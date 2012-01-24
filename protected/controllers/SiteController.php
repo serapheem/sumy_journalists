@@ -5,205 +5,303 @@
  */
 class SiteController extends Controller 
 {
-    public function actionIndex() 
+	/**
+	 * Displays items on index page
+	 * 
+	 * @access public
+	 * 
+	 * @return void
+	 */
+    public function actionIndex( ) 
     {
-    	$command = Yii::app()->db->createCommand();
-        $news = $command->selectDistinct('tbl.*, f.section')
-						->from('news tbl')
-						->join('frontpage f', 'f.item_id = tbl.id')
-						->where( array('AND', 'f.section = :section', 'tbl.publish = 1'),
-								array(':section' => 'News') )
-						->order('tbl.ordering ASC')
-						->queryAll();
+    	// Get published news
+    	$command = Yii::app( )->db
+    		->createCommand( );
+        $news = $command->selectDistinct( 'tbl.*, f.section' )
+			->from( 'news tbl' )
+			->join( 'frontpage f', 'f.item_id = tbl.id' )
+			->where( array( 'AND', 'f.section = :section', 'tbl.publish = 1' ),
+					array( ':section' => 'News' ) )
+			->order( 'tbl.ordering ASC' )
+			->queryAll( );
 		
-		$command->reset();
-		$know_our = $command->selectDistinct('tbl.*, f.section')
-						->from('know_our tbl')
-						->join('frontpage f', 'f.item_id = tbl.id')
-						->where( array('AND', 'f.section = :section', 'tbl.publish = 1'),
-								array(':section' => 'KnowOur') )
-						->order('tbl.ordering ASC')
-						->queryAll();
+		// Get published know ours items
+		$command->reset( );
+		$know_our = $command->selectDistinct( 'tbl.*, f.section' )
+			->from( 'know_our tbl' )
+			->join( 'frontpage f', 'f.item_id = tbl.id' )
+			->where( array( 'AND', 'f.section = :section', 'tbl.publish = 1' ),
+					array( ':section' => 'KnowOur' ) )
+			->order( 'tbl.ordering ASC' )
+			->queryAll( );
 						
-		$news = array_merge($news, $know_our);
+		$news = array_merge( $news, $know_our );
 		
-		foreach ($news AS $index => &$news_)
+		foreach ( $news AS $index => &$news_ )
 		{
 			$news_ = (object) $news_;
 		}
 		
-        $this->render('index', array('news' => $news) );
+        $this->render( 'index', array( 'news' => $news ) );
+		return true;
     }
-
+	
+	/**
+	 * Manages operations with news
+	 * 
+	 * @access public
+	 * 
+	 * @return void
+	 */
     public function actionNews() 
     {
-        if (isset($_GET['id'])) 
+    	if ( isset( $_GET['slug'] ) && !isset( $_GET['id'] ) )
+		{
+			$_GET['id'] = ( int ) $_GET['slug'];
+		}
+		if ( isset( $_GET['id'] ) ) 
         {
             $this->class = 'class="contentBody"';
 
-            $news = News::model()->findByPk($_GET['id']);
+            $news = News::model( )->findByPk( $_GET['id'] );
 
-            if (empty($news)) 
+            if ( empty( $news ) ) 
             {
-                throw new CHttpException(404, 'Зазначена новина не знайдена.');
+                throw new CHttpException( 404, 'Зазначена новина не знайдена.' );
             }
 
             $this->title = $news->title;
             
             // Check if user view this item at first time
-            if (Helper::isNewView('news', $news))
+            if ( Helper::isNewView( 'news', $news ) )
             {
                 $news->views++;
-                $news->save();
+                $news->save( );
             }
             
-            $news->body = Helper::addGallery($news->body);
+            $news->body = Helper::addGallery( $news->body );
 
-            $this->render('news', array('news' => $news) );
+            $this->render( 'news', array( 'news' => $news ) );
         } 
         else {
             $this->title = 'Новини';
-            $news = News::model()->published()->findAll();
+            $news = News::model( )->published( )
+            	->findAll( );
             
-            $this->render('articles', array('rows' => $news, 'view' => 'news') );
+            $this->render( 'articles', array(
+            	'rows' => $news, 
+            	'view' => 'news') 
+			);
         }
+		return true;
     }
-
-    public function actionKnowOur() 
+	
+	/**
+	 * Manages operations with know our items
+	 * 
+	 * @access public
+	 * 
+	 * @return void
+	 */
+    public function actionKnowOur( ) 
     {
-        if (isset($_GET['id'])) 
+    	if ( isset( $_GET['slug'] ) && !isset( $_GET['id'] ) )
+		{
+			$_GET['id'] = ( int ) $_GET['slug'];
+		}
+        if ( isset( $_GET['id'] ) ) 
         {
             $this->class = 'class="contentBody"';
 
-            $record = KnowOur::model()->findByPk($_GET['id']);
+            $record = KnowOur::model( )->findByPk( $_GET['id'] );
 
-            if (empty($record)) 
+            if ( empty( $record ) ) 
             {
-                throw new CHttpException(404, 'Зазначена особа не знайдена.');
+                throw new CHttpException( 404, 'Зазначена особа не знайдена.' );
             }
 
             $this->title = $record->title;
             
             // Check if user view this item at first time
-            if (Helper::isNewView('know_our', $record))
+            if ( Helper::isNewView( 'know_our', $record ) )
             {
                 $record->views++;
-                $record->save();
+                $record->save( );
             }
             
-            $record->body = Helper::addGallery($record->body);
+            $record->body = Helper::addGallery( $record->body );
             
-            $this->render('know_our', array('record' => $record) );
+            $this->render( 'know_our', array( 'record' => $record ) );
         } 
         else {
             $this->title = 'Знай наших';
             $this->class = 'class="knowour"';
 
-            $rows = KnowOur::model()->published()->findAll();
-            $this->render('persons', array('rows' => $rows, 'view' => 'knowour') );
+            $rows = KnowOur::model( )->published( )
+            	->findAll( );
+            $this->render( 'persons', array( 
+            	'rows' => $rows, 
+            	'view' => 'knowour'
+            ) );
         }
+		return true;
     }
-
-    public function actionCityStyle() 
+	
+	/**
+	 * Manages operations with city style items
+	 * 
+	 * @access public
+	 * 
+	 * @return void
+	 */
+    public function actionCityStyle( ) 
     {
-        if (isset($_GET['id'])) 
+    	if ( isset( $_GET['slug'] ) && !isset( $_GET['id'] ) )
+		{
+			$_GET['id'] = ( int ) $_GET['slug'];
+		}
+        if ( isset( $_GET['id'] ) ) 
         {
             $this->class = 'class="contentBody"';
 
-            $record = CityStyle::model()->findByPk($_GET['id']);
+            $record = CityStyle::model( )->findByPk( $_GET['id'] );
 
-            if (empty($record)) 
+            if ( empty( $record ) ) 
             {
-                throw new CHttpException(404, 'Зазначена стаття не знайдена.');
+                throw new CHttpException( 404, 'Зазначена стаття не знайдена.' );
             }
 
             $this->title = $record->title;
             
             // Check if user view this item at first time
-            if (Helper::isNewView('city_style', $record))
+            if ( Helper::isNewView( 'city_style', $record ) )
             {
                 $record->views++;
-                $record->save();
+                $record->save( );
             }
             
-            $record->body = Helper::addGallery($record->body);
+            $record->body = Helper::addGallery( $record->body );
             
-			$this->render('city_style', array('record' => $record) );
+			$this->render( 'city_style', array( 'record' => $record ) );
         } 
         else {
             $this->title = 'City стиль';
             $this->class = 'class="citystyle"';
 
-            $city_style = CityStyle::model()->published()->findAll();
-            $this->render('articles', array('rows' => $city_style, 'view' => 'citystyle') );
+            $city_style = CityStyle::model( )
+            	->published( )
+            	->findAll( );
+            $this->render( 'articles', array(
+            	'rows' => $city_style, 
+            	'view' => 'citystyle'
+            ) );
         }
+		return true;
     }
-
-    public function actionTyca() 
+	
+	/**
+	 * Manages operations with tyca items
+	 * 
+	 * @access public
+	 * 
+	 * @return void
+	 */
+    public function actionTyca( ) 
     {
-        if (isset($_GET['id'])) 
+    	if ( isset( $_GET['slug'] ) && !isset( $_GET['id'] ) )
+		{
+			$_GET['id'] = ( int ) $_GET['slug'];
+		}
+        if ( isset( $_GET['id'] ) ) 
         {
             $this->class = 'class="contentBody"';
 
-            $record = Tyca::model()->findByPk($_GET['id']);
+            $record = Tyca::model( )
+            	->findByPk( $_GET['id'] );
 
-            if (empty($record)) 
+            if ( empty( $record ) ) 
             {
-                throw new CHttpException(404, 'Зазначена подія не знайдена.');
+                throw new CHttpException( 404, 'Зазначена подія не знайдена.' );
             }
 
             $this->title = $record->title;
             
             // Check if user view this item at first time
-            if (Helper::isNewView('tyca', $record))
+            if ( Helper::isNewView( 'tyca', $record ) )
             {
                 $record->views++;
-                $record->save();
+                $record->save( );
             }
             
-            $record->body = Helper::addGallery($record->body);
+            $record->body = Helper::addGallery( $record->body );
             
-            $this->render('tyca', array('record' => $record) );
+            $this->render('tyca', array( 'record' => $record ) );
         } 
         else {
             $this->title = 'Tyca';
             $this->class = 'class="tyca"';
 
-            $rows = Tyca::model()->published()->findAll();
-            $this->render('persons', array('rows' => $rows, 'view' => 'tyca') );
+            $rows = Tyca::model( )
+            	->published( )
+            	->findAll( );
+            $this->render( 'persons', array(
+            	'rows' => $rows, 
+            	'view' => 'tyca'
+            ) );
         }
+		return true;
     }
-
-    public function actionPage() 
+	
+	/**
+	 * Manages operations with pages
+	 * 
+	 * @access public
+	 * 
+	 * @return void
+	 */
+    public function actionPage( ) 
     {
         $this->class = 'class="pageBox"';
 
-        $row = Pages::model()->find('seo=?', array($_GET['page']));
+        $row = Pages::model()
+        	->find( 'seo=?', array( $_GET['page'] ) );
 
-        if ( empty($row) )
+        if ( empty( $row ) )
 		{
-            throw new CHttpException(404, 'На жаль, сторінка не знайдена.');
+            throw new CHttpException( 404, 'На жаль, сторінка не знайдена.' );
 		}
 
         $this->title = $row->title;
 
-        $this->renderText($row->body);
+        $this->renderText( $row->body );
+		return true;
     }
-
-    public function actionError() 
+	
+	/**
+	 * Manages error page
+	 * 
+	 * @access public
+	 * 
+	 * @return void
+	 */
+    public function actionError( ) 
     {
         $this->class = 'class="errorBox"';
 
-        $error = Yii::app()->errorHandler->error;
-        if ($error) 
+        $error = Yii::app( )
+        	->errorHandler
+        	->error;
+			
+        if ( $error ) 
         {
-            if (Yii::app()->request->isAjaxRequest)
+            if ( Yii::app( )->request->isAjaxRequest )
 			{
                 echo $error['message'];
 			} 
 			else {
-                $this->render('error', $error);
+                $this->render( 'error', $error );
 			}
         }
+		return true;
     }
 }

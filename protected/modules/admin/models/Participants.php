@@ -1,45 +1,66 @@
 <?php
 
-class Participants extends CActiveRecord 
+/**
+ * News Model class
+ */
+class Participants extends ModelBase 
 {
-    public function rules() 
+	/**
+	 * Returns the model object
+	 * 
+	 * @static
+	 * @access public
+	 * @param string $className 
+	 * 
+	 * @return object
+	 */
+	public static function model( $className = __CLASS__ ) 
     {
-        return array
-        (
-            array('title, body', 'required'),
-            array('title, body, publish', 'safe'),
+    	return parent::model($className);
+    }
+	
+	/**
+	 * Returns array of rules for diferent properties
+	 * 
+	 * @access public
+	 * 
+	 * @return array
+	 */
+    public function rules( ) 
+    {
+        return array(
+            array( 'title, body', 'required' ),
+            array( 'title, alias, body, publish', 'safe' ),
         );
     }
-
-    public function attributeLabels() 
+	
+	/**
+	 * Returns labels for properties
+	 * 
+	 * @access public
+	 * 
+	 * @return array
+	 */
+    public function attributeLabels( ) 
     {
-        return array
-        (
+        return array(
             'title' => "Ім'я",
+            'alias' => 'Посилання',
             'body' => 'Характеристика',
             'publish' => 'Опублікувати',
         );
     }
 
-    public static function model($className = __CLASS__) 
-    {
-        return parent::model($className);
-    }
-
-    public function tableName() 
+	/**
+	 * Returns the name of table
+	 * 
+	 * @access public
+	 * 
+	 * @return string
+	 */
+    public function tableName( ) 
     {
         return '{{participants}}';
     }
     
-    public function scopes() 
-    {
-        return array
-        (
-            'ordering' => array
-            (
-                'order' => 'ordering ASC',
-            ),
-        );
-    }
-
 }

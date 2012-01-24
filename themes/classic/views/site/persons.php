@@ -3,33 +3,45 @@
         <?php
         $item_in_line = 4;
         $counter = 1;
-        foreach ($rows as $row):
-            ?>
-            <?php 
-            if (ceil(($counter - 1) / $item_in_line) == ($counter - 1) / $item_in_line or $counter == 1) { ?>
+        foreach ( $rows as $row ):
+			// Get image of article
+            $image = Helper::getThumbImage( $row->body );
+                
+            if ( empty( $image ) ) 
+            {
+                $image = '/images/no_image_small.png';
+			} 
+			$image = Yii::app( )
+				->createAbsoluteUrl( $image );
+			// Get link of article
+			if ( empty( $row->alias ) )
+			{
+				$link = '/' . $view . '/' . $row->id;
+			}
+			else {
+				$link = '/' . $view . '/' . $row->id . ':' . $row->alias;
+			}
+			$link = Yii::app( )
+				->createAbsoluteUrl( $link );
+        ?>
+            <?php if ( ceil( ( $counter - 1 ) / $item_in_line ) == ( $counter - 1 ) / $item_in_line or $counter == 1 ) : ?>
                 <tr class="sectiontableentry" >
-            <?php } ?>
+            <?php endif; ?>
                 <td valign="top" align="center">
                     <div class="personBox">
-                        <div class="personImg"><a href="/<?php echo $view .'/'. $row->id; ?>">
-                            <?php 
-                            $image = Helper::getThumbImage($row->body);
-                                
-                            if (empty($image)) 
-                            {
-                                $image = Yii::app()->theme->baseUrl . '/images/no_person_image.png';
-                            }
-                            ?>
+                        <div class="personImg"><a href="<?php echo $link ?>">
                             <img src="<?php echo $image; ?>" title="<?php echo $row->title; ?>" />
                         </a></div>
                         <div class="personTitle" >
-                            <h4><a href="/<?php echo $view .'/'. $row->id; ?>"><?php echo $row->title; ?></a></h4>
+                            <h4><a href="<?php echo $link ?>"><?php echo $row->title; ?></a></h4>
                         </div>
                     </div>
                 </td>
             <?php 
-            if (ceil($counter / $item_in_line) == $counter / $item_in_line)
-                echo "</tr>"; 
+            if ( ceil( $counter / $item_in_line ) == $counter / $item_in_line )
+			{
+                echo "</tr>";
+			} 
             $counter++; 
         endforeach; 
         ?>

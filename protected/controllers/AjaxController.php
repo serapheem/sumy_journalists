@@ -98,7 +98,7 @@ class AjaxController extends Controller
 		
 		$result = array('error' => $error, 'msg' => $msg, 'rating' => $record->rating);
         echo json_encode($result);
-        CApplication::end();
+        Yii::app()->end();
     }
 
     public function actionAddVoite() 
@@ -170,6 +170,7 @@ class AjaxController extends Controller
 
         $result = array('error' => $error, 'html' => $html);
         echo json_encode($result);
-        CApplication::end();
+        Yii::app()->end();
     }
+
 }

@@ -3,9 +3,14 @@
 return array(
     'elements' => array(
         (isset($_POST['id']) ? '<h1>Редагувати подію</h1>' : '<h1>Нова подія</h1>'),
+        
         'title' => array(
             'type' => 'text',
-            'maxlength' => 50,
+            'maxlength' => 120,
+        ),
+        'alias' => array(
+            'type' => 'text',
+            'maxlength' => 120,
         ),
         'body' => array(
             'type' => 'application.extensions.NHCKEditor.CKEditorWidget',
@@ -21,14 +26,20 @@ return array(
             'type' => 'checkbox',
             (isset($_POST['id']) ? '' : 'checked') => (isset($_POST['id']) ? '' : 'checked'),
         ),
+        
         '<input type="hidden" value="' . (isset($_POST['id']) ? $_POST['id'] : 0) . '" name="id" />',
         '<input type="hidden" value="true" name="edit" />'
     ),
     'buttons' => array(
-        'login' => array(
+        'apply' => array(
             'type' => 'submit',
             'label' => (isset($_POST['id']) ? 'Зберегти' : 'Додати'),
         ),
+        'save' => array(
+            'type' => 'submit',
+            'label' => (isset($_POST['id']) ? 'Зберегти і закрити' : 'Додати і закрити'),
+        ),
+        
         '<a href="/admin/publications/tyca">'. (isset($_POST['id']) ? 'Закрити' : 'Відмінити') .'</a>',
     ),
 );

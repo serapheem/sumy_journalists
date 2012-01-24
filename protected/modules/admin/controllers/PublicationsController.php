@@ -1,59 +1,83 @@
 <?php
 
+/**
+ * Publications Controller Class
+ */
 class PublicationsController extends AdminController 
 {
-    public function actionError() 
+	/**
+	 * Manages error page
+	 * 
+	 * @access public
+	 * 
+	 * @return void
+	 */
+    public function actionError( ) 
     {
-        $error = Yii::app()->errorHandler->error;
-        if ($error)
+        $error = Yii::app( )->errorHandler->error;
+        if ( $error )
 		{
-            $this->render('error', $error);
+            $this->render( 'error', $error );
 		}
+		return true;
     }
     
-    public function actionNews() 
+	/**
+	 * Manages the operation with news
+	 * 
+	 * @access public
+	 * 
+	 * @return void
+	 */
+    public function actionNews( ) 
     {
         $this->model = 'News';
 
-        if (isset( $_GET['edit'] )) 
+        if ( isset( $_GET['edit'] ) ) 
         {
-            $this->actionNewsEdit();
-            return true;
+            $this->actionNewsEdit( );
         }
-
-        if (isset( $_POST['publish'] )) 
+		elseif ( isset( $_POST['publish'] ) ) 
         {
-            $this->actionNewsPublish();
-            return true;
+            $this->actionNewsPublish( );
         }
-        
-        if (isset( $_POST['frontpage'] )) 
+		elseif ( isset( $_POST['frontpage'] ) ) 
         {
-            $this->actionNewsFrontpage();
-            return true;
+            $this->actionNewsFrontpage( );
         }
-
-        if (isset( $_POST['delete'] )) 
+		elseif ( isset( $_POST['delete'] ) ) 
         {
-            $this->actionNewsDelete();
-            return true;
+            $this->actionNewsDelete( );
         } 
         else {
-            $news = News::model()->ordering()->findAll();
-            $this->render('index', array(
-            					'data' => $news, 
-            					'view' => 'news'
-            				) 
-						);
+            $news = News::model( )->ordering( )->findAll( );
+            $this->render( 'index', array(
+				'data' => $news, 
+				'view' => 'news'
+			) );
         }
+		return true;
     }
 
-    private function actionNewsEdit() 
+	/**
+	 * Manages edit operaion with news
+	 * 
+	 * @access private
+	 * 
+	 * @return void
+	 */
+    private function actionNewsEdit( ) 
     {
-        $model = $this->loadModel();
-        $form = new CForm('admin.views.publications.news_form', $model);
+    	// Check the identifier
+    	if ( !isset( $_POST['id'] ) && $this->validateID( $_GET['edit'], false ) )
+		{
+			$_POST['id'] = $_GET['edit'];
+		}
+		
+        $model = $this->loadModel( );
+        $form = new CForm( 'admin.views.publications.news_form', $model );
 
-        if (is_null($model->id)) 
+        if ( is_null( $model->id ) ) 
         {
             $title = 'Нова новина';
         } 
@@ -65,76 +89,103 @@ class PublicationsController extends AdminController
             $title
         );
 		
-		if ( !empty($model->id) )
+		if ( $model->id )
 		{
-			$frontpage = Frontpage::model()->findByAttributes( array(
-									'section' => 'News',
-									'item_id' => $model->id
-								) );
-			if ( !empty($frontpage) )
+			$frontpage = Frontpage::model( )->findByAttributes( array(
+				'section' => 'News',
+				'item_id' => $model->id
+			) );
+			if ( $frontpage )
 			{
 				$model->frontpage = 1;
 			}
 		}
         
-        if (isset( $_POST['News'] )) 
+        if ( isset( $_POST['News'] ) ) 
         {
             $model->attributes = $_POST['News'];
-            $model->modified = date('Y-m-d H:i:s');
+            $model->modified = date( 'Y-m-d H:i:s' );
 			
-			if (empty($model->id) || ($model->id == 0) ) 
+			if ( empty( $model->id ) || !$model->id ) 
 			{
 				$model->created = $model->modified;
 			}
+			if ( !$model->alias )
+			{
+				$model->alias = Helper::translit( $model->title );
+			}
+			else {
+				$model->alias = Helper::translit( $model->alias );
+			}
 
-            if ($model->validate() && $model->save()) 
+            if ( $model->validate( ) && $model->save( ) ) 
             {
             	// Add or delete news from front page
-            	if ( !empty($_POST['News']['frontpage']) )
+            	if ( $model->frontpage && is_null( $frontpage ) )
 				{
 					$frontpage_model = new Frontpage( );
 					$frontpage_model->section = 'News';
 					$frontpage_model->item_id = $model->id;
-					if ( $frontpage_model->validate() )
+					if ( $frontpage_model->validate( ) )
 					{
-						$frontpage_model->save();
+						$frontpage_model->save( );
 					}
 				}
-				else {
-					Frontpage::model()->deleteAllByAttributes( array(
-								'section' => 'News',
-								'item_id' => $model->id
-							));
+				elseif ( !$model->frontpage ) 
+				{
+					Frontpage::model( )->deleteAllByAttributes( array(
+						'section' => 'News',
+						'item_id' => $model->id
+					));
 				}
 				
-                if (isset($_POST['id']) && ($_POST['id'] != 0) ) 
+                if ( isset( $_POST['id'] ) && $_POST['id'] ) 
                 {
                     $msg = 'Новина успішно оновлена.';
                 } 
                 else {
                     $msg = 'Новина успішно додана.';
                 }
-                Yii::app()->user->setFlash('info', $msg);
-                Yii::app()->getRequest()->redirect('/admin/publications/news');
+                Yii::app( )->user
+                	->setFlash( 'info', $msg );
+				
+				if ( !empty( $_POST['save'] ) )
+				{
+					Yii::app( )->getRequest( )
+                		->redirect( '/admin/publications/news' );
+				}
+				else {
+					Yii::app( )->getRequest( )
+                		->redirect( '/admin/publications/news/edit/' . $model->id );
+				}
             }
         }
 
-        $this->renderText($form);
+        $this->renderText( $form );
+		return true;
     }
 
-    private function actionNewsPublish() 
+	/**
+	 * Publishes news
+	 * 
+	 * @access private
+	 * 
+	 * @return void
+	 */
+    private function actionNewsPublish( ) 
     {
-        if (isset($_POST['publish']) && $this->validateID($_POST['id']) ) 
+        if ( isset( $_POST['publish'] ) && $this->validateID( $_POST['id'] ) ) 
         {
-            News::model()->updateByPk
-            (
-                $_POST['id'], array(
-                    'publish' => abs($_POST['publish'] - 1),
-                )
-            );
+            News::model( )->updateByPk( $_POST['id'], 
+            	array(
+	                'publish' => abs( $_POST['publish'] - 1 )
+	            ) 
+			);
         }
 
-        Yii::app()->getRequest()->redirect('/admin/publications/news');
+        Yii::app( )->getRequest( )
+        	->redirect( '/admin/publications/news' );
+		return true;
     }
     
     private function actionNewsFrontpage() 
@@ -178,39 +229,59 @@ class PublicationsController extends AdminController
         Yii::app()->getRequest()->redirect('/admin/publications/news');
     }
     
-    public function actionCityStyle() 
+	/**
+	 * Manages the operation with city style items
+	 * 
+	 * @access public
+	 * 
+	 * @return void
+	 */
+    public function actionCityStyle( ) 
     {
         $this->model = 'CityStyle';
 
-        if (isset($_GET['edit'])) 
+        if ( isset( $_GET['edit'] ) ) 
         {
-            $this->actionCityStyleEdit();
-            return true;
+            $this->actionCityStyleEdit( );
         }
-
-        if (isset($_POST['publish'])) 
+		elseif ( isset( $_POST['publish'] ) ) 
         {
-            $this->actionCityStylePublish();
-            return true;
+            $this->actionCityStylePublish( );
         }
-        
-        if (isset($_POST['delete'])) 
+		elseif ( isset( $_POST['delete'] ) ) 
         {
-            $this->actionCityStyleDelete();
-            return true;
+            $this->actionCityStyleDelete( );
         } 
         else {
-            $rows = CityStyle::model()->ordering()->findAll();
-            $this->render('index', array('data' => $rows, 'view' => 'city_style'));
+            $rows = CityStyle::model()->ordering( )
+            	->findAll( );
+            $this->render( 'index', array( 
+            	'data' => $rows, 
+            	'view' => 'city_style' 
+			) );
         }
+		return true;
     }
 
-    private function actionCityStyleEdit() 
+	/**
+	 * Manages edit operaion with city style items
+	 * 
+	 * @access private
+	 * 
+	 * @return void
+	 */
+    private function actionCityStyleEdit( ) 
     {
-        $model = $this->loadModel();
-        $form = new CForm('admin.views.publications.city_style_form', $model);
+    	// Check the identifier
+    	if ( !isset( $_POST['id'] ) && $this->validateID( $_GET['edit'], false ) )
+		{
+			$_POST['id'] = $_GET['edit'];
+		}
+		
+        $model = $this->loadModel( );
+        $form = new CForm( 'admin.views.publications.city_style_form', $model );
 
-        if (is_null($model->id)) 
+        if ( is_null( $model->id ) ) 
         {
             $title = 'Додати статтю';
         } 
@@ -222,31 +293,49 @@ class PublicationsController extends AdminController
             $title
         );
         
-        if (isset($_POST['CityStyle'])) 
+        if ( isset( $_POST['CityStyle'] ) ) 
         {
             $model->attributes = $_POST['CityStyle'];
-            $model->modified = date('Y-m-d H:i:s');
+            $model->modified = date( 'Y-m-d H:i:s' );
 			
-			if ( empty($model->id) || !$model->id )
+			if ( empty( $model->id ) || !$model->id )
 			{
-				$model->created = date('Y-m-d H:i:s');
+				$model->created = $model->modified;
+			}
+			if ( !$model->alias )
+			{
+				$model->alias = Helper::translit( $model->title );
+			}
+			else {
+				$model->alias = Helper::translit( $model->alias );
 			}
 
-            if ($model->validate() && $model->save()) 
+            if ( $model->validate() && $model->save( ) ) 
             {
-                if (isset($_POST['id']) && ($_POST['id'] != 0) ) 
+                if ( isset( $_POST['id'] ) && $_POST['id'] ) 
                 {
                     $msg = 'Стаття успішно оновлена.';
                 } 
                 else {
                     $msg = 'Стаття успішно додана.';
                 }
-                Yii::app()->user->setFlash('info', $msg);
-                Yii::app()->getRequest()->redirect('/admin/publications/citystyle');
+                Yii::app()->user
+                	->setFlash( 'info', $msg );
+				
+				if ( !empty( $_POST['save'] ) )
+				{
+					Yii::app( )->getRequest( )
+                		->redirect( '/admin/publications/citystyle' );
+				}
+				else {
+					Yii::app( )->getRequest( )
+                		->redirect( '/admin/publications/citystyle/edit/' . $model->id );
+				}
             }
         }
 
         $this->renderText($form);
+		return true;
     }
 
     private function actionCityStylePublish() 
@@ -278,50 +367,61 @@ class PublicationsController extends AdminController
         Yii::app()->getRequest()->redirect('/admin/publications/citystyle');
     }
     
-    public function actionKnowOur() 
+	/**
+	 * Manages the operation with news
+	 * 
+	 * @access public
+	 * 
+	 * @return void
+	 */
+    public function actionKnowOur( ) 
     {
         $this->model = 'KnowOur';
 
-        if (isset( $_GET['edit'] )) 
+        if ( isset( $_GET['edit'] ) ) 
         {
-            $this->actionKnowOurEdit();
-            return true;
+            $this->actionKnowOurEdit( );
         }
-
-        if (isset( $_POST['publish'] )) 
+		elseif ( isset( $_POST['publish'] ) ) 
         {
-            $this->actionKnowOurPublish();
-            return true;
+            $this->actionKnowOurPublish( );
         }
-		
-		if (isset( $_POST['frontpage'] )) 
+		elseif (isset( $_POST['frontpage'] )) 
         {
             $this->actionKnowOurFrontpage();
-            return true;
         }
-        
-        if (isset( $_POST['delete'] )) 
+		elseif (isset( $_POST['delete'] )) 
         {
             $this->actionKnowOurDelete();
-            return true;
         } 
         else {
-            $rows = KnowOur::model()->ordering()->findAll();
-            $this->render('index', 
-	            			array(
-	            				'data' => $rows, 
-	            				'view' => 'know_our'
-	            			)
-						);
+            $rows = KnowOur::model()->ordering()
+            	->findAll();
+            $this->render('index', array(
+				'data' => $rows, 
+				'view' => 'know_our'
+			) );
         }
     }
 
+	/**
+	 * Manages edit operaion with know our items
+	 * 
+	 * @access private
+	 * 
+	 * @return void
+	 */
     private function actionKnowOurEdit() 
     {
-        $model = $this->loadModel();
+    	// Check the identifier
+    	if ( !isset( $_POST['id'] ) && $this->validateID( $_GET['edit'], false ) )
+		{
+			$_POST['id'] = $_GET['edit'];
+		}
+		$model = $this->loadModel();
         $form = new CForm('admin.views.publications.know_our_form', $model);
 
-        if (is_null($model->id)) 
+        if ( is_null( $model->id ) ) 
         {
             $title = 'Нова особа';
         } 
@@ -333,61 +433,80 @@ class PublicationsController extends AdminController
             $title
         );
 		
-		if ( !empty($model->id) )
+		if ( $model->id )
 		{
-			$frontpage = Frontpage::model()->findByAttributes( array(
-									'section' => 'KnowOur',
-									'item_id' => $model->id
-								) );
-			if ( !empty($frontpage) )
+			$frontpage = Frontpage::model( )->findByAttributes( array(
+				'section' => 'KnowOur',
+				'item_id' => $model->id
+			) );
+			if ( $frontpage )
 			{
 				$model->frontpage = 1;
 			}
 		}
         
-        if (isset( $_POST['KnowOur'] )) 
+        if ( isset( $_POST['KnowOur'] ) ) 
         {
             $model->attributes = $_POST['KnowOur'];
-            $model->modified = date('Y-m-d H:i:s');
+            $model->modified = date( 'Y-m-d H:i:s' );
 			
-            if ( empty($model->id) || !$model->id )
+            if ( empty( $model->id ) || !$model->id )
 			{
-				$model->created = date('Y-m-d H:i:s');
+				$model->created = $model->modified;
+			}
+			if ( !$model->alias )
+			{
+				$model->alias = Helper::translit( $model->title );
+			}
+			else {
+				$model->alias = Helper::translit( $model->alias );
 			}
             
-            if ($model->validate() && $model->save()) 
+            if ( $model->validate( ) && $model->save( ) ) 
             {
             	// Add or delete news from front page
-            	if ( !empty($_POST['KnowOur']['frontpage']) )
+            	if ( $model->frontpage && is_null( $frontpage ) )
 				{
 					$frontpage_model = new Frontpage( );
 					$frontpage_model->section = 'KnowOur';
 					$frontpage_model->item_id = $model->id;
-					if ( $frontpage_model->validate() )
+					if ( $frontpage_model->validate( ) )
 					{
-						$frontpage_model->save();
+						$frontpage_model->save( );
 					}
 				}
-				else {
+				elseif ( !$model->frontpage ) 
+				{
 					Frontpage::model()->deleteAllByAttributes( array(
-								'section' => 'KnowOur',
-								'item_id' => $model->id
-							));
+						'section' => 'KnowOur',
+						'item_id' => $model->id
+					));
 				}
 				
-                if (isset($_POST['id']) && $_POST['id'] != 0) 
+                if ( isset($_POST['id']) && $_POST['id'] ) 
                 {
                     $msg = 'Особа успішно оновлена.';
                 } 
                 else {
                     $msg = 'Особа успішно додана.';
                 }
-                Yii::app()->user->setFlash('info', $msg);
-                Yii::app()->getRequest()->redirect('/admin/publications/knowour');
+                Yii::app()->user
+                	->setFlash('info', $msg);
+				
+				if ( !empty( $_POST['save'] ) )
+				{
+					Yii::app( )->getRequest( )
+                		->redirect( '/admin/publications/knowour' );
+				}
+				else {
+					Yii::app( )->getRequest( )
+                		->redirect( '/admin/publications/knowour/edit/' . $model->id );
+				}
             }
         }
 
         $this->renderText($form);
+		return true;
     }
 
     private function actionKnowOurPublish() 
@@ -446,43 +565,59 @@ class PublicationsController extends AdminController
         Yii::app()->getRequest()->redirect('/admin/publications/knowour');
     }
     
-    public function actionTyca() 
+	/**
+	 * Manages the operation with news
+	 * 
+	 * @access public
+	 * 
+	 * @return void
+	 */
+    public function actionTyca( ) 
     {
         $this->model = 'Tyca';
 
-        if (isset($_GET['edit'])) 
+        if ( isset( $_GET['edit'] ) ) 
         {
             $this->actionTycaEdit();
-            return true;
         }
-
-        if (isset($_POST['publish'])) 
+		elseif ( isset( $_POST['publish'] ) ) 
         {
             $this->actionTycaPublish();
-            return true;
         }
-        
-        if (isset($_POST['delete'])) 
+		elseif ( isset( $_POST['delete'] ) ) 
         {
             $this->actionTycaDelete();
-            return true;
         } 
         else {
-            $rows = Tyca::model()->ordering()->findAll();
+            $rows = Tyca::model()->ordering()
+            	->findAll();
             $this->render('index', array(
-            						'data' => $rows, 
-            						'view' => 'tyca'
-            					)
-							);
+				'data' => $rows, 
+				'view' => 'tyca'
+			) );
         }
+		return true;
     }
 
+	/**
+	 * Manages edit operaion with news
+	 * 
+	 * @access private
+	 * 
+	 * @return void
+	 */
     private function actionTycaEdit() 
     {
-        $model = $this->loadModel();
-        $form = new CForm('admin.views.publications.tyca_form', $model);
+    	// Check the identifier
+    	if ( !isset( $_POST['id'] ) && $this->validateID( $_GET['edit'], false ) )
+		{
+			$_POST['id'] = $_GET['edit'];
+		}
+		
+        $model = $this->loadModel( );
+        $form = new CForm( 'admin.views.publications.tyca_form', $model );
 
-        if (is_null($model->id)) 
+        if ( is_null( $model->id ) ) 
         {
             $title = 'Нова подія';
         } 
@@ -494,31 +629,49 @@ class PublicationsController extends AdminController
             $title
         );
         
-        if (isset($_POST['Tyca'])) 
+        if ( isset( $_POST['Tyca'] ) ) 
         {
             $model->attributes = $_POST['Tyca'];
-            $model->modified = date('Y-m-d H:i:s');
+            $model->modified = date( 'Y-m-d H:i:s' );
 			
 			if ( empty($model->id) || !$model->id )
 			{
-				$model->created = date('Y-m-d H:i:s');
+				$model->created = $model->modified;
+			}
+			if ( !$model->alias )
+			{
+				$model->alias = Helper::translit( $model->title );
+			}
+			else {
+				$model->alias = Helper::translit( $model->alias );
 			}
 
-            if ($model->validate() && $model->save()) 
+            if ( $model->validate( ) && $model->save( ) ) 
             {
-                if (isset($_POST['id']) && ($_POST['id'] != 0) ) 
+                if ( isset( $_POST['id'] ) && $_POST['id'] ) 
                 {
                     $msg = 'Подія успішно оновлена.';
                 } 
                 else {
                     $msg = 'Подія успішно додана.';
                 }
-                Yii::app()->user->setFlash('info', $msg);
-                Yii::app()->getRequest()->redirect('/admin/publications/tyca');
+                Yii::app()->user
+                	->setFlash( 'info', $msg );
+					
+				if ( !empty( $_POST['save'] ) )
+				{
+					Yii::app( )->getRequest( )
+                		->redirect( '/admin/publications/tyca' );
+				}
+				else {
+					Yii::app( )->getRequest( )
+                		->redirect( '/admin/publications/tyca/edit/' . $model->id );
+				}
             }
         }
 
         $this->renderText($form);
+		return true;
     }
 
     private function actionTycaPublish() 
@@ -550,50 +703,63 @@ class PublicationsController extends AdminController
         Yii::app()->getRequest()->redirect('/admin/publications/tyca');
     }
 	
+	/**
+	 * Manages the operation with participants
+	 * 
+	 * @access public
+	 * 
+	 * @return void
+	 */
 	public function actionParticipants()
     {
         $this->model = 'Participants';
 
-        if (isset( $_GET['edit'] )) 
+        if ( isset( $_GET['edit'] ) ) 
         {
             $this->actionParticipantsEdit();
-            return true;
         }
-
-        if (isset( $_POST['publish'] )) 
+		elseif ( isset( $_POST['publish'] ) ) 
         {
             $this->actionParticipantsPublish();
-            return true;
         }
-		
-		if (isset( $_POST['top10'] )) 
+		elseif ( isset( $_POST['top10'] ) ) 
         {
             $this->actionParticipantsTop10();
-            return true;
         }
-        
-        if (isset( $_POST['delete'] )) 
+		elseif ( isset( $_POST['delete'] ) ) 
         {
             $this->actionParticipantsDelete();
-            return true;
         } 
         else {
-            $rows = Participants::model()->ordering()->findAll();
-            $this->render('index', 
-	            			array(
-	            				'data' => $rows, 
-	            				'view' => 'participants'
-	            			)
-						);
+            $rows = Participants::model()->ordering()
+            	->findAll();
+            $this->render('index', array(
+				'data' => $rows, 
+				'view' => 'participants'
+			) );
         }
+		return true;
     }
 
+	/**
+	 * Manages edit operaion with participants
+	 * 
+	 * @access private
+	 * 
+	 * @return void
+	 */
     private function actionParticipantsEdit() 
     {
-        $model = $this->loadModel();
-        $form = new CForm('admin.views.publications.participants_form', $model);
+    	// Check the identifier
+    	if ( !isset( $_POST['id'] ) && $this->validateID( $_GET['edit'], false ) )
+		{
+			$_POST['id'] = $_GET['edit'];
+		}
 
-        if (is_null($model->id)) 
+        $model = $this->loadModel( );
+        $form = new CForm( 'admin.views.publications.participants_form', $model );
+
+        if ( is_null( $model->id ) ) 
         {
             $title = 'Новий учасник';
         } 
@@ -605,31 +771,49 @@ class PublicationsController extends AdminController
             $title
         );
         
-        if (isset( $_POST['Participants'] )) 
+        if ( isset( $_POST['Participants'] ) ) 
         {
             $model->attributes = $_POST['Participants'];
-            $model->modified = date('Y-m-d H:i:s');
+            $model->modified = date( 'Y-m-d H:i:s' );
             
-            if ( empty($model->id) || ($model->id == 0) ) 
+            if ( empty($model->id) || !$model->id ) 
             {
                 $model->created = $model->modified;
             }
+			if ( !$model->alias )
+			{
+				$model->alias = Helper::translit( $model->title );
+			}
+			else {
+				$model->alias = Helper::translit( $model->alias );
+			}
 
-            if ($model->validate() && $model->save()) 
+            if ( $model->validate( ) && $model->save( ) ) 
             {
-                if (isset($_POST['id']) && $_POST['id'] != 0) 
+                if ( isset( $_POST['id'] ) && $_POST['id'] ) 
                 {
                     $msg = 'Учасник успішно оновлений.';
                 } 
                 else {
                     $msg = 'Учасник успішно доданий.';
                 }
-                Yii::app()->user->setFlash('info', $msg);
-                Yii::app()->getRequest()->redirect('/admin/publications/participants');
+                Yii::app()->user
+                	->setFlash('info', $msg);
+					
+				if ( !empty( $_POST['save'] ) )
+				{
+					Yii::app( )->getRequest( )
+                		->redirect( '/admin/publications/participants' );
+				}
+				else {
+					Yii::app( )->getRequest( )
+                		->redirect( '/admin/publications/participants/edit/' . $model->id );
+				}
             }
         }
 
         $this->renderText($form);
+		return true;
     }
 
     private function actionParticipantsPublish() 
