@@ -1,15 +1,17 @@
 <?php
 
-class UsersController extends AdminController {
-    
+class UsersController extends AdminController 
+{
     public $model = 'Users';
 
-    public function actionIndex() {
-        $rows = Users::model()->findAll();
+    public function actionIndex( ) 
+    {
+        $rows = Users::model( )->findAll();
         $this->render('index', array('rows' => $rows));
     }
 
-    public function actionAdd() {
+    public function actionAdd() 
+    {
         $model = $this->loadModel();
         $form = new CForm('admin.views.users.form', $model);
 
@@ -18,12 +20,20 @@ class UsersController extends AdminController {
             'Новий користувач'
         );
         
-        if (isset($_POST['Users'])) {
+        if ( isset( $_POST['Users'] ) ) 
+        {
             $model->attributes = $_POST['Users'];
-            $model->password = sha1($model->password);
-            $model->password2 = sha1($model->password2);
+			if ( $model->password )
+			{
+            	$model->password = sha1( $model->email . $model->password );
+			}
+			if ( $model->password2 )
+			{
+            	$model->password2 = sha1( $model->email . $model->password2 );
+			}
 
-            if ($model->validate() && $model->save()) {
+            if ($model->validate() && $model->save()) 
+            {
                 Yii::app()->user->setFlash('info', 'Користувач доданий.');
                 Yii::app()->getRequest()->redirect('/admin/users');
             }
@@ -35,6 +45,7 @@ class UsersController extends AdminController {
     public function actionEdit() 
     {
         $model = $this->loadModel();
+		$old_model = clone $model;
         $form = new CForm('admin.views.users.edit_form', $model);
 
         $this->breadcrumbs = array(
@@ -48,15 +59,15 @@ class UsersController extends AdminController {
 			
 			if ( empty($model->password) || empty($model->password2) )
 			{
-				$model->password = $this->loadModel()->password;
-	            $model->password2 = $this->loadModel()->password;
+				$model->password = $old_model->password;
+	            $model->password2 = $old_model->password;
 			}
 			else {
-	            $model->password = sha1($model->password);
-	            $model->password2 = sha1($model->password2);
+	            $model->password = sha1( $model->email . $model->password );
+	            $model->password2 = sha1( $model->email . $model->password2 );
 			}
-            $model->username = $this->loadModel()->username;
-
+            $model->username = $old_model->username;
+			
             if ( $model->validate() && $model->save() ) 
             {
                 Yii::app()->user->setFlash('info', 'Дані користувача успішно змінені.');
@@ -67,11 +78,17 @@ class UsersController extends AdminController {
         $this->renderText($form);
     }
 
-    public function actionDelete() {
-        if (isset($_POST['delete']) && sizeof($_POST['delete']) > 0) {
+    public function actionDelete() 
+    {
+        if ( isset( $_POST['delete'] ) && ( sizeof( $_POST['delete'] ) > 0 ) ) 
+        {
             foreach ($_POST['delete'] as $id)
+			{
                 if ($id != 1)
+				{
                     Users::model()->deleteByPk($id);
+				}
+			}
 
             Yii::app()->user->setFlash('info', 'Користувачі видалені.');
         }

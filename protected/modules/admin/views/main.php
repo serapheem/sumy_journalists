@@ -23,7 +23,6 @@
                     <li><a href="/admin/poll">Голосування</a></li>
                     <li><a href="/admin/users">Користувачі</a></li>
                     <li><a href="/admin/pages">Статичні сторінки</a></li>
-                    <li><a href="javascript: postSend('/admin/users/edit', { id: <?php echo Yii::app()->user->getId(); ?> });" title="Редагувати">Змінити пароль</a></li>
                     <li class="right"><a href="/admin/default/logout">Вийти</a></li>
                     <li class="right"><a href="/" rel="external">Перегляд сайту</a></li>
                 </ul>

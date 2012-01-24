@@ -11,6 +11,10 @@ return array(
             'type' => 'text',
             'maxlength' => 120,
         ),
+        'email' => array(
+            'type' => 'text',
+            'maxlength' => 120,
+        ),
         'password' => array(
             'type' => 'password',
             'maxlength' => 50,

@@ -13,7 +13,8 @@ $this->breadcrumbs = array(
             <th width="25"><input type="checkbox" value="selectAll" /></th>
             <th width="35">&nbsp;</th>
             <th class="tl" style="padding-left: 15px">Ім'я</th>
-            <th width="200" class="tl" style="padding-left: 15px">Логін</th>
+            <th width="150" class="tl" style="padding-left: 15px">Логін</th>
+            <th width="150">Пошта</th>
             <th width="120">Був в адмін-панелі</th>
             <th width="100">Останній IP</th>
             <th width="30">ID</th>
@@ -38,7 +39,8 @@ $this->breadcrumbs = array(
                 	echo $row->name;
                 endif; ?>
             </td>
-            <td class="tl"><?php echo $row->username; ?></td>
+            <td class="tl" style="padding-left: 15px"><?php echo $row->username; ?></td>
+            <td><?php echo $row->email; ?></td>
             <td><?php echo CLocale::getInstance('uk')->dateFormatter->formatDateTime($row->lasttime, 'long'); ?></td>
             <td><?php echo $row->ip; ?></td>
             <td><?php echo $row->id; ?></a></td>

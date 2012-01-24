@@ -1,13 +1,16 @@
 <?php
 
-class DefaultController extends AdminController {
-
-    public function actionIndex() {
+class DefaultController extends AdminController 
+{
+    public function actionIndex() 
+    {
         $settingsFile = Yii::getPathOfAlias('application.config.settings') . '.php';
         $settings = require $settingsFile;
 
-        if (isset($_POST['settings'])) {
-            foreach ($_POST['settings'] as $key => $value) {
+        if ( isset($_POST['settings'])) 
+        {
+            foreach ($_POST['settings'] as $key => $value) 
+            {
                 if (strpos($_POST['settings'][$key], "\n"))
                     $_POST['settings'][$key] = nl2br($value);
             }
@@ -19,7 +22,8 @@ class DefaultController extends AdminController {
             Yii::app()->user->setFlash('info', 'Установки змінені.');
         }
 
-        foreach ($settings as $key => $value) {
+        foreach ($settings as $key => $value) 
+        {
             if (strpos($settings[$key], "\n"))
                 $settings[$key] = strip_tags($value);
         }
@@ -33,10 +37,12 @@ class DefaultController extends AdminController {
             $this->render('error', $error);
     }
 
-    public function actionLogin() {
-        $model = new Login;
+    public function actionLogin() 
+    {
+        $model = new Login( );
 
-        if (isset($_POST['Login'])) {
+        if (isset($_POST['Login'])) 
+        {
             $model->attributes = $_POST['Login'];
 
             if ($model->validate() && $model->login())

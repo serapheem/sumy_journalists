@@ -1,13 +1,14 @@
 <?php
 
-class Login extends CFormModel {
-
+class Login extends CFormModel 
+{
     public $username;
     public $password;
     public $rememberMe = false;
     private $_identity;
 
-    public function rules() {
+    public function rules() 
+    {
         return array(
             array('username, password', 'required'),
             array('password', 'authenticate'),
@@ -15,7 +16,8 @@ class Login extends CFormModel {
         );
     }
 
-    public function attributeLabels() {
+    public function attributeLabels() 
+    {
         return array(
             'rememberMe' => 'Запам\'ятати мене',
             'username' => 'Логін',
@@ -23,8 +25,10 @@ class Login extends CFormModel {
         );
     }
 
-    public function authenticate($attribute, $params) {
-        if (!$this->hasErrors()) {
+    public function authenticate($attribute, $params) 
+    {
+        if ( !$this->hasErrors() ) 
+        {
             $this->_identity = new UserIdentity($this->username, $this->password);
             $this->_identity->authenticate();
 
@@ -41,13 +45,16 @@ class Login extends CFormModel {
         }
     }
 
-    public function login() {
-        if ($this->_identity === null) {
+    public function login() 
+    {
+        if ($this->_identity === null) 
+        {
             $this->_identity = new UserIdentity($this->username, $this->password);
             $this->_identity->authenticate();
         }
 
-        if ($this->_identity->errorCode === UserIdentity::ERROR_NONE) {
+        if ($this->_identity->errorCode === UserIdentity::ERROR_NONE) 
+        {
             Yii::app()->user->login($this->_identity, 3600 * 24 * 30);
             return true;
         }

@@ -8,7 +8,7 @@ class Users extends CActiveRecord
     public function rules() 
     {
         return array(
-            array('name, username, password, password2', 'required'),
+            array('name, username, email, password, password2', 'required'),
             array('password', 'compare', 'compareAttribute' => 'password2'),
         );
     }
@@ -18,6 +18,7 @@ class Users extends CActiveRecord
         return array(
             'name' => 'Ім\'я користувача',
             'username' => 'Логін',
+            'email' => 'Пошта',
             'password' => 'Пароль',
             'password2' => 'Повторити пароль',
         );
