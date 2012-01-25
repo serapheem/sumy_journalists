@@ -152,10 +152,11 @@ class Helper
      * 
      * @static
      * @access public
+	 * @param string $link the url address of page with comments
      * 
      * @return string
      */
-    static public function getSocialButtons()
+    static public function getSocialButtons( $link = null )
     {
         $html = ''; 
         
@@ -317,10 +318,11 @@ class Helper
      * 
      * @static
      * @access public
+	 * @param string $link the url address of page with comments
      * 
      * @return string
      */
-    static public function getCommentsBlock()
+    static public function getCommentsBlock( $link = null )
     {
         $html = ''; 
         
