@@ -104,21 +104,8 @@ class PublicationsController extends AdminController
         if ( isset( $_POST['News'] ) ) 
         {
             $model->attributes = $_POST['News'];
-            $model->modified = date( 'Y-m-d H:i:s' );
-			
-			if ( empty( $model->id ) || !$model->id ) 
-			{
-				$model->created = $model->modified;
-			}
-			if ( !$model->alias )
-			{
-				$model->alias = Helper::translit( $model->title );
-			}
-			else {
-				$model->alias = Helper::translit( $model->alias );
-			}
-
-            if ( $model->validate( ) && $model->save( ) ) 
+            
+			if ( $model->validate( ) && $model->save( ) ) 
             {
             	// Add or delete news from front page
             	if ( $model->frontpage && is_null( $frontpage ) )
@@ -296,21 +283,8 @@ class PublicationsController extends AdminController
         if ( isset( $_POST['CityStyle'] ) ) 
         {
             $model->attributes = $_POST['CityStyle'];
-            $model->modified = date( 'Y-m-d H:i:s' );
-			
-			if ( empty( $model->id ) || !$model->id )
-			{
-				$model->created = $model->modified;
-			}
-			if ( !$model->alias )
-			{
-				$model->alias = Helper::translit( $model->title );
-			}
-			else {
-				$model->alias = Helper::translit( $model->alias );
-			}
-
-            if ( $model->validate() && $model->save( ) ) 
+            
+			if ( $model->validate() && $model->save( ) ) 
             {
                 if ( isset( $_POST['id'] ) && $_POST['id'] ) 
                 {
@@ -448,19 +422,6 @@ class PublicationsController extends AdminController
         if ( isset( $_POST['KnowOur'] ) ) 
         {
             $model->attributes = $_POST['KnowOur'];
-            $model->modified = date( 'Y-m-d H:i:s' );
-			
-            if ( empty( $model->id ) || !$model->id )
-			{
-				$model->created = $model->modified;
-			}
-			if ( !$model->alias )
-			{
-				$model->alias = Helper::translit( $model->title );
-			}
-			else {
-				$model->alias = Helper::translit( $model->alias );
-			}
             
             if ( $model->validate( ) && $model->save( ) ) 
             {
@@ -632,21 +593,8 @@ class PublicationsController extends AdminController
         if ( isset( $_POST['Tyca'] ) ) 
         {
             $model->attributes = $_POST['Tyca'];
-            $model->modified = date( 'Y-m-d H:i:s' );
-			
-			if ( empty($model->id) || !$model->id )
-			{
-				$model->created = $model->modified;
-			}
-			if ( !$model->alias )
-			{
-				$model->alias = Helper::translit( $model->title );
-			}
-			else {
-				$model->alias = Helper::translit( $model->alias );
-			}
-
-            if ( $model->validate( ) && $model->save( ) ) 
+            
+			if ( $model->validate( ) && $model->save( ) ) 
             {
                 if ( isset( $_POST['id'] ) && $_POST['id'] ) 
                 {
@@ -774,20 +722,7 @@ class PublicationsController extends AdminController
         if ( isset( $_POST['Participants'] ) ) 
         {
             $model->attributes = $_POST['Participants'];
-            $model->modified = date( 'Y-m-d H:i:s' );
             
-            if ( empty($model->id) || !$model->id ) 
-            {
-                $model->created = $model->modified;
-            }
-			if ( !$model->alias )
-			{
-				$model->alias = Helper::translit( $model->title );
-			}
-			else {
-				$model->alias = Helper::translit( $model->alias );
-			}
-
             if ( $model->validate( ) && $model->save( ) ) 
             {
                 if ( isset( $_POST['id'] ) && $_POST['id'] ) 
