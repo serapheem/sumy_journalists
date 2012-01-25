@@ -24,9 +24,9 @@
 
         <title><?php echo $this->title; ?></title>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-        <meta name="keywords" content="<?php echo $this->keywords; ?>">
-        <meta name="description" content="<?php echo $this->description; ?>">
-        <meta property="fb:app_id" content="116412811804627">
+        <meta name="keywords" content="<?php echo $this->keywords; ?>" />
+        <meta name="description" content="<?php echo $this->description; ?>" />
+        <meta property="fb:app_id" content="116412811804627" />
 
         <link href="<?php echo Yii::app()->theme->baseUrl; ?>/style.css" rel="stylesheet" type="text/css" />
         
