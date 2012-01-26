@@ -30,7 +30,7 @@ class Participants extends ModelBase
     {
         return array(
             array( 'title, body', 'required' ),
-            array( 'title, alias, body, publish', 'safe' ),
+            array( 'title, alias, body, publish, top10', 'safe' ),
         );
     }
 	
@@ -48,6 +48,7 @@ class Participants extends ModelBase
             'alias' => 'Посилання',
             'body' => 'Характеристика',
             'publish' => 'Опублікувати',
+            'top10' => 'На головній',
         );
     }
 

@@ -19,7 +19,7 @@
             <div id="menu">
                 <ul>
                     <li><a href="/admin/default">Установки</a></li>
-                    <li><a href="/admin/publications/news">Публікації</a></li>
+                    <li><a href="/admin/news">Публікації</a></li>
                     <li><a href="/admin/poll">Голосування</a></li>
                     <li><a href="/admin/users">Користувачі</a></li>
                     <li><a href="/admin/pages">Статичні сторінки</a></li>

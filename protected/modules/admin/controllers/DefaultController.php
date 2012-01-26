@@ -31,10 +31,21 @@ class DefaultController extends AdminController
         $this->render('index', $settings);
     }
 
-    public function actionError() {
-        $error = Yii::app()->errorHandler->error;
-        if ($error)
-            $this->render('error', $error);
+    /**
+	 * Manages error page
+	 * 
+	 * @access public
+	 * 
+	 * @return void
+	 */
+    public function actionError( ) 
+    {
+        $error = Yii::app( )->errorHandler->error;
+        if ( $error )
+		{
+            $this->render( 'error', $error );
+		}
+		return true;
     }
 
     public function actionLogin() 

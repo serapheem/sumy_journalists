@@ -9,7 +9,6 @@ return array(
         ),
         'publish' => array(
             'type' => 'checkbox',
-            (isset($_POST['id']) ? '' : 'checked') => (isset($_POST['id']) ? '' : 'checked'),
         ),
         '<input type="hidden" value="' . (isset($_POST['id']) ? $_POST['id'] : 0) . '" name="id" />',
     ),
