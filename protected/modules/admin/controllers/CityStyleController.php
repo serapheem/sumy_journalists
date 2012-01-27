@@ -22,13 +22,7 @@ class CityStyleController extends AdminController
 	 */
     public function actionEdit( ) 
     {
-    	// Check the identifier
-    	if ( !isset( $_POST['id'] ) && isset( $_GET['id'] ) && $this->validateID( $_GET['id'], false ) )
-		{
-			$_POST['id'] = $_GET['id'];
-		}
-		
-        $model = $this->loadModel( );
+    	$model = $this->loadModel( );
         $form = new CForm( 'admin.views.citystyle.form', $model );
 		
         if ( is_null( $model->id ) ) 
@@ -49,7 +43,7 @@ class CityStyleController extends AdminController
             
 			if ( $model->validate( ) && $model->save( ) ) 
             {
-            	if ( isset( $_POST['id'] ) && $_POST['id'] ) 
+            	if ( isset( $_REQUEST['id'] ) && $_REQUEST['id'] ) 
                 {
                     $msg = 'Стаття успішно оновлена.';
                 } 

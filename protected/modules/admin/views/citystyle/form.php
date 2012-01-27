@@ -2,7 +2,8 @@
 
 return array(
     'elements' => array(
-        (isset($_POST['id']) ? '<h1>Редагувати статтю</h1>' : '<h1>Нова стаття</h1>'),
+        ( isset( $_REQUEST['id'] ) ? '<h1>Редагувати статтю</h1>' : '<h1>Нова стаття</h1>'),
+        
         'title' => array(
             'type' => 'text',
             'maxlength' => 120,
@@ -24,18 +25,20 @@ return array(
         'publish' => array(
             'type' => 'checkbox',
         ),
-        '<input type="hidden" value="' . (isset($_POST['id']) ? $_POST['id'] : 0) . '" name="id" />',
+        
+        '<input type="hidden" value="' . ( isset( $_REQUEST['id'] ) ? $_REQUEST['id'] : 0 ) . '" name="id" />',
         '<input type="hidden" value="true" name="edit" />'
     ),
     'buttons' => array(
         'apply' => array(
             'type' => 'submit',
-            'label' => (isset($_POST['id']) ? 'Зберегти' : 'Додати'),
+            'label' => ( isset( $_REQUEST['id'] ) ? 'Зберегти' : 'Додати' ),
         ),
         'save' => array(
             'type' => 'submit',
-            'label' => (isset($_POST['id']) ? 'Зберегти і закрити' : 'Додати і закрити'),
+            'label' => ( isset( $_REQUEST['id'] ) ? 'Зберегти і закрити' : 'Додати і закрити' ),
         ),
-        '<a href="/admin/citystyle">'. (isset($_POST['id']) ? 'Закрити' : 'Відмінити') .'</a>',
+        
+        '<a href="/admin/citystyle">' . ( isset( $_REQUEST['id'] ) ? 'Закрити' : 'Відмінити' ) . '</a>',
     ),
 );

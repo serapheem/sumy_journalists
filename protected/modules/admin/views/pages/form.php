@@ -2,10 +2,11 @@
 
 return array(
     'elements' => array(
-        (isset($_POST['id']) ? '<h1>Редагувати сторінку</h1>' : '<h1>Нова сторінка</h1>'),
+        ( isset( $_REQUEST['id'] ) ? '<h1>Редагувати сторінку</h1>' : '<h1>Нова сторінка</h1>' ),
+        
         'title' => array(
             'type' => 'text',
-            'maxlength' => 50,
+            'maxlength' => 120,
         ),
         'body' => array(
             'type' => 'application.extensions.NHCKEditor.CKEditorWidget',
@@ -17,13 +18,19 @@ return array(
                 'toolbar' => 'custom',
             ),
         ),
-        '<input type="hidden" value="' . (isset($_POST['id']) ? $_POST['id'] : 0) . '" name="id" />'
+        
+        '<input type="hidden" value="' . ( isset( $_REQUEST['id'] ) ? $_REQUEST['id'] : 0 ) . '" name="id" />'
     ),
     'buttons' => array(
-        'login' => array(
+        'apply' => array(
             'type' => 'submit',
-            'label' => 'Зберегти',
+            'label' => ( isset( $_REQUEST['id'] ) ? 'Зберегти' : 'Додати' ),
         ),
-        '<a href="/admin/pages">'. (($_POST['id'] != 0) ? 'Закрити' : 'Відмінити') .'</a>',
+        'save' => array(
+            'type' => 'submit',
+            'label' => ( isset( $_REQUEST['id'] ) ? 'Зберегти і закрити' : 'Додати і закрити' ),
+        ),
+        
+        '<a href="/admin/pages">'. ( isset( $_REQUEST['id'] ) ? 'Закрити' : 'Відмінити' ) .'</a>',
     ),
 );

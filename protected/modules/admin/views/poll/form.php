@@ -2,21 +2,28 @@
 
 return array(
     'elements' => array(
-        (isset($_POST['id']) ? '<h1>Редагувати голосування</h1>' : '<h1>Нове голосування</h1>'),
+        ( isset( $_REQUEST['id'] ) ? '<h1>Редагувати голосування</h1>' : '<h1>Нове голосування</h1>' ),
+        
         'name' => array(
             'type' => 'text',
-            'maxlength' => 50,
+            'maxlength' => 120,
         ),
         'publish' => array(
             'type' => 'checkbox',
         ),
-        '<input type="hidden" value="' . (isset($_POST['id']) ? $_POST['id'] : 0) . '" name="id" />',
+        
+        '<input type="hidden" value="' . ( isset( $_REQUEST['id'] ) ? $_REQUEST['id'] : 0 ) . '" name="id" />',
     ),
     'buttons' => array(
-        'login' => array(
+    	'apply' => array(
             'type' => 'submit',
-            'label' => (isset($_POST['id']) ? 'Зберегти' : 'Додати'),
+            'label' => ( isset( $_REQUEST['id'] ) ? 'Зберегти' : 'Додати' ),
         ),
-        '<a href="/admin/poll">'. (isset($_POST['id']) ? 'Закрити' : 'Відмінити') .'</a>',
+        'save' => array(
+            'type' => 'submit',
+            'label' => ( isset( $_REQUEST['id'] ) ? 'Зберегти і закрити' : 'Додати і закрити' ),
+        ),
+        
+        '<a href="/admin/poll">' . ( isset( $_REQUEST['id'] ) ? 'Закрити' : 'Відмінити' ) . '</a>',
     ),
 );

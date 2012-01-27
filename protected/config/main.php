@@ -51,7 +51,7 @@ return array(
             'connectionString' => 'mysql:host=localhost;dbname=home_incity',
             'emulatePrepare' => true,
             'username' => 'root',
-            'password' => '46820',
+            'password' => '',
             'charset' => 'utf8',
             'tablePrefix' => '',
         ),

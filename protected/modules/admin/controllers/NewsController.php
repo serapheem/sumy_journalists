@@ -22,13 +22,7 @@ class NewsController extends AdminController
 	 */
     public function actionEdit( ) 
     {
-    	// Check the identifier
-    	if ( !isset( $_POST['id'] ) && isset( $_GET['id'] ) && $this->validateID( $_GET['id'], false ) )
-		{
-			$_POST['id'] = $_GET['id'];
-		}
-		
-        $model = $this->loadModel( );
+    	$model = $this->loadModel( );
         $form = new CForm( 'admin.views.news.form', $model );
 		
         if ( is_null( $model->id ) ) 
@@ -87,7 +81,7 @@ class NewsController extends AdminController
 						));
 				}
 				
-                if ( isset( $_POST['id'] ) && $_POST['id'] ) 
+                if ( isset( $_REQUEST['id'] ) && $_REQUEST['id'] ) 
                 {
                     $msg = 'Новина успішно оновлена.';
                 } 
