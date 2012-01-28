@@ -2,10 +2,11 @@
 $link = '/citystyle/' . $record->id;
 $link = Yii::app( )
 	->createAbsoluteUrl( $link );
+$created = CLocale::getInstance( 'uk' )->dateFormatter->formatDateTime( $record->created, 'long', null );
 ?>
 <div id="contentText">
-    <h1><?php echo $record->title; ?></h1>
-    <span class="note">Опубліковано: <?php echo CLocale::getInstance('uk')->dateFormatter->formatDateTime($record->created, 'long', null); ?></span>
+    <h1><?php echo CHtml::encode( $record->title ) ?></h1>
+    <span class="note">Опубліковано: <?php echo $created ?></span>
     <br />
     <br />
     <div class="content-desc">
@@ -13,7 +14,7 @@ $link = Yii::app( )
     </div>
 </div>
 <div id="contentFoot">
-    <?php echo Helper::getRatingButtons('CityStyle', $record) ?>
+    <?php echo Helper::getRatingButtons( 'CityStyle', $record ) ?>
         
     <?php echo Helper::getSocialButtons( $link ) ?>
 </div>

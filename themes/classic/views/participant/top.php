@@ -6,8 +6,9 @@
 					'section' => 'Participants', 
 					'ip' => $_SERVER['REMOTE_ADDR']
 				);
-		$voted = VotedIP::model()->findByAttributes( $param );
-		if ( empty($voted->ip) )
+		$voted = VotedIP::model( )
+			->findByAttributes( $param );
+		if ( empty( $voted->ip ) )
 		{
 			$can_change = true;
 		}
@@ -17,7 +18,7 @@
         
         $item_in_line = 4;
         $counter = 1;
-        foreach ($rows as $row):
+        foreach ( $rows AS $row ) :
 			// Get image of item
 			$image = Helper::getThumbImage( $row->body );
 			
@@ -38,27 +39,27 @@
 			$link = Yii::app( )
 				->createAbsoluteUrl( $link );
             ?>
-            <?php if ( ceil( ( $counter - 1 ) / $item_in_line ) == ( $counter - 1 ) / $item_in_line or $counter == 1 ) : ?>
+            <?php if ( ( ceil( ( $counter - 1 ) / $item_in_line ) == ( $counter - 1 ) / $item_in_line ) || ( $counter == 1 ) ) : ?>
                 <tr class="sectiontableentry" >
             <?php endif; ?>
                 <td valign="top" align="center">
                     <div class="personBox">
                         <div class="personImg"><a href="<?php echo $link ?>">
-                            <img src="<?php echo $image; ?>" title="<?php echo $row->title; ?>" />
+                            <img src="<?php echo $image; ?>" title="<?php echo htmlspecialchars( $row->title ) ?>" />
                         </a></div>
                         
                         <div class="personTitle" >
-                            <h4><a href="<?php echo $link ?>"><?php echo $row->title; ?></a></h4>
+                            <h4><a href="<?php echo $link ?>"><?php echo htmlspecialchars( $row->title ) ?></a></h4>
                         </div>
                         
                         <?php 
 						if ($row->top10): 
 							if ( $can_change )
 							{
-								$session = Yii::app()->session;
-								$change_rating = $session->get('change_rating');
+								$session = Yii::app( )->session;
+								$change_rating = $session->get( 'change_rating' );
 								$show_change_rating = true;
-								if ( is_array($change_rating['Participants']) ) 
+								if ( is_array( $change_rating['Participants'] ) ) 
 								{
 									$show_change_rating = !in_array( $row->id, $change_rating['Participants'] );
 								}
@@ -73,7 +74,7 @@
                         <div class="rating" id="rating-<?php echo $row->id ?>">
                         	Голосів: <?php echo $row->rating ?>
                         	
-                        	<?php if ($show_change_rating): ?>
+                        	<?php if ( $show_change_rating ) : ?>
 						        <div class="rating-up" onclick="addParticipantVote(<?php echo $row->id ?>, 'Participants');">
 						        	Проголосувати
 						        </div>
@@ -96,7 +97,7 @@
     </tbody>
 </table>
 <div id="bottom-links">
-	<div id="show-all" class="fleft"><a href="<?php Yii::app()->request->baseUrl ?>/participants.html">Показати всіх</a></div>
-	<div id="results" class="fleft"><a href="<?php Yii::app()->request->baseUrl ?>/top10/results.html">Результати</a></div>
+	<div id="show-all" class="fleft"><a href="<?php Yii::app( )->request->baseUrl ?>/participants.html">Показати всіх</a></div>
+	<div id="results" class="fleft"><a href="<?php Yii::app( )->request->baseUrl ?>/top10/results.html">Результати</a></div>
 	<div class="clear"></div>
 </div>

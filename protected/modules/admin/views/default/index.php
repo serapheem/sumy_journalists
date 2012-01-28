@@ -23,10 +23,8 @@ $this->breadcrumbs = array(
             <td><b>Вимкнути сайт:</b>Перевести сайт в стан offline, для проведення технічних робіт</td>
             <td>
                 <select name="settings[offline]"  style="width: 120px;">
-                    <option value="0"<?php if ($offline == 0)
-                        echo ' selected="selected"'; ?>>Онлайн</option>
-                    <option value="1"<?php if ($offline == 1)
-                        echo ' selected="selected"'; ?>>Оффлайн</option>
+                    <option value="0" <?php if ($offline == 0) echo 'selected="selected"'; ?>>Онлайн</option>
+                    <option value="1" <?php if ($offline == 1) echo 'selected="selected"'; ?>>Оффлайн</option>
                 </select>
             </td>
         </tr>

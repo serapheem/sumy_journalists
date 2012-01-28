@@ -11,16 +11,16 @@
         <div id="admin-wrapper">
             <form action="#" method="post">
 
-                <?php echo CHTML::errorSummary($model); ?>
+                <?php echo CHTML::errorSummary( $model ) ?>
 
-                <?php echo CHTML::activeLabelEx($model, 'username'); ?><br />
-                <?php echo CHTML::activeTextField($model, 'username', array('size' => '30', 'class' => 'text')); ?><br />
+                <?php echo CHTML::activeLabelEx( $model, 'username' ) ?><br />
+                <?php echo CHTML::activeTextField( $model, 'username', array( 'size' => '30', 'class' => 'text' ) ) ?><br />
 
-                <?php echo CHTML::activeLabelEx($model, 'password'); ?><br />
-                <?php echo CHTML::activePasswordField($model, 'password', array('size' => '30', 'class' => 'text')); ?><br />
+                <?php echo CHTML::activeLabelEx( $model, 'password' ) ?><br />
+                <?php echo CHTML::activePasswordField( $model, 'password', array( 'size' => '30', 'class' => 'text' ) ) ?><br />
 
-                <?php echo CHTML::activeCheckBox($model, 'rememberMe'); ?>
-                <?php echo CHTML::activeLabelEx($model, 'rememberMe'); ?><br />
+                <?php echo CHTML::activeCheckBox( $model, 'rememberMe' ) ?>
+                <?php echo CHTML::activeLabelEx( $model, 'rememberMe' ) ?><br />
 
                 <p><input type="submit" class="submit" id="btnLogin" value="Вхід" /></p>
             </form>

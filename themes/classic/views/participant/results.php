@@ -1,19 +1,19 @@
-<?php if ( empty($rows) ): ?>
+<?php if ( empty( $rows ) ): ?>
 	<div>Немає жодного учасника.</div>
 <?php else: ?>
 	<?php 
     $total = 0;
-    foreach ($rows as $row) 
+    foreach ( $rows as $row ) 
     {
         $total += $row->rating;
     }
 	?>
-	<?php foreach ($rows as $k => $row): ?>
-		<?php $rate = round( ($row->rating * 100 / $total), 2); ?>
+	<?php foreach ( $rows AS $k => $row ) : ?>
+		<?php $rate = round( ( $row->rating * 100 / $total ), 2 ); ?>
 	    <div class="vote-block">
             <div class="vote">
             	<a href="/<?php echo $view .'/'. $row->id; ?>">
-            		<?php echo "{$row->title}"; ?>
+            		<?php echo htmlspecialchars( $row->title ) ?>
             	</a>
             	<?php echo " - {$row->rating} ({$rate}%)"; ?>
             </div>

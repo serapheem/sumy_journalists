@@ -2,10 +2,11 @@
 $link = '/participant/' . $record->id;
 $link = Yii::app( )
 	->createAbsoluteUrl( $link );
+$created = CLocale::getInstance( 'uk' )->dateFormatter->formatDateTime( $record->created, 'long', null );
 ?>
 <div id="contentText">
-    <h1><?php echo $record->title; ?></h1>
-    <span class="note">Опубліковано: <?php echo CLocale::getInstance('uk')->dateFormatter->formatDateTime($record->created, 'long', null); ?></span>
+    <h1><?php echo htmlspecialchars( $record->title ) ?></h1>
+    <span class="note">Опубліковано: <?php echo $created ?></span>
     <br />
     <br />
     <div><?php echo $record->body; ?></div>
@@ -13,10 +14,10 @@ $link = Yii::app( )
 <div id="contentFoot">
 	<?php 
 	if ($record->top10): 
-		$session = Yii::app()->session;
-        $change_rating = $session->get('change_rating');
+		$session = Yii::app( )->session;
+        $change_rating = $session->get( 'change_rating' );
         $show_change_rating = true;
-        if ( is_array($change_rating['Participants']) ) 
+        if ( is_array( $change_rating['Participants'] ) ) 
 		{
             $show_change_rating = !in_array( $record->id, $change_rating['Participants'] );
         }
@@ -28,8 +29,9 @@ $link = Yii::app( )
 						'section' => 'Participants', 
 						'ip' => $_SERVER['REMOTE_ADDR']
 					);
-			$voted = VotedIP::model()->findByAttributes( $param );
-			if ( !empty($voted->ip) )
+			$voted = VotedIP::model( )
+				->findByAttributes( $param );
+			if ( !empty( $voted->ip ) )
 			{
 				$show_change_rating = false;
 			}
@@ -41,7 +43,7 @@ $link = Yii::app( )
     <div class="rating note" id="rating-<?php echo $record->id ?>" style="text-align: center">
     	Голосів: <?php echo $record->rating ?>
     	
-    	<?php if ($show_change_rating): ?>
+    	<?php if ( $show_change_rating ): ?>
 	        <div class="rating-up" onclick="addParticipantVote(<?php echo $record->id ?>, 'Participants');">
 	        	Проголосувати
 	        </div>

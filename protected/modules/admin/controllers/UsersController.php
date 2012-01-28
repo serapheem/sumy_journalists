@@ -1,15 +1,42 @@
 <?php
 
+/**
+ * Users Controller Class
+ */
 class UsersController extends AdminController 
 {
+	/**
+	 * Name of default model
+	 * 
+	 * @access public
+	 * @var string
+	 */
     public $model = 'Users';
-
+	
+	/**
+	 * Displays the list of items
+	 * 
+	 * @access public
+	 * 
+	 * @return void
+	 */
     public function actionIndex( ) 
     {
-        $rows = Users::model( )->findAll();
-        $this->render('index', array('rows' => $rows));
+    	$model = $this->model;
+        $rows = $model::model( )
+        	->findAll( );
+        
+        $this->render( 'list', array( 'rows' => $rows ) );
+		return true;
     }
-
+	
+	/**
+	 * Displays add form and save changes
+	 * 
+	 * @access public
+	 * 
+	 * @return void
+	 */
     public function actionAdd() 
     {
         $model = $this->loadModel();
@@ -23,6 +50,7 @@ class UsersController extends AdminController
         if ( isset( $_POST['Users'] ) ) 
         {
             $model->attributes = $_POST['Users'];
+			
 			if ( $model->password )
 			{
             	$model->password = sha1( $model->email . $model->password );
@@ -32,16 +60,35 @@ class UsersController extends AdminController
             	$model->password2 = sha1( $model->email . $model->password2 );
 			}
 
-            if ($model->validate() && $model->save()) 
+            if ( $model->validate( ) && $model->save( ) ) 
             {
                 Yii::app()->user->setFlash('info', 'Користувач доданий.');
-                Yii::app()->getRequest()->redirect('/admin/users');
+				
+				if ( !empty( $_POST['save'] ) || ( empty( $_POST['save'] ) && empty( $_POST['apply'] ) ) )
+				{
+					Yii::app( )
+						->getRequest( )
+                		->redirect( '/admin/users' );
+				}
+				else {
+					Yii::app( )
+						->getRequest( )
+                		->redirect( '/admin/users/edit?id=' . $model->id );
+				}
             }
         }
 
         $this->renderText($form);
+		return true;
     }
-
+	
+	/**
+	 * Displays edit form and save changes
+	 * 
+	 * @access public
+	 * 
+	 * @return void
+	 */
     public function actionEdit() 
     {
         $model = $this->loadModel();
@@ -53,11 +100,11 @@ class UsersController extends AdminController
             $model->username
         );
         
-        if (isset($_POST['Users'])) 
+        if ( isset( $_POST['Users'] ) ) 
         {
             $model->attributes = $_POST['Users'];
 			
-			if ( empty($model->password) || empty($model->password2) )
+			if ( empty( $model->password ) || empty( $model->password2 ) )
 			{
 				$model->password = $old_model->password;
 	            $model->password2 = $old_model->password;
@@ -68,32 +115,26 @@ class UsersController extends AdminController
 			}
             $model->username = $old_model->username;
 			
-            if ( $model->validate() && $model->save() ) 
+            if ( $model->validate( ) && $model->save( ) ) 
             {
                 Yii::app()->user->setFlash('info', 'Дані користувача успішно змінені.');
-                Yii::app()->getRequest()->redirect('/admin/users');
+				
+                if ( !empty( $_POST['save'] ) || ( empty( $_POST['save'] ) && empty( $_POST['apply'] ) ) )
+				{
+					Yii::app( )
+						->getRequest( )
+                		->redirect( '/admin/users' );
+				}
+				else {
+					Yii::app( )
+						->getRequest( )
+                		->redirect( '/admin/users/edit?id=' . $model->id );
+				}
             }
         }
 
         $this->renderText($form);
-    }
-
-    public function actionDelete() 
-    {
-        if ( isset( $_POST['delete'] ) && ( sizeof( $_POST['delete'] ) > 0 ) ) 
-        {
-            foreach ($_POST['delete'] as $id)
-			{
-                if ($id != 1)
-				{
-                    Users::model()->deleteByPk($id);
-				}
-			}
-
-            Yii::app()->user->setFlash('info', 'Користувачі видалені.');
-        }
-
-        Yii::app()->getRequest()->redirect('/admin/users');
+		return true;
     }
 
 }

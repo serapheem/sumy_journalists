@@ -15,17 +15,21 @@
         </div>  
     </div>  
 <![endif]-->  
-<?php if (stripos($_SERVER['HTTP_USER_AGENT'], 'msie 6') !== false && stripos($_SERVER['HTTP_USER_AGENT'], 'msie 8') === false)
-    CApplication::end(); ?>
-
+<?php 
+if ( ( stripos( $_SERVER['HTTP_USER_AGENT'], 'msie 6' ) !== false ) 
+	&& ( stripos( $_SERVER['HTTP_USER_AGENT'], 'msie 8' ) === false ) )
+{
+    CApplication::end();
+} 
+?>
 
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:fb="http://www.facebook.com/2008/fbml" xml:lang="en" lang="en">
     <head>
 
-        <title><?php echo $this->title; ?></title>
+        <title><?php echo CHtml::encode( $this->title ) ?></title>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-        <meta name="keywords" content="<?php echo $this->keywords; ?>" />
-        <meta name="description" content="<?php echo $this->description; ?>" />
+        <meta name="keywords" content="<?php echo CHtml::encode( $this->keywords ) ?>" />
+        <meta name="description" content="<?php echo CHtml::encode( $this->description ) ?>" />
         <meta property="fb:app_id" content="116412811804627" />
 
         <link href="<?php echo Yii::app()->theme->baseUrl; ?>/style.css" rel="stylesheet" type="text/css" />
@@ -52,41 +56,63 @@
 		  })();
 		</script>
 		<!-- Google analytics blocek end -->
-
     </head>
 
     <body>
         <div id="wrapper">
 
             <!-- HEADER -->
-
             <div id="header">
                 <div class="row-1">
-                    <div class="fleft"><a href="/"><img src="<?php echo Yii::app()->theme->baseUrl; ?>/images/logo.png" title="<?php echo Yii::app()->params['title']; ?>" id="logoImg"/></a></div>
+                    <div class="fleft"><a href="/">
+                    	<img src="<?php echo Yii::app()->theme->baseUrl; ?>/images/logo.png" 
+                    		title="<?php echo CHtml::encode( Yii::app()->params['title'] ) ?>" id="logoImg" 
+                    	/>
+                    </a></div>
                     <div class="fright" id="clock"></div>
                     <div class="clear"></div>
                 </div>
 
                 <div class="row-2">
                     <ul>
-                        <li class="m1"><a href="<?php echo Yii::app()->request->baseUrl; ?>/news.html" ><img src="<?php echo Yii::app()->theme->baseUrl; ?>/images/news.png" title="Новини"/></a></li>
-                        <li class="separator"><img src="<?php echo Yii::app()->theme->baseUrl; ?>/images/separator.png" title="Separator"/></li>
-                        <li class="m2"><a href="<?php echo Yii::app()->request->baseUrl; ?>/top10.html" ><img src="<?php echo Yii::app()->theme->baseUrl; ?>/images/top10.png" title="Top 10"/></a></li>
-                        <li class="separator"><img src="<?php echo Yii::app()->theme->baseUrl; ?>/images/separator.png" title="Separator"/></li>
-                        <li class="m3"><a href="<?php echo Yii::app()->request->baseUrl; ?>/knowour.html" ><img src="<?php echo Yii::app()->theme->baseUrl; ?>/images/know_our.png" title="Знай наших"/></a></li>
-                        <li class="separator"><img src="<?php echo Yii::app()->theme->baseUrl; ?>/images/separator.png" title="Separator"/></li>
-                        <li class="m4"><a href="<?php echo Yii::app()->request->baseUrl; ?>/citystyle.html" ><img src="<?php echo Yii::app()->theme->baseUrl; ?>/images/city_style.png" title="city - стиль"/></a></li>
-                        <li class="separator"><img src="<?php echo Yii::app()->theme->baseUrl; ?>/images/separator.png" title="Separator"/></li>
-                        <li class="m5"><a href="<?php echo Yii::app()->request->baseUrl; ?>/tyca.html" ><img src="<?php echo Yii::app()->theme->baseUrl; ?>/images/tyca.png" title="tyca"/></a></li>
-                        <li class="separator"><img src="<?php echo Yii::app()->theme->baseUrl; ?>/images/separator.png" title="Separator"/></li>
-                        <li class="m6"><a href="<?php echo Yii::app()->request->baseUrl; ?>/pro-nas.html" ><img src="<?php echo Yii::app()->theme->baseUrl; ?>/images/about_us.png" title="Про нас"/></a></li>
+                        <li class="m1"><a href="<?php echo Yii::app()->request->baseUrl; ?>/news.html">
+                        	<img src="<?php echo Yii::app()->theme->baseUrl; ?>/images/news.png" title="Новини" />
+                        </a></li>
+                        <li class="separator">
+                        	<img src="<?php echo Yii::app()->theme->baseUrl; ?>/images/separator.png" title="Separator" />
+                        </li>
+                        <li class="m2"><a href="<?php echo Yii::app()->request->baseUrl; ?>/top10.html">
+                        	<img src="<?php echo Yii::app()->theme->baseUrl; ?>/images/top10.png" title="Top 10" />
+                        </a></li>
+                        <li class="separator">
+                        	<img src="<?php echo Yii::app()->theme->baseUrl; ?>/images/separator.png" title="Separator" />
+                        </li>
+                        <li class="m3"><a href="<?php echo Yii::app()->request->baseUrl; ?>/knowour.html">
+                        	<img src="<?php echo Yii::app()->theme->baseUrl; ?>/images/know_our.png" title="Знай наших" />
+                        </a></li>
+                        <li class="separator">
+                        	<img src="<?php echo Yii::app()->theme->baseUrl; ?>/images/separator.png" title="Separator" />
+                        </li>
+                        <li class="m4"><a href="<?php echo Yii::app()->request->baseUrl; ?>/citystyle.html">
+                        	<img src="<?php echo Yii::app()->theme->baseUrl; ?>/images/city_style.png" title="city - стиль" />
+                        </a></li>
+                        <li class="separator">
+                        	<img src="<?php echo Yii::app()->theme->baseUrl; ?>/images/separator.png" title="Separator" />
+                        </li>
+                        <li class="m5"><a href="<?php echo Yii::app()->request->baseUrl; ?>/tyca.html">
+                        	<img src="<?php echo Yii::app()->theme->baseUrl; ?>/images/tyca.png" title="tyca" />
+                        </a></li>
+                        <li class="separator">
+                        	<img src="<?php echo Yii::app()->theme->baseUrl; ?>/images/separator.png" title="Separator" />
+                        </li>
+                        <li class="m6"><a href="<?php echo Yii::app()->request->baseUrl; ?>/pro-nas.html">
+                        	<img src="<?php echo Yii::app()->theme->baseUrl; ?>/images/about_us.png" title="Про нас" />
+                        </a></li>
                     </ul>
                 </div>
-
             </div>
 
             <!-- CONTENT -->
-
             <div id="content">
                 <div class="col-1">
                     <div class="stratum"></div>
@@ -98,50 +124,54 @@
                 <div class="col-2">
                     
                     <?php 
-                    if ($this->show_poll): 
-                        $poll = $this->getPoll();
-                        if (!empty ($poll) && !empty ($poll->items)): 
+                    if ( $this->show_poll ): 
+                        $poll = $this->getPoll( );
+                        if ( !empty( $poll ) && !empty( $poll->items ) ) : 
                         ?>
                         <div class="box poll">
                             <h2>Голосування</h2>
-                            <strong><?php echo $poll->name; ?></strong>
+                            <strong><?php echo CHtml::encode( $poll->name ) ?></strong>
                             <?php 
                             $add_vote = true;
-                            $session = Yii::app()->session->get('poll');
-                            if ( !empty ($session) && in_array($poll->id, $session) )
+                            $session = Yii::app( )->session->get( 'poll' );
+                            if ( !empty( $session ) && in_array( $poll->id, $session ) )
 							{
 								$add_vote = false;
 							}
-							if ($add_vote)
+							if ( $add_vote )
 							{
 								// Check IP for voted
 								$param = array(
-											'section' => 'Poll', 
-											'item_id' => $poll->id,
-											'ip' => $_SERVER['REMOTE_ADDR']
-										);
-								$voted = VotedIP::model()->findByAttributes( $param );
-								if ( !empty($voted->ip) )
+									'section' => 'Poll', 
+									'item_id' => $poll->id,
+									'ip' => $_SERVER['REMOTE_ADDR']
+								);
+								$voted = VotedIP::model( )
+									->findByAttributes( $param );
+								if ( !empty( $voted->ip ) )
 								{
 									$add_vote = false;
 								}
 							}
                             ?>
                             
-                            <?php if (!$add_vote): ?>
+                            <?php if ( !$add_vote ) : ?>
                                 <div id="poll">
                                     <?php 
                                     $total = 0;
-                                    foreach ($poll->items as $item) {
+                                    foreach ( $poll->items AS $item ) 
+                                    {
                                         $total += $item->count;
                                     }
                                     
-                                    foreach ($poll->items as $k => $item):
-                                        $rate = round( ($item->count * 100 / $total), 2); 
+                                    foreach ( $poll->items AS $k => $item ) :
+                                        $rate = round( ( $item->count * 100 / $total ), 2 ); 
                                     ?>
-                                        <div class="vote"><?php echo "{$item->name} - {$item->count} ({$rate}%)"; ?></div>
+                                        <div class="vote"><?php echo CHtml::encode( $item->name ) . " - {$item->count} ({$rate}%)"; ?></div>
                                         <div class="imgvote">
-                                            <img width="<?php echo $rate; ?>%" height="10" style="border:1px solid black" src="<?php echo Yii::app()->theme->baseUrl; ?>/images/poll<?php echo $k%4; ?>.gif" />
+                                            <img width="<?php echo $rate; ?>%" height="10" style="border:1px solid black" 
+                                            	src="<?php echo Yii::app()->theme->baseUrl; ?>/images/poll<?php echo $k%4; ?>.gif" 
+                                            />
                                         </div>
                                     <?php endforeach; ?>
                                         
@@ -151,11 +181,13 @@
                                 <div id="poll">
                                 <form actions="" method="post">
                                     <ul>
-                                        <?php foreach ($poll->items as $k => $item): ?>
+                                        <?php foreach ( $poll->items as $k => $item ) : ?>
                                             <li>
-                                                <?php if ($k == 0) $checked = 'checked="checked"'; else $checked = ''; ?>
-                                                <input type="radio" value="<?php echo $item->id; ?>" name="vote" id="vote<?php echo $item->id; ?>" <?php echo $checked; ?> />
-                                                <label for="vote<?php echo $item->id; ?>"><?php echo $item->name; ?></label>
+                                                <?php if ( $k == 0 ) $checked = 'checked="checked"'; else $checked = ''; ?>
+                                                <input type="radio" value="<?php echo $item->id; ?>" name="vote" 
+                                                	id="vote<?php echo $item->id; ?>" <?php echo $checked; ?> 
+                                                />
+                                                <label for="vote<?php echo $item->id; ?>"><?php echo CHtml::encode( $item->name ) ?></label>
                                             </li>
                                         <?php endforeach; ?>
                                     </ul>
@@ -177,7 +209,6 @@
         </div>
 
         <!-- FOOTER -->
-        
         <div id="footer">
             <img src="<?php echo Yii::app()->theme->baseUrl; ?>/images/icons.png" title="Значки" class="fleft"/>
             <div class="fright">

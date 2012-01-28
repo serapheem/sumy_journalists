@@ -43,7 +43,7 @@ return array(
                 '/citystyle/<slug:(\w|_|-|.|:)+>' => '/site/citystyle',
                 '/tyca.html' => '/site/tyca',
                 '/tyca/<slug:(\w|_|-|.|:)+>' => '/site/tyca',
-                '/<page>.html' => '/site/page',
+                '/<alias:(\w|_|-|.|:)+>.html' => '/site/page',
                 '/top10/test.html' => '/participant/test',
             ),
         ),

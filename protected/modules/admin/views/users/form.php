@@ -3,9 +3,10 @@
 return array(
     'elements' => array(
         '<h1>Новий користувач</h1>',
+        
         'name' => array(
             'type' => 'text',
-            'maxlength' => 250,
+            'maxlength' => 120,
         ),
         'username' => array(
             'type' => 'text',
@@ -25,10 +26,15 @@ return array(
         )
     ),
     'buttons' => array(
-        'login' => array(
+    	'apply' => array(
             'type' => 'submit',
             'label' => 'Додати',
         ),
+        'save' => array(
+            'type' => 'submit',
+            'label' => 'Додати і закрити',
+        ),
+        
         '<a href="/admin/users">Відмінити</a>',
     ),
 );

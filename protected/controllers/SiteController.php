@@ -264,7 +264,7 @@ class SiteController extends Controller
         $this->class = 'class="pageBox"';
 
         $row = Pages::model()
-        	->find( 'seo=?', array( $_GET['page'] ) );
+        	->find( 'alias=?', array( $_GET['alias'] ) );
 
         if ( empty( $row ) )
 		{
@@ -272,6 +272,13 @@ class SiteController extends Controller
 		}
 
         $this->title = $row->title;
+		
+		// Check if user view this item at first time
+        if ( Helper::isNewView( 'pages', $row ) )
+        {
+            $row->views++;
+            $row->save( );
+        }
 
         $this->renderText( $row->body );
 		return true;

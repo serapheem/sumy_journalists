@@ -24,16 +24,16 @@
 			$link = Yii::app( )
 				->createAbsoluteUrl( $link );
         ?>
-            <?php if ( ceil( ( $counter - 1 ) / $item_in_line ) == ( $counter - 1 ) / $item_in_line or $counter == 1 ) : ?>
+            <?php if ( ( ceil( ( $counter - 1 ) / $item_in_line ) == ( $counter - 1 ) / $item_in_line ) || ( $counter == 1 ) ) : ?>
                 <tr class="sectiontableentry" >
             <?php endif; ?>
                 <td valign="top" align="center">
                     <div class="personBox">
                         <div class="personImg"><a href="<?php echo $link ?>">
-                            <img src="<?php echo $image; ?>" title="<?php echo $row->title; ?>" />
+                            <img src="<?php echo $image; ?>" title="<?php echo htmlspecialchars( $row->title ) ?>" />
                         </a></div>
                         <div class="personTitle" >
-                            <h4><a href="<?php echo $link ?>"><?php echo $row->title; ?></a></h4>
+                            <h4><a href="<?php echo $link ?>"><?php echo htmlspecialchars( $row->title ) ?></a></h4>
                         </div>
                     </div>
                 </td>

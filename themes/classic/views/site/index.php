@@ -71,9 +71,9 @@ $cs->registerScript(
                 $body = substr( $body, 0, $wrap_pos ) . '...';
             } 
             ?>
-            <img src="<?php echo $image; ?>" title="<?php echo $news[0]->title; ?>" />
+            <img src="<?php echo $image; ?>" title="<?php echo CHtml::encode( $news[0]->title ) ?>" />
         </div>
-        <h3><a href="<?php echo $link ?>"><?php echo $news[0]->title; ?></a></h3>
+        <h3><a href="<?php echo $link ?>"><?php echo CHtml::encode( $news[0]->title ) ?></a></h3>
         <div>
             <p style="font-size:10px;"><?php echo $date ?></p>
             <p><?php echo $body ?></p>
@@ -82,13 +82,13 @@ $cs->registerScript(
         </div>
     </div>
     <?php
-    	unset ($news[0]);
-		if (count($news) > 4)
+    	unset( $news[0] );
+		if ( count( $news ) > 4 )
 		{
-			$item_in_col = round( (count($news) - 3) / 3);
-			$col1_news = array_slice($news, 0, $item_in_col);
-			$col2_news = array_slice($news, $item_in_col, $item_in_col);
-			$col3_news = array_slice($news, $item_in_col*2);
+			$item_in_col = round( (count( $news ) - 3) / 3);
+			$col1_news = array_slice( $news, 0, $item_in_col );
+			$col2_news = array_slice( $news, $item_in_col, $item_in_col );
+			$col3_news = array_slice( $news, $item_in_col * 2 );
 			
 			$show_column = true;
 		} 
@@ -97,11 +97,11 @@ $cs->registerScript(
 			$show_column = false;
 		}
     ?>
-	    <?php if ($show_column) : ?>
+	    <?php if ( $show_column ) : ?>
 	    <div class="front-column">
 	    	<?php
-		    if ( !empty($col1_news) ) :
-		        foreach ($col1_news as $news_) :
+		    if ( !empty( $col1_news ) ) :
+		        foreach ( $col1_news AS $news_ ) :
 					// Get link of article
 					if ( empty( $news_->alias ) )
 					{
@@ -124,10 +124,10 @@ $cs->registerScript(
 	            <div class="frontItem">
 	                <div class="small-image">
 	                	<a href="<?php echo $link ?>">
-	                    	<img src="<?php echo $image; ?>" title="<?php echo $news_->title; ?>" />
+	                    	<img src="<?php echo $image; ?>" title="<?php echo CHtml::encode( $news_->title ) ?>" />
 	                	</a>
 	                </div>
-	                <h4><a href="<?php echo $link ?>"><?php echo $news_->title; ?></a></h4>
+	                <h4><a href="<?php echo $link ?>"><?php echo CHtml::encode( $news_->title ) ?></a></h4>
 	            </div>
 		    <?php
 		        endforeach;
@@ -136,8 +136,8 @@ $cs->registerScript(
 	    </div>
 	    <div class="front-column">
 	    	<?php
-		    if ( !empty($col2_news) ) :
-		        foreach ($col2_news as $news_) :
+		    if ( !empty( $col2_news ) ) :
+		        foreach ( $col2_news AS $news_ ) :
 					// Get link of article
 					if ( empty( $news_->alias ) )
 					{
@@ -150,7 +150,7 @@ $cs->registerScript(
 						->createAbsoluteUrl( $link );
 					// Get image of article
 					$image = Helper::getThumbImage( $news_->body );
-                    if (empty($image)) 
+                    if ( empty( $image ) ) 
                     {
                         $image = '/images/no_image.png';
                     }
@@ -160,10 +160,10 @@ $cs->registerScript(
 	            <div class="frontItem">
 	                <div class="small-image">
 	                	<a href="<?php echo $link ?>">
-	                    	<img src="<?php echo $image; ?>" title="<?php echo $news_->title; ?>" />
+	                    	<img src="<?php echo $image; ?>" title="<?php echo CHtml::encode( $news_->title ) ?>" />
 	                	</a>
 	                </div>
-	                <h4><a href="<?php echo $link ?>"><?php echo $news_->title; ?></a></h4>
+	                <h4><a href="<?php echo $link ?>"><?php echo CHtml::encode( $news_->title ) ?></a></h4>
 	            </div>
 		    <?php
 		        endforeach;
@@ -178,8 +178,8 @@ $cs->registerScript(
 </div>
 <div id="frontRight" class="front-column">
     <?php
-    if (!empty($col3_news)) :
-        foreach ($col3_news as $news_) :
+    if ( !empty( $col3_news ) ) :
+        foreach ( $col3_news AS $news_ ) :
 			// Get link of article
 			if ( empty( $news_->alias ) )
 			{
@@ -192,7 +192,7 @@ $cs->registerScript(
 				->createAbsoluteUrl( $link );
 			// Get image of article
 			$image = Helper::getThumbImage( $news_->body );
-            if (empty($image)) 
+            if ( empty( $image ) ) 
             {
                 $image = Yii::app()->theme->baseUrl . '/images/no_image.png';
             }
@@ -202,10 +202,10 @@ $cs->registerScript(
             <div class="frontItem">
                 <div class="small-image">
                 	<a href="<?php echo $link ?>">
-                    	<img src="<?php echo $image; ?>" title="<?php echo $news_->title; ?>" />
+                    	<img src="<?php echo $image; ?>" title="<?php echo CHtml::encode( $news_->title ) ?>" />
                 	</a>
                 </div>
-                <h4><a href="<?php echo $link ?>"><?php echo $news_->title; ?></a></h4>
+                <h4><a href="<?php echo $link ?>"><?php echo CHtml::encode( $news_->title ) ?></a></h4>
             </div>
             <?php
         endforeach;

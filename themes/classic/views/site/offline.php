@@ -47,7 +47,7 @@
                 <td width="100%">
                     <div class="errorwrap">
                         <h4>Сайт тимчасово відключений:</h4>
-                        <p><?php echo nl2br(Yii::app()->params['offlineText']); ?></p>
+                        <p><?php echo nl2br( Yii::app( )->params['offlineText'] ); ?></p>
                     </div>
                 </td>
             </tr>

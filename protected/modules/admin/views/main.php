@@ -19,7 +19,7 @@
             <div id="menu">
                 <ul>
                     <li><a href="/admin">Установки</a></li>
-                    <li><a href="/admin/news">Публікації</a></li>
+                    <li><a href="/admin/news">Матеріали</a></li>
                     <li><a href="/admin/poll">Голосування</a></li>
                     <li><a href="/admin/users">Користувачі</a></li>
                     <li><a href="/admin/pages">Статичні сторінки</a></li>
@@ -35,9 +35,9 @@
                         'homeLink' => '<a href="/admin">Адмін-панель</a>',
                     )); ?><!-- breadcrumbs -->	
             </div>
-            <?php if (Yii::app()->user->hasFlash('info')): ?>
+            <?php if ( Yii::app( )->user->hasFlash( 'info' ) ) : ?>
                 <div class="info" onclick="this.style.display='none'">
-                    <?php echo Yii::app()->user->getFlash('info'); ?>
+                    <?php echo Yii::app( )->user->getFlash( 'info' ); ?>
                 </div>
             <?php endif; ?>
             <div id="content">

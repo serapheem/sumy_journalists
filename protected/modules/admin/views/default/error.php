@@ -5,4 +5,4 @@ $this->breadcrumbs = array(
 ?>
 
 <h1>Помилка <?php echo $code; ?></h1>
-<p class="error"><?php echo $message; ?></p>
+<p class="error"><?php echo CHtml::encode( $message ) ?></p>

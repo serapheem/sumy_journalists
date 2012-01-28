@@ -32,16 +32,16 @@
                 $body = substr( $body, 0, $wrap_pos ).'...';
             } 
         ?>
-            <?php if ( ceil( ( $counter - 1 ) / $item_in_line ) == ( $counter - 1 ) / $item_in_line or $counter == 1 ) : ?> 
+            <?php if ( ( ceil( ( $counter - 1 ) / $item_in_line ) == ( $counter - 1 ) / $item_in_line ) || ( $counter == 1 ) ) : ?> 
                 <tr class="sectiontableentry" >
             <?php endif; ?>
                 <td valign="top" align="center">
                     <div class="articlesBox">
                         <div class="articlesImg"><a href="<?php echo $link ?>">
-                            <img src="<?php echo $image; ?>" title="<?php echo $row->title; ?>" />
+                            <img src="<?php echo $image; ?>" title="<?php echo CHtml::encode( $row->title ) ?>" />
                         </a></div>
                         <div class="articlesText" >
-                            <h4><a href="<?php echo $link ?>"><?php echo $row->title; ?></a></h4>
+                            <h4><a href="<?php echo $link ?>"><?php echo CHtml::encode( $row->title ) ?></a></h4>
                             <div>
                                 <p style="font-size:10px;"><?php //echo $row->date; ?></p>
                                 <p><?php echo $body ?></p>

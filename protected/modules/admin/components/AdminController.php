@@ -1,4 +1,4 @@
-<?php/** * Admin Controller Class */
+<?php// error_reporting(E_ALL);// ini_set('display_errors', 1);/** * Admin Controller Class */
 class AdminController extends CController{	/**	 * Shows the main layout file	 *	 * @access public	 * @var string	 */
 	public $layout = 'admin.views.layouts.main';	/**	 * The object of model	 *	 * @access public	 * @var object	 */
 	public $_model = null;	/**	 * The name of model	 *	 * @access public	 * @var string	 */
