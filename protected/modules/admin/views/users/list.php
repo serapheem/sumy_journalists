@@ -24,8 +24,8 @@ $delete_onclick = "if(confirm('Видалити?')) $('#admin-form').attr('actio
 
 <h1 class="main">Користувачі</h1>
 <form action="#" method="post" id="admin-form">
-	<a href="/admin/users/add" class="add">Додати</a>
-	<a href="#" onclick="<?php echo $delete_onclick ?>" class="delete">Видалити обраних</a>
+	<a href="/admin/users/add"><span class="state add"></span> Додати</a>
+	<a href="#" title="Видалити обраних" onclick="<?php echo $delete_onclick ?>"><span class="state delete"></span> Видалити обраних</a>
 	
 	<table style="clear:both">
 		<thead>
@@ -51,10 +51,12 @@ $delete_onclick = "if(confirm('Видалити?')) $('#admin-form').attr('actio
 			$lasttime = CLocale::getInstance( 'uk' )->dateFormatter->formatDateTime( $row->lasttime, 'long' );
 			?>
 			<tr>
-				<td><?php if ($row->id != 1): ?><input type="checkbox" name="items[]" value="<?php echo $row->id; ?>" /><?php endif; ?></td>
+				<td>
+					<?php if ($row->id != 1) : ?><input type="checkbox" name="items[]" value="<?php echo $row->id; ?>" /><?php endif; ?>
+				</td>
 				<td>
 					<?php if ($row->id != 1): ?>
-						<a href="#" onclick="<?php echo $delete_onclick ?>" title="Видалити" class="delete"></a>
+						<a href="#" title="Видалити" onclick="<?php echo $delete_onclick ?>"><span class="state delete"></span></a>
 					<?php else: ?>
 						<span class="space"></span>
 					<?php endif; ?>

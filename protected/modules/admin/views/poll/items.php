@@ -31,8 +31,8 @@ $order_onclick = "$('#admin-form').attr('action', '/admin/poll/saveitemorder').s
 
 <form action="#" method="post" id="admin-form">
 	
-	<a href="/admin/poll/itemedit?poll_id=<?php echo $poll->id; ?>" class="add">Додати</a>
-	<a href="#" class="delete" onclick="<?php echo $delete_onclick ?>">Видалити обрані</a>
+	<a href="/admin/poll/itemedit?poll_id=<?php echo $poll->id; ?>" title="Додати"><span class="state add"></span> Додати</a>
+	<a href="#" title="Видалити обрані" onclick="<?php echo $delete_onclick ?>"><span class="state delete"></span> Видалити обрані</a>
 	
 	<table style="clear:both">
 		<thead>
@@ -40,7 +40,10 @@ $order_onclick = "$('#admin-form').attr('action', '/admin/poll/saveitemorder').s
 				<th width="25"><input type="checkbox" value="selectAll" /></th>
 				<th width="35">&nbsp;</th>
 				<th align="left"><b>Назва</b></th>
-				<th width="100">Порядок <a href="#" onclick="<?php echo $order_onclick ?>" class="save-order"></a></th>
+				<th width="100">
+					Порядок 
+					<a href="#" title="Зберегти порядок" onclick="<?php echo $order_onclick ?>"><span class="state saveorder"></span></a>
+				</th>
 				<th width="90" align="center">Кількість голосів</th>
 				<th width="30" align="center">ID</th>
 			</tr>
@@ -51,18 +54,20 @@ $order_onclick = "$('#admin-form').attr('action', '/admin/poll/saveitemorder').s
 		<?php else : ?>
 			<?php foreach ( $rows AS $k => $row ) : ?>
 				<?php 
-					// Get delete data
-					$delete_onclick = "if ( confirm('Видалити?') ) postSend('/admin/poll/itemdelete', { poll_id : {$poll->id}, 'items[]': {$row->id} }); return false;";
-					// Get edit link
-					$link = "/admin/poll/itemedit?poll_id={$poll->id}&amp;id={$row->id}";
-					// Get order data
-					$order_up_onclick = "postSend('/admin/poll/changeitemorder', { id: {$row->id}, type: 'up', poll_id: {$poll->id} }); return false;";
-					$order_down_onclick = "postSend('/admin/poll/changeitemorder', { id: {$row->id}, type: 'down', poll_id: {$poll->id} }); return false;";
-					?>
+				// Get delete data
+				$delete_onclick = "if ( confirm('Видалити?') ) postSend('/admin/poll/itemdelete', { poll_id : {$poll->id}, 'items[]': {$row->id} }); return false;";
+				// Get edit link
+				$link = "/admin/poll/itemedit?poll_id={$poll->id}&amp;id={$row->id}";
+				// Get order data
+				$order_up_onclick = "postSend('/admin/poll/changeitemorder', { id: {$row->id}, type: 'up', poll_id: {$poll->id} }); return false;";
+				$order_down_onclick = "postSend('/admin/poll/changeitemorder', { id: {$row->id}, type: 'down', poll_id: {$poll->id} }); return false;";
+				?>
 			<tr>
-				<td><input type="checkbox" name="items[]" value="<?php echo $row->id; ?>" /></td>
+				<td>
+					<input type="checkbox" name="items[]" value="<?php echo $row->id; ?>" />
+				</td>
 				<td class="tc">
-					<a href="#" onclick="<?php echo $delete_onclick ?>" title="Видалити" class="delete"></a>
+					<a href="#" title="Видалити" onclick="<?php echo $delete_onclick ?>"><span class="state delete"></span></a>
 				</td>
 				<td style="text-align: left">
 					<a href="<?php echo $link ?>" title="Редагувати">
@@ -70,16 +75,16 @@ $order_onclick = "$('#admin-form').attr('action', '/admin/poll/saveitemorder').s
 					</a>
 				</td>
 				<td>
-					<?php if ( $k != 0 ) : ?>
-						<a href="#" onclick="<?php echo $order_up_onclick ?>" class="order-up" title="Вверх"></a>
+					<?php if( $k != 0 ) : ?>
+						<a href="#" title="Вверх" onclick="<?php echo $order_up_onclick ?>"><span class="uparrow"></span></a>
 					<?php else : ?>
-						<span class="space"></span>
+						<span class="uparrow inactive"></span>
 					<?php endif; ?>
 						
 					<?php if ( ( $k + 1 ) != count( $rows ) ) : ?>
-						<a href="#" onclick="<?php echo $order_down_onclick ?>" class="order-down" title="Вниз"></a>
+						<a href="#" title="Вниз" onclick="<?php echo $order_down_onclick ?>"><span class="downarrow"></a>
 					<?php else : ?>
-						<span class="space"></span>
+						<span class="downarrow inactive"></span>
 					<?php endif; ?>
 						
 					<input type="text" name="order[<?php echo $row->id; ?>]" value="<?php echo $row->ordering;?>" size="3" class="tc" />
