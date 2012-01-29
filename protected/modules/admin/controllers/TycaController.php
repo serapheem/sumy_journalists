@@ -20,54 +20,54 @@ class TycaController extends AdminController
 	 * 
 	 * @return void
 	 */
-    public function actionEdit( ) 
-    {
-    	$model = $this->loadModel( );
-        $form = new CForm( 'admin.views.tyca.form', $model );
+	public function actionEdit( ) 
+	{
+		$model = $this->loadModel( );
+		$form = new CForm( 'admin.views.tyca.form', $model );
 		
-        if ( is_null( $model->id ) ) 
-        {
-            $title = 'Нова подія';
-        } 
-        else {
-            $title = $model->title;
-        }
-        $this->breadcrumbs = array(
-            'Tyca' => '/admin/tyca',
-            $title
-        );
+		if ( is_null( $model->id ) ) 
+		{
+			$title = 'Нова подія';
+		} 
+		else {
+			$title = $model->title;
+		}
+		$this->breadcrumbs = array(
+			'Tyca' => '/admin/tyca',
+			$title
+		);
 		
 		if ( isset( $_POST['Tyca'] ) ) 
-        {
-            $model->attributes = $_POST['Tyca'];
-            
+		{
+			$model->attributes = $_POST['Tyca'];
+			
 			if ( $model->validate( ) && $model->save( ) ) 
-            {
-            	if ( isset( $_REQUEST['id'] ) && $_REQUEST['id'] ) 
-                {
-                    $msg = 'Подія успішно оновлена.';
-                } 
-                else {
-                    $msg = 'Подія успішно додана.';
-                }
-                Yii::app( )->user->setFlash( 'info', $msg );
+			{
+				if ( isset( $_REQUEST['id'] ) && $_REQUEST['id'] ) 
+				{
+					$msg = 'Подія успішно оновлена.';
+				} 
+				else {
+					$msg = 'Подія успішно додана.';
+				}
+				Yii::app( )->user->setFlash( 'info', $msg );
 				
 				if ( !empty( $_POST['save'] ) || ( empty( $_POST['save'] ) && empty( $_POST['apply'] ) ) )
 				{
 					Yii::app( )
 						->getRequest( )
-                		->redirect( '/admin/tyca' );
+						->redirect( '/admin/tyca' );
 				}
 				else {
 					Yii::app( )
 						->getRequest( )
-                		->redirect( '/admin/tyca/edit?id=' . $model->id );
+						->redirect( '/admin/tyca/edit?id=' . $model->id );
 				}
-            }
-        }
+			}
+		}
 		
-        $this->renderText( $form );
+		$this->renderText( $form );
 		return true;
-    }
+	}
 
 }

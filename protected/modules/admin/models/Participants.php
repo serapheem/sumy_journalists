@@ -15,9 +15,9 @@ class Participants extends ModelBase
 	 * @return object
 	 */
 	public static function model( $className = __CLASS__ ) 
-    {
-    	return parent::model($className);
-    }
+	{
+		return parent::model($className);
+	}
 	
 	/**
 	 * Returns array of rules for diferent properties
@@ -26,13 +26,13 @@ class Participants extends ModelBase
 	 * 
 	 * @return array
 	 */
-    public function rules( ) 
-    {
-        return array(
-            array( 'title, body', 'required' ),
-            array( 'title, alias, body, publish, top10', 'safe' ),
-        );
-    }
+	public function rules( ) 
+	{
+		return array(
+			array( 'title, body', 'required' ),
+			array( 'title, alias, body, publish, top10', 'safe' ),
+		);
+	}
 	
 	/**
 	 * Returns labels for properties
@@ -41,16 +41,16 @@ class Participants extends ModelBase
 	 * 
 	 * @return array
 	 */
-    public function attributeLabels( ) 
-    {
-        return array(
-            'title' => "Ім'я",
-            'alias' => 'Посилання',
-            'body' => 'Характеристика',
-            'publish' => 'Опублікувати',
-            'top10' => 'На головній',
-        );
-    }
+	public function attributeLabels( ) 
+	{
+		return array(
+			'title' => "Ім'я",
+			'alias' => 'Посилання',
+			'body' => 'Характеристика',
+			'publish' => 'Опублікувати',
+			'top10' => 'На головній',
+		);
+	}
 
 	/**
 	 * Returns the name of table
@@ -59,9 +59,9 @@ class Participants extends ModelBase
 	 * 
 	 * @return string
 	 */
-    public function tableName( ) 
-    {
-        return '{{participants}}';
-    }
-    
+	public function tableName( ) 
+	{
+		return '{{participants}}';
+	}
+	
 }

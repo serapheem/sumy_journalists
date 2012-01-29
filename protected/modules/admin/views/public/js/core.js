@@ -34,7 +34,6 @@ var ajax = {
 		else return false;
 	}
 };
-
 function addEvent(element, type, fn, useCapture) {
 	if (element.addEventListener)
 		element.addEventListener(type, fn, useCapture);
@@ -43,7 +42,6 @@ function addEvent(element, type, fn, useCapture) {
 	else
 		element['on' + type] = fn;
 }
-
 function tableRibs() {
 	var tables = document.getElementsByTagName('table');
 	
@@ -58,7 +56,6 @@ function tableRibs() {
 		
 	}
 }
-
 function listMenu() {
 	if (document.all && document.getElementById) {
 		var menu = document.getElementById('menu');
@@ -77,7 +74,6 @@ function listMenu() {
 		}
 	}
 }
-
 function selectAll() {
 	var parent = this;
 
@@ -100,7 +96,6 @@ function selectAll() {
 			boxs[i].checked = this.checked;
 	}
 }
-
 function selectAllBoxs() {
 	var boxs = document.getElementsByTagName('input');
 	
@@ -109,7 +104,6 @@ function selectAllBoxs() {
 			boxs[i].onclick = selectAll;
 	}
 }
-
 function postSend(action, params)
 {
 	var form = document.createElement('form');
@@ -129,7 +123,6 @@ function postSend(action, params)
 	document.body.appendChild(form);
 	form.submit();
 }
-
 function externalLink()
 {
 	var links = document.getElementsByTagName('a');
@@ -138,6 +131,10 @@ function externalLink()
 		if(links[i].getAttribute('rel') == 'external')
 			links[i].target = '_blank';
 	}
+}
+function checkRow( row )
+{
+	jQuery( row ).find( 'input[type=checkbox]' ).trigger( 'click' )
 }
 
 addEvent(window, 'load', listMenu, false);

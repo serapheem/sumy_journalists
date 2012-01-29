@@ -14,10 +14,10 @@ class CityStyle extends ModelBase
 	 * 
 	 * @return object
 	 */
-    public static function model( $className = __CLASS__ ) 
-    {
-       return parent::model($className);
-    }
+	public static function model( $className = __CLASS__ ) 
+	{
+	   return parent::model($className);
+	}
 	   
 	/**
 	 * Returns array of rules for diferent properties
@@ -26,13 +26,13 @@ class CityStyle extends ModelBase
 	 * 
 	 * @return array
 	 */
-    public function rules() 
-    {
-        return array(
-            array( 'title, body', 'required' ),
-            array( 'title, alias, body, publish', 'safe' ),
-        );
-    }
+	public function rules() 
+	{
+		return array(
+			array( 'title, body', 'required' ),
+			array( 'title, alias, body, publish', 'safe' ),
+		);
+	}
 
 	/**
 	 * Returns labels for properties
@@ -41,15 +41,15 @@ class CityStyle extends ModelBase
 	 * 
 	 * @return array
 	 */
-    public function attributeLabels() 
-    {
-        return array(
-            'title' => 'Назва',
-            'alias' => 'Посилання',
-            'body' => 'Текст',
-            'publish' => 'Опублікувати',
-        );
-    }
+	public function attributeLabels() 
+	{
+		return array(
+			'title' => 'Назва',
+			'alias' => 'Посилання',
+			'body' => 'Текст',
+			'publish' => 'Опублікувати',
+		);
+	}
 
 	/**
 	 * Returns the name of table
@@ -58,9 +58,9 @@ class CityStyle extends ModelBase
 	 * 
 	 * @return string
 	 */
-    public function tableName() 
-    {
-        return '{{city_style}}';
-    }
-    
+	public function tableName() 
+	{
+		return '{{city_style}}';
+	}
+	
 }

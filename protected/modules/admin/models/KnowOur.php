@@ -15,9 +15,9 @@ class KnowOur extends ModelBase
 	 * @return object
 	 */
 	public static function model( $className = __CLASS__ ) 
-    {
-    	return parent::model( $className );
-    }
+	{
+		return parent::model( $className );
+	}
 	
 	/**
 	 * Returns array of rules for diferent properties
@@ -26,13 +26,13 @@ class KnowOur extends ModelBase
 	 * 
 	 * @return array
 	 */
-    public function rules( ) 
-    {
-        return array(
-            array( 'title, body', 'required' ),
-            array( 'title, alias, body, publish, frontpage', 'safe' ),
-        );
-    }
+	public function rules( ) 
+	{
+		return array(
+			array( 'title, body', 'required' ),
+			array( 'title, alias, body, publish, frontpage', 'safe' ),
+		);
+	}
 
 	/**
 	 * Returns labels for properties
@@ -41,16 +41,16 @@ class KnowOur extends ModelBase
 	 * 
 	 * @return array
 	 */
-    public function attributeLabels( ) 
-    {
-        return array(
-            'title' => "Ім'я",
-            'alias' => 'Посилання',
-            'body' => 'Характеристика',
-            'publish' => 'Опублікувати',
-            'frontpage' => 'Розмістити на головній',
-        );
-    }
+	public function attributeLabels( ) 
+	{
+		return array(
+			'title' => "Ім'я",
+			'alias' => 'Посилання',
+			'body' => 'Характеристика',
+			'publish' => 'Опублікувати',
+			'frontpage' => 'Розмістити на головній',
+		);
+	}
 
 	/**
 	 * Returns the name of table
@@ -59,11 +59,11 @@ class KnowOur extends ModelBase
 	 * 
 	 * @return string
 	 */
-    public function tableName( ) 
-    {
-        return '{{know_our}}';
-    }
-    
+	public function tableName( ) 
+	{
+		return '{{know_our}}';
+	}
+	
 	/**
 	 * Returns array of relations with other tables
 	 * 
@@ -71,14 +71,14 @@ class KnowOur extends ModelBase
 	 * 
 	 * @return array 
 	 */
-    public function relations( )
-    {
-        return array( 'frontpage' => array(
-        	self::HAS_ONE, 
-        	'Frontpage', 
-        	'item_id',
+	public function relations( )
+	{
+		return array( 'frontpage' => array(
+			self::HAS_ONE, 
+			'Frontpage', 
+			'item_id',
 			'condition' => "frontpage.section='KnowOur'")
-        );
-    }
+		);
+	}
 
 }

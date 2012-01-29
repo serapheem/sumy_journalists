@@ -20,22 +20,22 @@ class KnowOurController extends AdminController
 	 * 
 	 * @return void
 	 */
-    public function actionEdit( ) 
-    {
-    	$model = $this->loadModel( );
-        $form = new CForm( 'admin.views.knowour.form', $model );
+	public function actionEdit( ) 
+	{
+		$model = $this->loadModel( );
+		$form = new CForm( 'admin.views.knowour.form', $model );
 		
-        if ( is_null( $model->id ) ) 
-        {
-            $title = 'Нова особа';
-        } 
-        else {
-            $title = $model->title;
-        }
-        $this->breadcrumbs = array(
-            'Знай наших' => '/admin/knowour',
-            $title
-        );
+		if ( is_null( $model->id ) ) 
+		{
+			$title = 'Нова особа';
+		} 
+		else {
+			$title = $model->title;
+		}
+		$this->breadcrumbs = array(
+			'Знай наших' => '/admin/knowour',
+			$title
+		);
 		
 		$frontpage = null;
 		if ( $model->id )
@@ -54,15 +54,15 @@ class KnowOurController extends AdminController
 		{
 			$model->frontpage = 0;
 		}
-         
-        if ( isset( $_POST['KnowOur'] ) ) 
-        {
-            $model->attributes = $_POST['KnowOur'];
-            
+		 
+		if ( isset( $_POST['KnowOur'] ) ) 
+		{
+			$model->attributes = $_POST['KnowOur'];
+			
 			if ( $model->validate( ) && $model->save( ) ) 
-            {
-            	// Add or delete news from front page
-            	if ( $model->frontpage && is_null( $frontpage ) )
+			{
+				// Add or delete news from front page
+				if ( $model->frontpage && is_null( $frontpage ) )
 				{
 					$frontpage_model = new Frontpage( );
 					$frontpage_model->section = 'KnowOur';
@@ -81,31 +81,31 @@ class KnowOurController extends AdminController
 						));
 				}
 				
-                if ( isset( $_REQUEST['id'] ) && $_REQUEST['id'] ) 
-                {
-                    $msg = 'Особа успішно оновлена.';
-                } 
-                else {
-                    $msg = 'Особа успішно додана.';
-                }
-                Yii::app( )->user->setFlash( 'info', $msg );
+				if ( isset( $_REQUEST['id'] ) && $_REQUEST['id'] ) 
+				{
+					$msg = 'Особа успішно оновлена.';
+				} 
+				else {
+					$msg = 'Особа успішно додана.';
+				}
+				Yii::app( )->user->setFlash( 'info', $msg );
 				
 				if ( !empty( $_POST['save'] ) || ( empty( $_POST['save'] ) && empty( $_POST['apply'] ) ) )
 				{
 					Yii::app( )
 						->getRequest( )
-                		->redirect( '/admin/knowour' );
+						->redirect( '/admin/knowour' );
 				}
 				else {
 					Yii::app( )
 						->getRequest( )
-                		->redirect( '/admin/knowour/edit?id=' . $model->id );
+						->redirect( '/admin/knowour/edit?id=' . $model->id );
 				}
-            }
-        }
+			}
+		}
 		
-        $this->renderText( $form );
+		$this->renderText( $form );
 		return true;
-    }
+	}
 
 }

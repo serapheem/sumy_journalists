@@ -68,12 +68,12 @@ class Pages extends ModelBase
 	 * 
 	 * @return array 
 	 */
-    public function relations( )
-    {
-        return array( 
-        	'author' => array( self::BELONGS_TO, 'Users', 'created_by'),
-        	'updater' => array( self::BELONGS_TO, 'Users', 'modified_by')
+	public function relations( )
+	{
+		return array( 
+			'author' => array( self::BELONGS_TO, 'Users', 'created_by'),
+			'updater' => array( self::BELONGS_TO, 'Users', 'modified_by')
 		);
-    }
+	}
 
 }

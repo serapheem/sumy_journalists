@@ -12,7 +12,7 @@ class ModelBase extends CActiveRecord
 	 * 
 	 * @return array
 	 */
-    public function scopes() 
+	public function scopes() 
     {
         return array(
             'ordering' => array(

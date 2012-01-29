@@ -28,7 +28,7 @@ class News extends ModelBase
 	 */
     public function rules( ) 
     {
-        return array(
+	    return array(
             array( 'title, body', 'required' ),
             array( 'title, alias, body, publish, frontpage', 'safe' ),
         );

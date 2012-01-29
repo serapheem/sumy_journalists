@@ -20,54 +20,54 @@ class ParticipantsController extends AdminController
 	 * 
 	 * @return void
 	 */
-    public function actionEdit( ) 
-    {
-    	$model = $this->loadModel( );
-        $form = new CForm( 'admin.views.participants.form', $model );
+	public function actionEdit( ) 
+	{
+		$model = $this->loadModel( );
+		$form = new CForm( 'admin.views.participants.form', $model );
 		
-        if ( is_null( $model->id ) ) 
-        {
-            $title = 'Новий учасник';
-        } 
-        else {
-            $title = $model->title;
-        }
-        $this->breadcrumbs = array(
-            'Учасники' => '/admin/participants',
-            $title
-        );
+		if ( is_null( $model->id ) ) 
+		{
+			$title = 'Новий учасник';
+		} 
+		else {
+			$title = $model->title;
+		}
+		$this->breadcrumbs = array(
+			'Учасники' => '/admin/participants',
+			$title
+		);
 		
 		if ( isset( $_POST['Participants'] ) ) 
-        {
-            $model->attributes = $_POST['Participants'];
-            
+		{
+			$model->attributes = $_POST['Participants'];
+			
 			if ( $model->validate( ) && $model->save( ) ) 
-            {
-            	if ( isset( $_REQUEST['id'] ) && $_REQUEST['id'] ) 
-                {
-                    $msg = 'Учасник успішно оновлений.';
-                } 
-                else {
-                    $msg = 'Учасник успішно доданий.';
-                }
-                Yii::app( )->user->setFlash( 'info', $msg );
+			{
+				if ( isset( $_REQUEST['id'] ) && $_REQUEST['id'] ) 
+				{
+					$msg = 'Учасник успішно оновлений.';
+				} 
+				else {
+					$msg = 'Учасник успішно доданий.';
+				}
+				Yii::app( )->user->setFlash( 'info', $msg );
 				
 				if ( !empty( $_POST['save'] ) || ( empty( $_POST['save'] ) && empty( $_POST['apply'] ) ) )
 				{
 					Yii::app( )
 						->getRequest( )
-                		->redirect( '/admin/participants' );
+						->redirect( '/admin/participants' );
 				}
 				else {
 					Yii::app( )
 						->getRequest( )
-                		->redirect( '/admin/participants/edit?id=' . $model->id );
+						->redirect( '/admin/participants/edit?id=' . $model->id );
 				}
-            }
-        }
+			}
+		}
 		
-        $this->renderText( $form );
+		$this->renderText( $form );
 		return true;
-    }
+	}
 
 }

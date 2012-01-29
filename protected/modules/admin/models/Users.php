@@ -2,36 +2,36 @@
 
 class Users extends CActiveRecord 
 {
-    public $password;
-    public $password2;
+	public $password;
+	public $password2;
 
-    public function rules() 
-    {
-        return array(
-            array('name, username, email, password, password2', 'required'),
-            array('password', 'compare', 'compareAttribute' => 'password2'),
-        );
-    }
+	public function rules() 
+	{
+		return array(
+			array('name, username, email, password, password2', 'required'),
+			array('password', 'compare', 'compareAttribute' => 'password2'),
+		);
+	}
 
-    public function attributeLabels() 
-    {
-        return array(
-            'name' => 'Ім\'я користувача',
-            'username' => 'Логін',
-            'email' => 'Пошта',
-            'password' => 'Пароль',
-            'password2' => 'Повторити пароль',
-        );
-    }
+	public function attributeLabels() 
+	{
+		return array(
+			'name' => 'Ім\'я користувача',
+			'username' => 'Логін',
+			'email' => 'Пошта',
+			'password' => 'Пароль',
+			'password2' => 'Повторити пароль',
+		);
+	}
 
-    public static function model($className = __CLASS__) 
-    {
-        return parent::model($className);
-    }
+	public static function model($className = __CLASS__) 
+	{
+		return parent::model($className);
+	}
 
-    public function tableName() 
-    {
-        return '{{users}}';
-    }
+	public function tableName() 
+	{
+		return '{{users}}';
+	}
 
 }
