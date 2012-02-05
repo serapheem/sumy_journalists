@@ -38,7 +38,7 @@
                 font-size: 11px;
             }
         </style>
-        <title>Сайт тимчасово відключений</title>
+        <title><?php echo Yii::t( 'main', 'SITE_TEMPORARILY_DISABLED' ) ?></title>
     </head>
     <body>
         <br /><br /><br /><br /><br /><br /><br /><br /><br />
@@ -46,7 +46,7 @@
             <tr>
                 <td width="100%">
                     <div class="errorwrap">
-                        <h4>Сайт тимчасово відключений:</h4>
+                        <h4><?php echo Yii::t( 'main', 'SITE_TEMPORARILY_DISABLED' ) ?>:</h4>
                         <p><?php echo nl2br( Yii::app( )->params['offlineText'] ); ?></p>
                     </div>
                 </td>

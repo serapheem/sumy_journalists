@@ -15,8 +15,8 @@ class SiteController extends Controller
     public function actionIndex( ) 
     {
     	// Get published news
-    	$command = Yii::app( )->db
-    		->createCommand( );
+    	$command = Yii::app( )->db->createCommand( );
+		
         $news = $command->selectDistinct( 'tbl.*, f.section' )
 			->from( 'news tbl' )
 			->join( 'frontpage f', 'f.item_id = tbl.id' )
@@ -63,11 +63,12 @@ class SiteController extends Controller
         {
             $this->class = 'class="contentBody"';
 
-            $news = News::model( )->findByPk( $_GET['id'] );
+            $news = News::model( )
+            	->findByPk( $_GET['id'] );
 
             if ( empty( $news ) ) 
             {
-                throw new CHttpException( 404, 'Зазначена новина не знайдена.' );
+                throw new CHttpException( 404, Yii::t( 'news', 'ITEM_NOT_FOUND' ) );
             }
 
             $this->title = $news->title;
@@ -84,14 +85,15 @@ class SiteController extends Controller
             $this->render( 'news', array( 'news' => $news ) );
         } 
         else {
-            $this->title = 'Новини';
-            $news = News::model( )->published( )
+            $this->title = Yii::t( 'news', 'SECTION_NAME' );
+            $news = News::model( )
+            	->published( )
             	->findAll( );
             
             $this->render( 'articles', array(
             	'rows' => $news, 
-            	'view' => 'news') 
-			);
+            	'view' => 'news'
+            ) );
         }
 		return true;
     }
@@ -113,17 +115,18 @@ class SiteController extends Controller
         {
             $this->class = 'class="contentBody"';
 
-            $record = KnowOur::model( )->findByPk( $_GET['id'] );
+            $record = KnowOur::model( )
+            	->findByPk( $_GET['id'] );
 
             if ( empty( $record ) ) 
             {
-                throw new CHttpException( 404, 'Зазначена особа не знайдена.' );
+                throw new CHttpException( 404, Yii::t( 'knowour', 'ITEM_NOT_FOUND' ) );
             }
 
             $this->title = $record->title;
             
             // Check if user view this item at first time
-            if ( Helper::isNewView( 'know_our', $record ) )
+            if ( Helper::isNewView( 'knowour', $record ) )
             {
                 $record->views++;
                 $record->save( );
@@ -131,13 +134,14 @@ class SiteController extends Controller
             
             $record->body = Helper::addGallery( $record->body );
             
-            $this->render( 'know_our', array( 'record' => $record ) );
+            $this->render( 'knowour', array( 'record' => $record ) );
         } 
         else {
-            $this->title = 'Знай наших';
+            $this->title = Yii::t( 'knowour', 'SECTION_NAME' );
             $this->class = 'class="knowour"';
 
-            $rows = KnowOur::model( )->published( )
+            $rows = KnowOur::model( )
+            	->published( )
             	->findAll( );
             $this->render( 'persons', array( 
             	'rows' => $rows, 
@@ -164,17 +168,18 @@ class SiteController extends Controller
         {
             $this->class = 'class="contentBody"';
 
-            $record = CityStyle::model( )->findByPk( $_GET['id'] );
+            $record = CityStyle::model( )
+            	->findByPk( $_GET['id'] );
 
             if ( empty( $record ) ) 
             {
-                throw new CHttpException( 404, 'Зазначена стаття не знайдена.' );
+                throw new CHttpException( 404, Yii::t( 'citystyle', 'ITEM_NOT_FOUND' ) );
             }
 
             $this->title = $record->title;
             
             // Check if user view this item at first time
-            if ( Helper::isNewView( 'city_style', $record ) )
+            if ( Helper::isNewView( 'citystyle', $record ) )
             {
                 $record->views++;
                 $record->save( );
@@ -182,15 +187,16 @@ class SiteController extends Controller
             
             $record->body = Helper::addGallery( $record->body );
             
-			$this->render( 'city_style', array( 'record' => $record ) );
+			$this->render( 'citystyle', array( 'record' => $record ) );
         } 
         else {
-            $this->title = 'City стиль';
+            $this->title = Yii::t( 'citystyle', 'SECTION_NAME' );
             $this->class = 'class="citystyle"';
 
             $city_style = CityStyle::model( )
             	->published( )
             	->findAll( );
+				
             $this->render( 'articles', array(
             	'rows' => $city_style, 
             	'view' => 'citystyle'
@@ -221,7 +227,7 @@ class SiteController extends Controller
 
             if ( empty( $record ) ) 
             {
-                throw new CHttpException( 404, 'Зазначена подія не знайдена.' );
+                throw new CHttpException( 404, Yii::t( 'tyca', 'ITEM_NOT_FOUND' ) );
             }
 
             $this->title = $record->title;
@@ -235,15 +241,16 @@ class SiteController extends Controller
             
             $record->body = Helper::addGallery( $record->body );
             
-            $this->render('tyca', array( 'record' => $record ) );
+            $this->render( 'tyca', array( 'record' => $record ) );
         } 
         else {
-            $this->title = 'Tyca';
+            $this->title = Yii::t( 'tyca', 'SECTION_NAME' );
             $this->class = 'class="tyca"';
 
             $rows = Tyca::model( )
             	->published( )
             	->findAll( );
+			
             $this->render( 'persons', array(
             	'rows' => $rows, 
             	'view' => 'tyca'
@@ -259,7 +266,7 @@ class SiteController extends Controller
 	 * 
 	 * @return void
 	 */
-    public function actionPage( ) 
+    public function actionPages( ) 
     {
         $this->class = 'class="pageBox"';
 
@@ -268,7 +275,7 @@ class SiteController extends Controller
 
         if ( empty( $row ) )
 		{
-            throw new CHttpException( 404, 'На жаль, сторінка не знайдена.' );
+            throw new CHttpException( 404, Yii::t( 'pages', 'ITEM_NOT_FOUND' ) );
 		}
 
         $this->title = $row->title;

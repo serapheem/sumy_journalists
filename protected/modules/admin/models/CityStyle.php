@@ -20,7 +20,7 @@ class CityStyle extends ModelBase
 	}
 	   
 	/**
-	 * Returns array of rules for diferent properties
+	 * Returns array of rules for different properties
 	 * 
 	 * @access public
 	 * 
@@ -44,10 +44,10 @@ class CityStyle extends ModelBase
 	public function attributeLabels() 
 	{
 		return array(
-			'title' => 'Назва',
-			'alias' => 'Посилання',
-			'body' => 'Текст',
-			'publish' => 'Опублікувати',
+			'title' => Yii::t( 'main', 'TITLE' ),
+			'alias' => Yii::t( 'main', 'ALIAS' ),
+			'body' => Yii::t( 'main', 'TEXT' ),
+			'publish' => Yii::t( 'main', 'PUBLISH' ),
 		);
 	}
 

@@ -1,8 +1,8 @@
 <?php
 $this->breadcrumbs = array(
-	'Помилка'
+	Yii::t( 'main', 'ERROR' )
 );
 ?>
 
-<h1>Помилка <?php echo $code; ?></h1>
+<h1><?php echo Yii::t( 'main', 'ERROR' ) . ' ' . $code ?></h1>
 <p class="error"><?php echo CHtml::encode( $message ) ?></p>

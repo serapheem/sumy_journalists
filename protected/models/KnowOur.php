@@ -1,22 +1,34 @@
 <?php
 
-class KnowOur extends CActiveRecord {
-
-    public static function model($className = __CLASS__) {
-        return parent::model($className);
+/**
+ * Know Our model class
+ */
+class KnowOur extends ModelBase 
+{
+	/**
+	 * Returns the model object
+	 * 
+	 * @static
+	 * @access public
+	 * @param string $className 
+	 * 
+	 * @return object
+	 */
+    public static function model( $className = __CLASS__ ) 
+    {
+        return parent::model( $className );
     }
-
-    public function tableName() {
+	
+	/**
+	 * Returns the name of table
+	 * 
+	 * @access public
+	 * 
+	 * @return string
+	 */
+    public function tableName( ) 
+    {
         return '{{know_our}}';
-    }
-    
-    public function scopes() {
-        return array(
-            'published' => array(
-                'condition' => 'publish=1',
-                'order' => 'ordering ASC',
-            ),
-        );
     }
 
 }

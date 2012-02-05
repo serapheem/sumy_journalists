@@ -20,7 +20,7 @@ class Pages extends ModelBase
 	}
 	
 	/**
-	 * Returns array of rules for diferent properties
+	 * Returns array of rules for different properties
 	 * 
 	 * @access public
 	 * 
@@ -44,8 +44,8 @@ class Pages extends ModelBase
 	public function attributeLabels( )
 	{
 		return array(
-			'title' => 'Назва',
-			'body' => 'Текст',
+			'title' => Yii::t( 'main', 'TITLE' ),
+			'body' => Yii::t( 'main', 'TEXT' ),
 		);
 	}
 	

@@ -9,7 +9,7 @@ $created = CLocale::getInstance( 'uk' )
 <div id="contentText">
     <h1><?php echo CHtml::encode( $news->title ) ?></h1>
     <?php /* ?><span class="note">Переглядів: <?php echo $news->views; ?></span><?php */ ?>
-    <span class="note">Опубліковано: <?php echo $created ?></span>
+    <span class="note"><?php echo Yii::t( 'main', 'PUBLISHED' ) ?>: <?php echo $created ?></span>
     <br />
     <br />
     <div class="content-desc">

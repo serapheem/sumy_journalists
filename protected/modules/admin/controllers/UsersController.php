@@ -39,17 +39,19 @@ class UsersController extends AdminController
 	 */
 	public function actionAdd() 
 	{
+		$model_name = strtolower( $this->model );
+		
 		$model = $this->loadModel();
 		$form = new CForm('admin.views.users.form', $model);
 
 		$this->breadcrumbs = array(
-			'Користувачі' => '/admin/users',
-			'Новий користувач'
+			Yii::t( $model_name, 'SECTION_NAME' ) => '/admin/' . $model_name,
+			Yii::t( $model_name, 'NEW_ITEM' )
 		);
 		
-		if ( isset( $_POST['Users'] ) ) 
+		if ( isset( $_POST[$this->model] ) ) 
 		{
-			$model->attributes = $_POST['Users'];
+			$model->attributes = $_POST[$this->model];
 			
 			if ( $model->password )
 			{
@@ -62,18 +64,18 @@ class UsersController extends AdminController
 
 			if ( $model->validate( ) && $model->save( ) ) 
 			{
-				Yii::app()->user->setFlash('info', 'Користувач доданий.');
+				Yii::app( )->user->setFlash( 'info', Yii::t( $model_name, 'ITEM_ADDED' ) );
 				
 				if ( !empty( $_POST['save'] ) || ( empty( $_POST['save'] ) && empty( $_POST['apply'] ) ) )
 				{
 					Yii::app( )
 						->getRequest( )
-						->redirect( '/admin/users' );
+						->redirect( '/admin/' . $model_name );
 				}
 				else {
 					Yii::app( )
 						->getRequest( )
-						->redirect( '/admin/users/edit?id=' . $model->id );
+						->redirect( "/admin/{$model_name}/edit?id=" . $model->id );
 				}
 			}
 		}
@@ -91,18 +93,20 @@ class UsersController extends AdminController
 	 */
 	public function actionEdit() 
 	{
+		$model_name = strtolower( $this->model );
+		
 		$model = $this->loadModel();
 		$old_model = clone $model;
 		$form = new CForm('admin.views.users.edit_form', $model);
 
 		$this->breadcrumbs = array(
-			'Користувачі' => '/admin/users',
+			Yii::t( $model_name, 'SECTION_NAME' ) => '/admin/' . $model_name,
 			$model->username
 		);
 		
-		if ( isset( $_POST['Users'] ) ) 
+		if ( isset( $_POST[$this->model] ) ) 
 		{
-			$model->attributes = $_POST['Users'];
+			$model->attributes = $_POST[$this->model];
 			
 			if ( empty( $model->password ) || empty( $model->password2 ) )
 			{
@@ -117,18 +121,18 @@ class UsersController extends AdminController
 			
 			if ( $model->validate( ) && $model->save( ) ) 
 			{
-				Yii::app()->user->setFlash('info', 'Дані користувача успішно змінені.');
+				Yii::app()->user->setFlash( 'info', Yii::t( $model_name, 'ITEM_UPDATED' ) );
 				
 				if ( !empty( $_POST['save'] ) || ( empty( $_POST['save'] ) && empty( $_POST['apply'] ) ) )
 				{
 					Yii::app( )
 						->getRequest( )
-						->redirect( '/admin/users' );
+						->redirect( '/admin/' . $model_name );
 				}
 				else {
 					Yii::app( )
 						->getRequest( )
-						->redirect( '/admin/users/edit?id=' . $model->id );
+						->redirect( "/admin/{$model_name}/edit?id=" . $model->id );
 				}
 			}
 		}

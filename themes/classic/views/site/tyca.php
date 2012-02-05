@@ -8,7 +8,7 @@ $created = CLocale::getInstance( 'uk' )
 ?>
 <div id="contentText">
     <h1><?php echo CHtml::encode( $record->title ) ?></h1>
-    <span class="note">Опубліковано: <?php echo $created ?></span>
+    <span class="note"><?php echo Yii::t( 'main', 'PUBLISHED' ) ?>: <?php echo $created ?></span>
     <br />
     <br />
     <div class="content-desc">

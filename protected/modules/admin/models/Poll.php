@@ -1,25 +1,62 @@
 <?php
 
-class Poll extends CActiveRecord {
-
-	public function rules() {
+/**
+ * CityStyle Model class
+ */
+class Poll extends CActiveRecord 
+{
+	/**
+	 * Returns the model object
+	 * 
+	 * @static
+	 * @access public
+	 * @param string $className 
+	 * 
+	 * @return object
+	 */
+	public static function model( $className = __CLASS__ ) 
+	{
+	   return parent::model($className);
+	}
+	
+	/**
+	 * Returns array of rules for different properties
+	 * 
+	 * @access public
+	 * 
+	 * @return array
+	 */
+	public function rules( ) 
+	{
 		return array(
-			array('name, publish', 'required'),
+			array( 'title, publish', 'required' ),
+		);
+	}
+	
+	/**
+	 * Returns labels for properties
+	 * 
+	 * @access public
+	 * 
+	 * @return array
+	 */
+	public function attributeLabels( ) 
+	{
+		return array(
+			'title' => Yii::t( 'main', 'TITLE' ),
+			'publish' => Yii::t( 'main', 'PUBLISH' ),
 		);
 	}
 
-	public function attributeLabels() {
-		return array(
-			'name' => 'Назва',
-			'publish' => 'Опублікувати',
-		);
-	}
-
-	public static function model($className = __CLASS__) {
-		return parent::model($className);
-	}
-
-	public function tableName() {
+	/**
+	 * Returns the name of table
+	 * 
+	 * @access public
+	 * 
+	 * @return string
+	 */
+	public function tableName( ) 
+	{
 		return '{{poll}}';
 	}
 

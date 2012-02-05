@@ -2,8 +2,10 @@
 /**
  * Poll list layout file
  */
+$model_name = strtolower( $this->model );
+
 $this->breadcrumbs = array(
-	'Голосування'
+	Yii::t( $model_name, 'SECTION_NAME' )
 );
 
 $cs = Yii::app( )->getClientScript( );  
@@ -22,62 +24,71 @@ $cs->registerScript(
 	CClientScript::POS_END
 );
 
-$delete_onclick = "if(confirm('Видалити?')) $('#admin-form').attr('action', '/admin/poll/delete').submit(); return false;";
+$delete_onclick = "if(confirm('" . Yii::t( $model_name, 'DELETE_ITEMS' ) 
+				. "?')) $('#admin-form').attr('action', '/admin/{$model_name}/delete').submit(); return false;";
 ?>
 
-<h1 class="main">Голосування</h1>
+<h1 class="main"><?php echo Yii::t( $model_name, 'SECTION_NAME' ) ?></h1>
 
 <form action="#" method="post" id="admin-form">
-	<a href="/admin/poll/edit" title="Додати"><span class="state add"></span> Додати</a>
-	<a href="#" title="Видалити обрані" onclick="<?php echo $delete_onclick ?>"><span class="state delete"></span> Видалити обрані</a>
+	<a href="/admin/<?php echo $model_name ?>/edit" title="<?php echo Yii::t( $model_name, 'ADD_ITEM' ) ?>">
+		<span class="state add"></span> <?php echo Yii::t( $model_name, 'ADD_ITEM' ) ?>
+	</a>
+	<a href="#" title="<?php echo Yii::t( $model_name, 'DELETE_ITEMS' ) ?>" onclick="<?php echo $delete_onclick ?>">
+		<span class="state delete"></span> <?php echo Yii::t( $model_name, 'DELETE_ITEMS' ) ?>
+	</a>
 	
 	<table style="clear:both">
 		<thead>
 			<tr>
 				<th width="25"><input type="checkbox" value="selectAll" /></th>
 				<th width="35">&nbsp;</th>
-				<th align="left"><b>Назва</b></th>
+				<th align="left"><b><?php echo Yii::t( 'main', 'TITLE' ) ?></b></th>
 				<th width="130" align="center">&nbsp;</th>
-				<th width="70" align="center">Опубліковано</th>
-				<th width="25" align="center">ID</th>
+				<th width="70" align="center"><?php echo Yii::t( 'main', 'PUBLISHED' ) ?></th>
+				<th width="25" align="center"><?php echo Yii::t( 'main', 'ID' ) ?></th>
 			</tr>
 		</thead>
 		<tbody>
 		<?php if ( empty( $rows ) ) : ?>
-			<tr><td colspan="6" align="center">Немає жодного голосування.</td></tr>
+			<tr><td colspan="6" class="tc"><?php echo Yii::t( $model_name, 'NO_ITEMS' ) ?></td></tr>
 		<?php else : ?>
 			<?php foreach ( $rows AS $row ) : ?>
 				<?php 
 				// Get delete data
-				$delete_onclick = "if ( confirm('Видалити?') ) postSend('/admin/poll/delete', { 'items[]': {$row->id} }); return false;";
+				$delete_onclick = "if ( confirm('" . Yii::t( $model_name, 'DELETE_ITEM' ) 
+								. "?') ) postSend('/admin/{$model_name}/delete', { 'items[]': {$row->id} }); return false;";
 				// Get edit link
-				$link = "/admin/poll/edit?id={$row->id}";
+				$link = "/admin/{$model_name}/edit?id={$row->id}";
 				// Get publish data
 				if ($row->publish) 
 				{
-					$publish_title = 'Відмінити публікацію';
+					$publish_title = Yii::t( 'main', 'UNPUBLISH' );
 					$publish_class = 'state publish';
 				} 
 				else {
-					$publish_title = 'Опублікувати';
+					$publish_title = Yii::t( 'main', 'PUBLISH' );
 					$publish_class = 'state unpublish';
 				}
-				$publish_onclick = "postSend('/admin/poll/edit', { id: {$row->id}, 'Poll[publish]': " . (1 - $row->publish) . " }); return false;";
+				$publish_onclick = "postSend('/admin/{$model_name}/edit', { id: {$row->id}, '{$this->model}[publish]': " 
+								. (1 - $row->publish) . " }); return false;";
 				?>
 			<tr>
 				<td>
 					<input type="checkbox" name="items[]" value="<?php echo $row->id; ?>" />
 				</td>
 				<td class="tc">
-					<a href="#" title="Видалити" onclick="<?php echo $delete_onclick ?>"><span class="state delete"></span></a>
+					<a href="#" title="<?php echo Yii::t( 'main', 'REMOVE' ) ?>" onclick="<?php echo $delete_onclick ?>">
+						<span class="state delete"></span>
+					</a>
 				</td>
 				<td class="tl">
-					<a href="<?php echo $link ?>" title="Редагувати">
-						<?php echo CHtml::encode( $row->name ) ?>
+					<a href="<?php echo $link ?>" title="<?php echo Yii::t( 'main', 'EDIT' ) ?>">
+						<?php echo CHtml::encode( $row->title ) ?>
 					</a>
 				</td>
 				<td>
-					<a href="/admin/poll/items?id=<?php echo $row->id; ?>">Редагувати елементи</a>
+					<a href="/admin/<?php echo $model_name ?>/items?id=<?php echo $row->id; ?>"><?php echo Yii::t( $model_name, 'MODERATE_ELEMENTS' ) ?></a>
 				</td>
 				<td>
 					<a href="#" title="<?php echo $publish_title ?>" onclick="<?php echo $publish_onclick ?>">

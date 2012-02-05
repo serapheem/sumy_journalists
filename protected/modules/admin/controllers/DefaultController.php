@@ -30,7 +30,7 @@ class DefaultController extends AdminController
 			$settings = $_POST['settings'];
 			file_put_contents( $settingsFile, '<?php return ' . var_export($settings, true) . ';', LOCK_EX );
 
-			Yii::app( )->user->setFlash( 'info', 'Установки змінені.' );
+			Yii::app( )->user->setFlash( 'info', Yii::t( 'main', 'SETTINGS_CHANGED' ) );
 		}
 
 		foreach ( $settings AS $key => $value ) 

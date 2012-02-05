@@ -3,7 +3,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-		<title>Панель управління</title>
+		<title><?php echo Yii::t( 'default', 'CONTROL_PANEL' ) ?></title>
 		<link href="/protected/modules/admin/views/public/css/reset.css" rel="stylesheet" type="text/css" />
 		<link href="/protected/modules/admin/views/public/css/login.css" rel="stylesheet" type="text/css" />
 	</head>
@@ -22,7 +22,7 @@
 				<?php echo CHTML::activeCheckBox( $model, 'rememberMe' ) ?>
 				<?php echo CHTML::activeLabelEx( $model, 'rememberMe' ) ?><br />
 
-				<p><input type="submit" class="submit" id="btnLogin" value="Вхід" /></p>
+				<p><input type="submit" class="submit" id="btnLogin" value="<?php echo Yii::t( 'main', 'ENTER' ) ?>" /></p>
 			</form>
 		</div>
 	</body>

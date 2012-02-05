@@ -1,43 +1,55 @@
 <?php
 $this->breadcrumbs = array(
-	'Установки сайту'
+	Yii::t( 'default', 'SITE_SETTINGS' )
 );
 ?>
 
-<h1 class="main">Установки сайту</h1>
+<h1 class="main"><?php echo Yii::t( 'default', 'SITE_SETTINGS' ) ?></h1>
 <form action="#" method="post">
 	<table id="settings" class="no-ribs">
 		<tr>
-			<td width="500"><b>Назва сайту:</b>наприклад: "Моя домашня сторінка"</td>
-			<td><input type="text" maxlength="255" name="settings[title]" value="<?php echo $title; ?>" /></td>
+			<td width="500"><label for="title">
+				<b><?php echo Yii::t( 'default', 'SITE_NAME' ) ?>:</b><?php echo Yii::t( 'default', 'SITE_NAME_DESC' ) ?>
+			</label></td>
+			<td><input type="text" name="settings[title]" id="title" value="<?php echo $title ?>" maxlength="255" /></td>
 		</tr>
 		<tr>
-			<td><b>Опис (Description) сайту:</b>Короткий опис, не більше 200 символів</td>
-			<td><input type="text" maxlength="255" name="settings[description]" value="<?php echo $description; ?>" /></td>
+			<td><label for="description">
+				<b><?php echo Yii::t( 'default', 'SITE_DESCRIPTION' ) ?>:</b><?php echo Yii::t( 'default', 'SITE_DESCRIPTION_DESC' ) ?>
+			</label></td>
+			<td><input type="text" name="settings[description]" id="description" value="<?php echo $description ?>" maxlength="255" /></td>
 		</tr>
 		<tr>
-			<td><b>Ключові слова (Keywords) для сайту:</b>Введіть через кому основні ключові слова для вашого сайту</td>
-			<td><input type="text" maxlength="255" name="settings[keywords]" value="<?php echo $keywords; ?>" /></td>
+			<td><label for="keywords">
+				<b><?php echo Yii::t( 'default', 'SITE_KEYWORDS' ) ?>:</b><?php echo Yii::t( 'default', 'SITE_KEYWORDS_DESC' ) ?>
+			</label></td>
+			<td><input type="text" name="settings[keywords]" id="keywords" value="<?php echo $keywords ?>" maxlength="255" /></td>
 		</tr>
 		<tr>
-			<td><b>Вимкнути сайт:</b>Перевести сайт в стан offline, для проведення технічних робіт</td>
+			<td><label for="offline">
+				<b><?php echo Yii::t( 'default', 'OFF_SITE' ) ?>:</b><?php echo Yii::t( 'default', 'OFF_SITE_DESC' ) ?>
+			</label></td>
 			<td>
-				<select name="settings[offline]"  style="width: 120px;">
-					<option value="0" <?php if ($offline == 0) echo 'selected="selected"'; ?>>Онлайн</option>
-					<option value="1" <?php if ($offline == 1) echo 'selected="selected"'; ?>>Оффлайн</option>
+				<select name="settings[offline]" id="offline" style="width: 120px;">
+					<option value="0" <?php if ($offline == 0) echo 'selected="selected"'; ?>><?php echo Yii::t( 'main', 'ONLINE' ) ?></option>
+					<option value="1" <?php if ($offline == 1) echo 'selected="selected"'; ?>><?php echo Yii::t( 'main', 'OFFLINE' ) ?></option>
 				</select>
 			</td>
 		</tr>
 		<tr>
-			<td><b>Повідомлення offline:</b>Повідомлення, яке виводиться якшо сайт у стані offline</td>
-			<td><textarea name="settings[offlineText]" style="width:100%; height: 50px;"><?php echo $offlineText; ?></textarea></td>
+			<td><label for="offlineText">
+				<b><?php echo Yii::t( 'default', 'OFFLINE_MESSAGE' ) ?>:</b><?php echo Yii::t( 'default', 'OFFLINE_MESSAGES_DESC' ) ?>
+			</label></td>
+			<td><textarea name="settings[offlineText]" id="offlineText" rows="6" style="width:100%"><?php echo $offlineText ?></textarea></td>
 		</tr>
 		<tr>
-			<td><b>E-mail адреса адміністратора:</b>Введіть e-mail адресу адміністратора сайту</td>
-			<td><input type="text" maxlength="255" name="settings[adminEmail]" value="<?php echo $adminEmail; ?>" /></td>
+			<td><label for="adminEmail">
+				<b><?php echo Yii::t( 'default', 'ADMIN_EMAIL' ) ?>:</b><?php echo Yii::t( 'default', 'ADMIN_EMAIL_DESC' ) ?>
+			</label></td>
+			<td><input type="text" name="settings[adminEmail]" id="adminEmail" value="<?php echo $adminEmail ?>" maxlength="128" /></td>
 		</tr>
 	</table>
 	<div class="submit">
-		<input type="submit" value="Зберегти" />
+		<input type="submit" value="<?php echo Yii::t( 'main', 'SAVE' ) ?>" />
 	</div>
 </form>

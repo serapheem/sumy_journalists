@@ -32,63 +32,6 @@ class PollController extends AdminController
 	}
 	
 	/**
-	 * Displays edit form and save changes
-	 * 
-	 * @access public
-	 * 
-	 * @return void
-	 */
-	public function actionEdit( ) 
-	{
-		$model = $this->loadModel( );
-		$form = new CForm( 'admin.views.poll.form', $model );
-
-		if ( is_null( $model->id ) ) 
-		{
-			$title = 'Нове голосування';
-		} 
-		else {
-			$title = $model->name;
-		}
-		$this->breadcrumbs = array(
-			'Голосування' => '/admin/poll',
-			$title
-		);
-		
-		if ( isset( $_POST['Poll'] ) ) 
-		{
-			$model->attributes = $_POST['Poll'];
-			
-			if ( $model->validate( ) && $model->save( ) ) 
-			{
-				if ( isset( $_POST['id'] ) && $_POST['id'] ) 
-				{
-					$msg = 'Голосування успішно оновлене.';
-				} 
-				else {
-					$msg = 'Голосування успішно додане.';
-				}
-				Yii::app( )->user->setFlash( 'info', $msg );
-				
-				if ( !empty( $_POST['save'] ) || ( empty( $_POST['save'] ) && empty( $_POST['apply'] ) ) )
-				{
-					Yii::app( )
-						->getRequest( )
-						->redirect( '/admin/poll' );
-				}
-				else {
-					Yii::app( )
-						->getRequest( )
-						->redirect( '/admin/poll/edit?id=' . $model->id );
-				}
-			}
-		}
-
-		$this->renderText($form);
-		return true;
-	}
-	
-	/**
 	 * Displays the items list of poll
 	 * 
 	 * @access public
@@ -136,35 +79,38 @@ class PollController extends AdminController
 		$poll = $model::model( )
 			->findByPk( $poll_id );
 		
+		$parent_model_name = strtolower( $this->model );
 		$this->model = 'PollItems';
+		$model_name = strtolower( $this->model );
+		
 		$model = $this->loadModel( );
 		$form = new CForm( 'admin.views.poll.item_form', $model );
 
 		if ( is_null( $model->id ) ) 
 		{
-			$title = 'Новий варіант';
+			$title = Yii::t( $model_name, 'NEW_ITEM' );
 		} 
 		else {
-			$title = $model->name;
+			$title = $model->title;
 		}
 		$this->breadcrumbs = array(
-			'Голосування' => '/admin/poll',
-			'Варіанти голосування: ' . $poll->name => '/admin/poll/items?id=' . $poll->id,
+			Yii::t( $parent_model_name, 'SECTION_NAME' ) => '/admin/' . $parent_model_name,
+			Yii::t( $model_name, 'SECTION_NAME' ) . ': ' . $poll->title => "/admin/{$parent_model_name}/items?id=" . $poll->id,
 			$title
 		);
 		
-		if ( isset( $_POST['PollItems'] ) ) 
+		if ( isset( $_POST[$this->model] ) ) 
 		{
-			$model->attributes = $_POST['PollItems'];
+			$model->attributes = $_POST[$this->model];
 			
 			if ( $model->validate( ) && $model->save( ) ) 
 			{
 				if ( isset( $_REQUEST['id'] ) && $_REQUEST['id'] ) 
 				{
-					$msg = 'Варіант голосування успішно оновлений.';
+					$msg = Yii::t( $model_name, 'ITEM_UPDATED' );
 				} 
 				else {
-					$msg = 'Варіант голосування успішно доданий.';
+					$msg = Yii::t( $model_name, 'ITEM_ADDED' );
 				}
 				Yii::app( )->user->setFlash( 'info', $msg );
 				
@@ -172,12 +118,12 @@ class PollController extends AdminController
 				{
 					Yii::app( )
 						->getRequest( )
-						->redirect( '/admin/poll/items?id=' . $poll->id );
+						->redirect( "/admin/{$parent_model_name}/items?id=" . $poll->id );
 				}
 				else {
 					Yii::app( )
 						->getRequest( )
-						->redirect( '/admin/poll/itemedit?poll_id=' . $poll->id . '&id=' . $model->id );
+						->redirect( "/admin/{$parent_model_name}/itemedit?poll_id=" . $poll->id . '&id=' . $model->id );
 				}
 			}
 		}
@@ -204,20 +150,24 @@ class PollController extends AdminController
 		}
 		$this->validateID($poll_id);
 		
+		$parent_model_name = strtolower( $this->model );
+		$model = 'PollItems';
+		$model_name = strtolower( $model );
+		
 		if ( isset( $_POST['items'] ) && count( $_POST['items'] ) ) 
 		{
 			foreach ( $_POST['items'] AS $id )
 			{
-				PollItems::model( )
+				$model::model( )
 					->deleteByPk( $id );
 			}
 
-			Yii::app( )->user->setFlash( 'info', 'Варіанти голосування видалені.' );
+			Yii::app( )->user->setFlash( 'info', Yii::t( $model_name, '1#ITEM_DELETED|n>1#ITEMS_DELETED', count( $_POST['items'] ) ) );
 		}
 
 		Yii::app( )
 			->getRequest( )
-			->redirect( '/admin/poll/items?id=' . $poll_id );
+			->redirect( "/admin/{$parent_model_name}/items?id=" . $poll_id );
 		return true;
 	}
 	
@@ -238,6 +188,8 @@ class PollController extends AdminController
 			$poll_id = 0;
 		}
 		$order = $_POST['order'];
+		
+		$parent_model_name = strtolower( $this->model );
 		$model = 'PollItems';
 		
 		if ( !empty( $order ) && is_array( $order ) )
@@ -261,10 +213,10 @@ class PollController extends AdminController
 			$this->setPageState( 'poll_id', $poll_id );
 			$this->reorderItems( );
 		}
-		Yii::app( )->user->setFlash( 'info', 'Новий порядок збережений.' );
+		Yii::app( )->user->setFlash( 'info', Yii::t( 'main', 'NEW_ORDER_SAVED' ) );
 		Yii::app( )
 			->getRequest( )
-			->redirect( '/admin/poll/items?id=' . $poll_id ); 
+			->redirect( "/admin/{$parent_model_name}/items?id=" . $poll_id ); 
 		
 		return true;
 	}
@@ -281,7 +233,10 @@ class PollController extends AdminController
 		$id = $_POST['id'];
 		$type = $_POST['type'];
 		$poll_id = $_POST['poll_id'];
+		
+		$parent_model_name = strtolower( $this->model );
 		$model = 'PollItems';
+		$model_name = strtolower( $model );
 
 		if ( !empty( $type ) && $this->validateID( $id ) ) 
 		{
@@ -306,10 +261,10 @@ class PollController extends AdminController
 			$this->setPageState( 'poll_id', $poll_id );
 			$this->reorderItems( );
 		}
-		Yii::app( )->user->setFlash( 'info', 'Новий порядок збережений.' );
+		Yii::app( )->user->setFlash( 'info', Yii::t( $model_name, 'ITEM_ORDER_CHANGED' ) );
 		Yii::app( )
 			->getRequest( )
-			->redirect( '/admin/poll/items?id=' . $poll_id ); 
+			->redirect( "/admin/{$parent_model_name}/items?id=" . $poll_id ); 
 	}
 	
 	/**

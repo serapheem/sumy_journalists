@@ -1,22 +1,34 @@
 <?php
 
-class VotedIP extends CActiveRecord 
+/**
+ * VotedIP model class
+ */
+class VotedIP extends ModelBase 
 {
-    public static function model($className = __CLASS__) 
+	/**
+	 * Returns the model object
+	 * 
+	 * @static
+	 * @access public
+	 * @param string $className 
+	 * 
+	 * @return object
+	 */
+    public static function model( $className = __CLASS__ ) 
     {
-        return parent::model($className);
+        return parent::model( $className );
     }
-
-    public function tableName() 
+	
+	/**
+	 * Returns the name of table
+	 * 
+	 * @access public
+	 * 
+	 * @return string
+	 */
+    public function tableName( ) 
     {
         return '{{voted_ips}}';
-    }
-
-    public function scopes() 
-    {
-        return array(
-            
-        );
     }
 
 }

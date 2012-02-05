@@ -20,7 +20,7 @@ class Participants extends ModelBase
 	}
 	
 	/**
-	 * Returns array of rules for diferent properties
+	 * Returns array of rules for different properties
 	 * 
 	 * @access public
 	 * 
@@ -44,11 +44,11 @@ class Participants extends ModelBase
 	public function attributeLabels( ) 
 	{
 		return array(
-			'title' => "Ім'я",
-			'alias' => 'Посилання',
-			'body' => 'Характеристика',
-			'publish' => 'Опублікувати',
-			'top10' => 'На головній',
+			'title' => Yii::t( 'main', 'NAME' ),
+			'alias' => Yii::t( 'main', 'ALIAS' ),
+			'body' => Yii::t( 'main', 'CHARACTERISTIC' ),
+			'publish' => Yii::t( 'main', 'PUBLISH' ),
+			'top10' => Yii::t( 'main', 'FEATURED' ),
 		);
 	}
 

@@ -1,18 +1,44 @@
 <?php
 
-class Participants extends CActiveRecord 
+/**
+ * Participants model class
+ */
+class Participants extends ModelBase 
 {
-    public static function model($className = __CLASS__) 
+    /**
+	 * Returns the model object
+	 * 
+	 * @static
+	 * @access public
+	 * @param string $className 
+	 * 
+	 * @return object
+	 */
+    public static function model( $className = __CLASS__ ) 
     {
-        return parent::model($className);
+        return parent::model( $className );
     }
-
-    public function tableName() 
+	
+	/**
+	 * Returns the name of table
+	 * 
+	 * @access public
+	 * 
+	 * @return string
+	 */
+    public function tableName( ) 
     {
         return '{{participants}}';
     }
-
-    public function scopes() 
+	
+	/**
+	 * Returns the array with different rules for selection items
+	 * 
+	 * @access public
+	 * 
+	 * @return array
+	 */
+    public function scopes( ) 
     {
         return array(
             'published' => array(

@@ -32,10 +32,10 @@ if ( ( stripos( $_SERVER['HTTP_USER_AGENT'], 'msie 6' ) !== false )
         <meta name="description" content="<?php echo CHtml::encode( $this->description ) ?>" />
         <meta property="fb:app_id" content="116412811804627" />
 
-        <link href="<?php echo Yii::app()->theme->baseUrl; ?>/style.css" rel="stylesheet" type="text/css" />
+        <link href="<?php echo Yii::app()->theme->baseUrl ?>/style.css" rel="stylesheet" type="text/css" />
         
-        <script src="<?php echo Yii::app()->theme->baseUrl; ?>/js/jquery-1.7.min.js" type="text/javascript"></script>
-        <script src="<?php echo Yii::app()->theme->baseUrl; ?>/js/core.js" type="text/javascript"></script>
+        <script src="<?php echo Yii::app()->theme->baseUrl ?>/js/jquery-1.7.min.js" type="text/javascript"></script>
+        <script src="<?php echo Yii::app()->theme->baseUrl ?>/js/core.js" type="text/javascript"></script>
         
         <script type="text/javascript" src="http://userapi.com/js/api/openapi.js?34"></script>
         <script type="text/javascript" src="http://userapi.com/js/api/openapi.js?47"></script>
@@ -65,7 +65,7 @@ if ( ( stripos( $_SERVER['HTTP_USER_AGENT'], 'msie 6' ) !== false )
             <div id="header">
                 <div class="row-1">
                     <div class="fleft"><a href="/">
-                    	<img src="<?php echo Yii::app()->theme->baseUrl; ?>/images/logo.png" 
+                    	<img src="<?php echo Yii::app()->theme->baseUrl ?>/images/logo.png" 
                     		title="<?php echo CHtml::encode( Yii::app()->params['title'] ) ?>" id="logoImg" 
                     	/>
                     </a></div>
@@ -75,14 +75,14 @@ if ( ( stripos( $_SERVER['HTTP_USER_AGENT'], 'msie 6' ) !== false )
 
                 <div class="row-2">
                     <ul>
-                        <li class="m1"><a href="<?php echo Yii::app()->request->baseUrl; ?>/news.html">
-                        	<img src="<?php echo Yii::app()->theme->baseUrl; ?>/images/news.png" title="Новини" />
+                        <li class="m1"><a href="<?php echo Yii::app()->request->baseUrl ?>/news.html">
+                        	<img src="<?php echo Yii::app()->theme->baseUrl ?>/images/news.png" title="Новини" />
                         </a></li>
                         <li class="separator">
-                        	<img src="<?php echo Yii::app()->theme->baseUrl; ?>/images/separator.png" title="Separator" />
+                        	<img src="<?php echo Yii::app()->theme->baseUrl ?>/images/separator.png" title="Separator" />
                         </li>
-                        <li class="m2"><a href="<?php echo Yii::app()->request->baseUrl; ?>/top10.html">
-                        	<img src="<?php echo Yii::app()->theme->baseUrl; ?>/images/top10.png" title="Top 10" />
+                        <li class="m2"><a href="<?php echo Yii::app()->request->baseUrl ?>/top10.html">
+                        	<img src="<?php echo Yii::app()->theme->baseUrl ?>/images/top10.png" title="Top 10" />
                         </a></li>
                         <li class="separator">
                         	<img src="<?php echo Yii::app()->theme->baseUrl; ?>/images/separator.png" title="Separator" />
@@ -124,82 +124,18 @@ if ( ( stripos( $_SERVER['HTTP_USER_AGENT'], 'msie 6' ) !== false )
                 <div class="col-2">
                     
                     <?php 
-                    if ( $this->show_poll ): 
+                    if ( $this->show_poll )
+					{
                         $poll = $this->getPoll( );
-                        if ( !empty( $poll ) && !empty( $poll->items ) ) : 
-                        ?>
-                        <div class="box poll">
-                            <h2>Голосування</h2>
-                            <strong><?php echo CHtml::encode( $poll->name ) ?></strong>
-                            <?php 
-                            $add_vote = true;
-                            $session = Yii::app( )->session->get( 'poll' );
-                            if ( !empty( $session ) && in_array( $poll->id, $session ) )
-							{
-								$add_vote = false;
-							}
-							if ( $add_vote )
-							{
-								// Check IP for voted
-								$param = array(
-									'section' => 'Poll', 
-									'item_id' => $poll->id,
-									'ip' => $_SERVER['REMOTE_ADDR']
-								);
-								$voted = VotedIP::model( )
-									->findByAttributes( $param );
-								if ( !empty( $voted->ip ) )
-								{
-									$add_vote = false;
-								}
-							}
-                            ?>
-                            
-                            <?php if ( !$add_vote ) : ?>
-                                <div id="poll">
-                                    <?php 
-                                    $total = 0;
-                                    foreach ( $poll->items AS $item ) 
-                                    {
-                                        $total += $item->count;
-                                    }
-                                    
-                                    foreach ( $poll->items AS $k => $item ) :
-                                        $rate = round( ( $item->count * 100 / $total ), 2 ); 
-                                    ?>
-                                        <div class="vote"><?php echo CHtml::encode( $item->name ) . " - {$item->count} ({$rate}%)"; ?></div>
-                                        <div class="imgvote">
-                                            <img width="<?php echo $rate; ?>%" height="10" style="border:1px solid black" 
-                                            	src="<?php echo Yii::app()->theme->baseUrl; ?>/images/poll<?php echo $k%4; ?>.gif" 
-                                            />
-                                        </div>
-                                    <?php endforeach; ?>
-                                        
-                                    <strong>Всього проголосувало: <?php echo $total; ?></strong>
-                                </div>
-                            <?php else: ?>
-                                <div id="poll">
-                                <form actions="" method="post">
-                                    <ul>
-                                        <?php foreach ( $poll->items as $k => $item ) : ?>
-                                            <li>
-                                                <?php if ( $k == 0 ) $checked = 'checked="checked"'; else $checked = ''; ?>
-                                                <input type="radio" value="<?php echo $item->id; ?>" name="vote" 
-                                                	id="vote<?php echo $item->id; ?>" <?php echo $checked; ?> 
-                                                />
-                                                <label for="vote<?php echo $item->id; ?>"><?php echo CHtml::encode( $item->name ) ?></label>
-                                            </li>
-                                        <?php endforeach; ?>
-                                    </ul>
-                                    <input type="hidden" name="poll_id" value="<?php echo $poll->id; ?>" />
-                                    <button onclick="addVote(); return false;">Проголосувати</button>
-                                </form>
-                                </div>
-                            <?php endif; ?>
+                        if ( !empty( $poll ) && !empty( $poll->items ) )
+						{
+						?>
+						<div class="box" id="poll">
+							<?php $this->renderPartial( '/html/poll', array( 'poll' => $poll ) ); ?>
                         </div>
-                        <?php 
-                        endif; 
-                    endif; 
+                        <?php
+                        } 
+                    } 
                     ?>
 
                 </div>
@@ -210,7 +146,7 @@ if ( ( stripos( $_SERVER['HTTP_USER_AGENT'], 'msie 6' ) !== false )
 
         <!-- FOOTER -->
         <div id="footer">
-            <img src="<?php echo Yii::app()->theme->baseUrl; ?>/images/icons.png" title="Значки" class="fleft"/>
+            <img src="<?php echo Yii::app()->theme->baseUrl; ?>/images/icons.png" title="Значки" class="fleft" />
             <div class="fright">
                 Copyright &copy; 2011 Developed by Serapheem
             </div>

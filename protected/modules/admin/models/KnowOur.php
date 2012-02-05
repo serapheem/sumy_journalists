@@ -20,7 +20,7 @@ class KnowOur extends ModelBase
 	}
 	
 	/**
-	 * Returns array of rules for diferent properties
+	 * Returns array of rules for different properties
 	 * 
 	 * @access public
 	 * 
@@ -44,11 +44,11 @@ class KnowOur extends ModelBase
 	public function attributeLabels( ) 
 	{
 		return array(
-			'title' => "Ім'я",
-			'alias' => 'Посилання',
-			'body' => 'Характеристика',
-			'publish' => 'Опублікувати',
-			'frontpage' => 'Розмістити на головній',
+			'title' => Yii::t( 'main', 'NAME' ),
+			'alias' => Yii::t( 'main', 'ALIAS' ),
+			'body' => Yii::t( 'main', 'CHARACTERISTIC' ),
+			'publish' => Yii::t( 'main', 'PUBLISH' ),
+			'frontpage' => Yii::t( 'main', 'FEATURED' ),
 		);
 	}
 
@@ -73,11 +73,8 @@ class KnowOur extends ModelBase
 	 */
 	public function relations( )
 	{
-		return array( 'frontpage' => array(
-			self::HAS_ONE, 
-			'Frontpage', 
-			'item_id',
-			'condition' => "frontpage.section='KnowOur'")
+		return array( 
+			'frontpage' => array( self::HAS_ONE, 'Frontpage', 'item_id', 'condition' => "frontpage.section='KnowOur'" )
 		);
 	}
 

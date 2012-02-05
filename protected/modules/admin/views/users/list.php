@@ -1,6 +1,11 @@
 <?php
+/**
+ * Users list layout file
+ */
+$model_name = strtolower( $this->model );
+
 $this->breadcrumbs = array(
-	'Користувачі'
+	Yii::t( $model_name, 'SECTION_NAME' )
 );
 
 $cs = Yii::app( )->getClientScript( );  
@@ -19,34 +24,40 @@ $cs->registerScript(
 	CClientScript::POS_END
 );
 
-$delete_onclick = "if(confirm('Видалити?')) $('#admin-form').attr('action', '/admin/users/delete').submit(); return false;";
+$delete_onclick = "if(confirm('" . Yii::t( $model_name, 'DELETE_ITEMS' ) 
+				. "?')) $('#admin-form').attr('action', '/admin/{$model_name}/delete').submit(); return false;";
 ?>
 
-<h1 class="main">Користувачі</h1>
+<h1 class="main"><?php echo Yii::t( $model_name, 'SECTION_NAME' ) ?></h1>
 <form action="#" method="post" id="admin-form">
-	<a href="/admin/users/add"><span class="state add"></span> Додати</a>
-	<a href="#" title="Видалити обраних" onclick="<?php echo $delete_onclick ?>"><span class="state delete"></span> Видалити обраних</a>
+	<a href="/admin/<?php echo $model_name ?>/add" title="<?php echo Yii::t( $model_name, 'ADD_ITEM' ) ?>">
+		<span class="state add"></span> <?php echo Yii::t( $model_name, 'ADD_ITEM' ) ?>
+	</a>
+	<a href="#" title="<?php echo Yii::t( $model_name, 'DELETE_ITEMS' ) ?>" onclick="<?php echo $delete_onclick ?>">
+		<span class="state delete"></span> <?php echo Yii::t( $model_name, 'DELETE_ITEMS' ) ?>
+	</a>
 	
 	<table style="clear:both">
 		<thead>
 			<tr>
 				<th width="25"><input type="checkbox" value="selectAll" /></th>
 				<th width="35">&nbsp;</th>
-				<th class="tl" style="padding-left: 15px">Ім'я</th>
-				<th width="150" class="tl" style="padding-left: 15px">Логін</th>
-				<th width="150">Пошта</th>
-				<th width="120">Був в адмін-панелі</th>
-				<th width="100">Останній IP</th>
-				<th width="30">ID</th>
+				<th class="tl" style="padding-left: 15px"><?php echo Yii::t( 'main', 'NAME' ) ?></th>
+				<th width="150" class="tl" style="padding-left: 15px"><?php echo Yii::t( 'main', 'LOGIN' ) ?></th>
+				<th width="150"><?php echo Yii::t( 'main', 'EMAIL' ) ?></th>
+				<th width="120"><?php echo Yii::t( 'main', 'LAST_VISITED' ) ?></th>
+				<th width="100"><?php echo Yii::t( 'main', 'LAST_IP' ) ?></th>
+				<th width="30"><?php echo Yii::t( 'main', 'ID' ) ?></th>
 			</tr>
 		</thead>
 		<tbody>
 		<?php foreach ($rows as $row): ?>
 			<?php 
 			// Get delete data
-			$delete_onclick = "if ( confirm('Видалити?') ) postSend('/admin/users/delete', { 'items[]': {$row->id} }); return false;";
+			$delete_onclick = "if ( confirm('" . Yii::t( $model_name, 'DELETE_ITEM' ) 
+								. "?') ) postSend('/admin/{$model_name}/delete', { 'items[]': {$row->id} }); return false;";
 			// Get edit link
-			$link = "/admin/users/edit?id={$row->id}";
+			$link = "/admin/{$model_name}/edit?id={$row->id}";
 			// Get modified date
 			$lasttime = CLocale::getInstance( 'uk' )->dateFormatter->formatDateTime( $row->lasttime, 'long' );
 			?>
@@ -56,14 +67,16 @@ $delete_onclick = "if(confirm('Видалити?')) $('#admin-form').attr('actio
 				</td>
 				<td>
 					<?php if ($row->id != 1): ?>
-						<a href="#" title="Видалити" onclick="<?php echo $delete_onclick ?>"><span class="state delete"></span></a>
+						<a href="#" title="<?php echo Yii::t( 'main', 'REMOVE' ) ?>" onclick="<?php echo $delete_onclick ?>">
+							<span class="state delete"></span>
+						</a>
 					<?php else: ?>
 						<span class="space"></span>
 					<?php endif; ?>
 				</td>
 				<td style="padding-left: 15px" class="tl">
 					<?php if ( $row->id != 1 ) : ?>
-					<a href="<?php echo $link ?>" title="Редагувати">
+					<a href="<?php echo $link ?>" title="<?php echo Yii::t( 'main', 'EDIT' ) ?>">
 						<?php echo CHtml::encode( $row->name ) ?>
 					</a>
 					<?php else : ?>

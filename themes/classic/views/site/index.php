@@ -77,7 +77,7 @@ $cs->registerScript(
         <div>
             <p style="font-size:10px;"><?php echo $date ?></p>
             <p><?php echo $body ?></p>
-            <a href="<?php echo $link ?>" class="readMore fright">читати далі...</a>
+            <a href="<?php echo $link ?>" class="readMore fright"><?php echo Yii::t( 'main', 'READ_MORE' ) ?>...</a>
             <div class="clear"></div>
         </div>
     </div>

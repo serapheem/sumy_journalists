@@ -2,7 +2,7 @@
 
 return array(
 	'elements' => array(
-		'<h1>Новий користувач</h1>',
+		'<h1>' . Yii::t( 'users', 'NEW_ITEM' ) . '</h1>',
 		
 		'name' => array(
 			'type' => 'text',
@@ -28,13 +28,13 @@ return array(
 	'buttons' => array(
 		'apply' => array(
 			'type' => 'submit',
-			'label' => 'Додати',
+			'label' => Yii::t( 'main', 'ADD' ),
 		),
 		'save' => array(
 			'type' => 'submit',
-			'label' => 'Додати і закрити',
+			'label' => Yii::t( 'main', 'ADD_AND_CLOSE' ),
 		),
 		
-		'<a href="/admin/users">Відмінити</a>',
+		'<a href="/admin/users">' . Yii::t( 'main', 'CANCEL' ) . '</a>',
 	),
 );

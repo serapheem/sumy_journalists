@@ -2,7 +2,7 @@
 
 return array(
 	'elements' => array(
-		'<h1>Редагувати користувача</h1>',
+		'<h1>' . Yii::t( 'users', 'EDIT_ITEM' ) . '</h1>',
 		
 		'name' => array(
 			'type' => 'text',
@@ -28,13 +28,13 @@ return array(
 	'buttons' => array(
 		'apply' => array(
 			'type' => 'submit',
-			'label' => 'Змінити',
+			'label' => Yii::t( 'main', 'SAVE' ),
 		),
 		'save' => array(
 			'type' => 'submit',
-			'label' => 'Змінити і закрити',
+			'label' => Yii::t( 'main', 'SAVE_AND_CLOSE' ),
 		),
 		
-		'<a href="/admin/users">Закрити</a>',
+		'<a href="/admin/users">' . Yii::t( 'main', 'CLOSE' ) . '</a>',
 	),
 );

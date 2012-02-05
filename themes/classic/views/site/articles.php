@@ -45,7 +45,7 @@
                             <div>
                                 <p style="font-size:10px;"><?php //echo $row->date; ?></p>
                                 <p><?php echo $body ?></p>
-                                <a href="<?php echo $link ?>" class="readMore">читати далі...</a>
+                                <a href="<?php echo $link ?>" class="readMore"><?php echo Yii::t( 'main', 'READ_MORE' ) ?>...</a>
                             </div>
                         </div>
                     </div>

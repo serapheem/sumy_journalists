@@ -2,7 +2,7 @@
 
 return array(
 	'elements' => array(
-		( isset( $_REQUEST['id'] ) ? '<h1>Редагувати подію</h1>' : '<h1>Нова подія</h1>' ),
+		isset( $_REQUEST['id'] ) ? '<h1>' . Yii::t( 'tyca', 'EDIT_ITEM' ) . '</h1>' : '<h1>' . Yii::t( 'tyca', 'NEW_ITEM' ) . '</h1>',
 		
 		'title' => array(
 			'type' => 'text',
@@ -27,18 +27,17 @@ return array(
 		),
 		
 		'<input type="hidden" value="' . ( isset( $_REQUEST['id'] ) ? $_REQUEST['id'] : 0 ) . '" name="id" />',
-		'<input type="hidden" value="true" name="edit" />'
 	),
 	'buttons' => array(
 		'apply' => array(
 			'type' => 'submit',
-			'label' => ( isset( $_REQUEST['id'] ) ? 'Зберегти' : 'Додати' ),
+			'label' => ( isset( $_REQUEST['id'] ) ? Yii::t( 'main', 'SAVE' ) : Yii::t( 'main', 'ADD' ) ),
 		),
 		'save' => array(
 			'type' => 'submit',
-			'label' => ( isset( $_REQUEST['id'] ) ? 'Зберегти і закрити' : 'Додати і закрити' ),
+			'label' => ( isset( $_REQUEST['id'] ) ? Yii::t( 'main', 'SAVE_AND_CLOSE' ) : Yii::t( 'main', 'ADD_AND_CLOSE' ) ),
 		),
 		
-		'<a href="/admin/tyca">'. ( isset( $_REQUEST['id'] ) ? 'Закрити' : 'Відмінити' ) .'</a>',
+		'<a href="/admin/tyca">'. ( isset( $_REQUEST['id'] ) ? Yii::t( 'main', 'CLOSE' ) : Yii::t( 'main', 'CANCEL' ) ) .'</a>',
 	),
 );
