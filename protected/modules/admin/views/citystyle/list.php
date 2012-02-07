@@ -130,10 +130,10 @@ $order_onclick = "$('#admin-form').attr('action', '/admin/{$model_name}/saveorde
 						<span class="downarrow inactive"></span>
 					<?php endif; ?>
 						
-					<input type="text" name="order[<?php echo $row->id ?>]" value="<?php echo $row->ordering ?>" size="3" class="tc" />
+					<input type="text" name="order[<?php echo $row->id ?>]" value="<?php echo $row->ordering ?>" size="2" class="tc" />
 				</td>
 				<td><?php echo $modified_date ?></td>
-				<td><?php echo $row->id ?></a></td>
+				<td><?php echo $row->id ?></td>
 			</tr>
 			<?php endforeach; ?>
 		<?php endif; ?>

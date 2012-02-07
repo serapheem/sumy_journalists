@@ -59,7 +59,7 @@
 								$session = Yii::app( )->session;
 								$change_rating = $session->get( 'change_rating' );
 								$show_change_rating = true;
-								if ( is_array( $change_rating['Participants'] ) ) 
+								if ( isset( $change_rating['Participants'] ) && is_array( $change_rating['Participants'] ) ) 
 								{
 									$show_change_rating = !in_array( $row->id, $change_rating['Participants'] );
 								}

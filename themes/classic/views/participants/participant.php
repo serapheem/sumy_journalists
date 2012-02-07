@@ -1,8 +1,7 @@
 <?php 
-$link = '/participants/' . $record->id;
-$link = Yii::app( )
-	->createAbsoluteUrl( $link );
-$created = CLocale::getInstance( 'uk' )->dateFormatter->formatDateTime( $record->created, 'long', null );
+$created = CLocale::getInstance( 'uk' )
+	->dateFormatter
+	->formatDateTime( $record->created, 'long', null );
 ?>
 <div id="contentText">
     <h1><?php echo CHtml::encode( $record->title ) ?></h1>
@@ -17,7 +16,7 @@ $created = CLocale::getInstance( 'uk' )->dateFormatter->formatDateTime( $record-
 		$session = Yii::app( )->session;
         $change_rating = $session->get( 'change_rating' );
         $show_change_rating = true;
-        if ( is_array( $change_rating['Participants'] ) ) 
+        if ( isset( $change_rating['Participants'] ) && is_array( $change_rating['Participants'] ) )
 		{
             $show_change_rating = !in_array( $record->id, $change_rating['Participants'] );
         }
@@ -54,6 +53,6 @@ $created = CLocale::getInstance( 'uk' )->dateFormatter->formatDateTime( $record-
 	</div>
 	<?php endif; ?> 
     
-    <?php echo Helper::getSocialButtons( $link ) ?>
+    <?php echo Helper::getSocialButtons( 'Participants', $record ) ?>
 </div>
-<?php echo Helper::getCommentsBlock( $link ) ?>
+<?php echo Helper::getCommentsBlock( 'Participants', $record ) ?>

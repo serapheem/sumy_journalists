@@ -38,10 +38,10 @@ $order_onclick = "$('#admin-form').attr('action', '/admin/{$model_name}/saveorde
 	<h1><?php echo Yii::t( $model_name, 'SECTION_NAME' ) ?></h1>
 
 	<a href="/admin/<?php echo $model_name ?>/edit" title="<?php echo Yii::t( $model_name, 'ADD_ITEM' ) ?>">
-		<span class="state add"></span> <?php echo Yii::t( $model_name, 'ADD_ITEM' ) ?>
+		<span class="state add">&nbsp;</span> <?php echo Yii::t( $model_name, 'ADD_ITEM' ) ?>
 	</a>
 	<a href="#" title="<?php echo Yii::t( $model_name, 'DELETE_ITEMS' ) ?>" onclick="<?php echo $delete_onclick ?>">
-		<span class="state delete"></span> <?php echo Yii::t( $model_name, 'DELETE_ITEMS' ) ?>
+		<span class="state delete">&nbsp;</span> <?php echo Yii::t( $model_name, 'DELETE_ITEMS' ) ?>
 	</a>
 
 	<table>
@@ -56,7 +56,7 @@ $order_onclick = "$('#admin-form').attr('action', '/admin/{$model_name}/saveorde
 				<th width="90">
 					<?php echo Yii::t( 'main', 'ORDER' ) ?> 
 					<a href="#" title="<?php echo Yii::t( 'main', 'SAVE_ORDER' ) ?>" onclick="<?php echo $order_onclick ?>">
-						<span class="state saveorder"></span>
+						<span class="state saveorder">&nbsp;</span>
 					</a>
 				</th>
 				<th width="110"><?php echo Yii::t( 'main', 'LAST_UPDATED' ) ?></th>
@@ -96,7 +96,7 @@ $order_onclick = "$('#admin-form').attr('action', '/admin/{$model_name}/saveorde
 				<td><input type="checkbox" name="items[]" value="<?php echo $row->id; ?>" /></td>
 				<td>
 					<a href="#" title="<?php echo Yii::t( 'main', 'REMOVE' ) ?>" onclick="<?php echo $delete_onclick ?>">
-						<span class="state delete"></span>
+						<span class="state delete">&nbsp;</span>
 					</a>
 				</td>
 				<td class="tl">
@@ -108,30 +108,30 @@ $order_onclick = "$('#admin-form').attr('action', '/admin/{$model_name}/saveorde
 				<td><?php echo $row->rating ?></td>
 				<td>
 					<a href="#" title="<?php echo $publish_title ?>" onclick="<?php echo $publish_onclick ?>">
-						<span class="<?php echo $publish_class ?>"></span>
+						<span class="<?php echo $publish_class ?>">&nbsp;</span>
 					</a>
 				</td>
 				<td>
 					<?php if( $k != 0 ) : ?>
 						<a href="#" title="<?php echo Yii::t( 'main', 'UP' ) ?>" onclick="<?php echo $order_up_onclick ?>">
-							<span class="uparrow"></span>
+							<span class="uparrow">&nbsp;</span>
 						</a>
 					<?php else : ?>
-						<span class="uparrow inactive"></span>
+						<span class="uparrow inactive">&nbsp;</span>
 					<?php endif; ?>
 						
 					<?php if ( ( $k + 1 ) != count( $rows ) ) : ?>
 						<a href="#" title="<?php echo Yii::t( 'main', 'DOWN' ) ?>" onclick="<?php echo $order_down_onclick ?>">
-							<span class="downarrow"></span>
+							<span class="downarrow">&nbsp;</span>
 						</a>
 					<?php else : ?>
-						<span class="downarrow inactive"></span>
+						<span class="downarrow inactive">&nbsp;</span>
 					<?php endif; ?>
 						
-					<input type="text" name="order[<?php echo $row->id ?>]" value="<?php echo $row->ordering ?>" size="3" class="tc" />
+					<input type="text" name="order[<?php echo $row->id ?>]" value="<?php echo $row->ordering ?>" size="2" class="tc" />
 				</td>
 				<td><?php echo $modified_date ?></td>
-				<td><?php echo $row->id ?></a></td>
+				<td><?php echo $row->id ?></td>
 			</tr>
 			<?php endforeach; ?>
 		<?php endif; ?>

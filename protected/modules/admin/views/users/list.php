@@ -31,10 +31,10 @@ $delete_onclick = "if(confirm('" . Yii::t( $model_name, 'DELETE_ITEMS' )
 <h1 class="main"><?php echo Yii::t( $model_name, 'SECTION_NAME' ) ?></h1>
 <form action="#" method="post" id="admin-form">
 	<a href="/admin/<?php echo $model_name ?>/add" title="<?php echo Yii::t( $model_name, 'ADD_ITEM' ) ?>">
-		<span class="state add"></span> <?php echo Yii::t( $model_name, 'ADD_ITEM' ) ?>
+		<span class="state add">&nbsp;</span> <?php echo Yii::t( $model_name, 'ADD_ITEM' ) ?>
 	</a>
 	<a href="#" title="<?php echo Yii::t( $model_name, 'DELETE_ITEMS' ) ?>" onclick="<?php echo $delete_onclick ?>">
-		<span class="state delete"></span> <?php echo Yii::t( $model_name, 'DELETE_ITEMS' ) ?>
+		<span class="state delete">&nbsp;</span> <?php echo Yii::t( $model_name, 'DELETE_ITEMS' ) ?>
 	</a>
 	
 	<table style="clear:both">
@@ -68,10 +68,10 @@ $delete_onclick = "if(confirm('" . Yii::t( $model_name, 'DELETE_ITEMS' )
 				<td>
 					<?php if ($row->id != 1): ?>
 						<a href="#" title="<?php echo Yii::t( 'main', 'REMOVE' ) ?>" onclick="<?php echo $delete_onclick ?>">
-							<span class="state delete"></span>
+							<span class="state delete">&nbsp;</span>
 						</a>
 					<?php else: ?>
-						<span class="space"></span>
+						<span class="space">&nbsp;</span>
 					<?php endif; ?>
 				</td>
 				<td style="padding-left: 15px" class="tl">
@@ -89,7 +89,7 @@ $delete_onclick = "if(confirm('" . Yii::t( $model_name, 'DELETE_ITEMS' )
 				<td><?php echo $row->email ?></td>
 				<td><?php echo $lasttime ?></td>
 				<td><?php echo $row->ip ?></td>
-				<td><?php echo $row->id ?></a></td>
+				<td><?php echo $row->id ?></td>
 			</tr>
 		<?php endforeach; ?>
 		</tbody>

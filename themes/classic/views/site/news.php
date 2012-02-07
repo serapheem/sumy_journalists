@@ -1,24 +1,21 @@
 <?php 
-$link = '/news/' . $news->id;
-$link = Yii::app( )
-	->createAbsoluteUrl( $link );
 $created = CLocale::getInstance( 'uk' )
 	->dateFormatter
-	->formatDateTime( $news->created, 'long', null );
+	->formatDateTime( $record->created, 'long', null );
 ?>
 <div id="contentText">
-    <h1><?php echo CHtml::encode( $news->title ) ?></h1>
-    <?php /* ?><span class="note">Переглядів: <?php echo $news->views; ?></span><?php */ ?>
+    <h1><?php echo CHtml::encode( $record->title ) ?></h1>
+    <?php /* ?><span class="note">Переглядів: <?php echo $record->views; ?></span><?php */ ?>
     <span class="note"><?php echo Yii::t( 'main', 'PUBLISHED' ) ?>: <?php echo $created ?></span>
     <br />
     <br />
     <div class="content-desc">
-        <?php echo $news->body; ?>
+        <?php echo $record->body; ?>
     </div>
 </div>
 <div id="contentFoot">
-    <?php echo Helper::getRatingButtons( 'News', $news ) ?>
+    <?php echo Helper::getRatingButtons( 'News', $record ) ?>
     
-    <?php echo Helper::getSocialButtons( $link ) ?>
+    <?php echo Helper::getSocialButtons( 'News', $record ) ?>
 </div>
-<?php echo Helper::getCommentsBlock( $link ) ?>
+<?php echo Helper::getCommentsBlock( 'News', $record ) ?>

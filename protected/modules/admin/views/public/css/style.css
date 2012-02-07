@@ -82,60 +82,62 @@ a:hover { text-decoration: none; }
 .section {
 	margin: 0 0 5px;
 }
-ul.tabs {
+
+ul.tabs 
+	{
 	height: 28px;
 	line-height: 25px;
 	list-style: none;
 	border-bottom: 1px solid #DDD;
 	background: #FFF;
+	}
 
-}
-
-.a_in_tab{
-	width: 100%;
-	height: 100%;	
-}
-
-.a_in_tab:hover{
+.a_in_tab:hover
+	{
 	text-decoration: none;
-}
+	}
 
-.tabs li {
+.tabs li 
+	{
 	float: left;
 	display: inline;
 	margin: 0 1px -1px 0;
-	padding: 0 13px 1px;
 	color: #777;
 	cursor: pointer;
 	background: #F9F9F9;
 	border: 1px solid #E4E4E4;
 	border-bottom: 1px solid #F9F9F9;
 	position: relative;
-}
-.tabs li a {
-	text-decoration: none;
-	color: #777;
-
-}
-
-.tabs li:hover {
+	}
+	.tabs li a 
+		{
+		text-decoration: none;
+		padding: 0 13px 1px;
+		display: block;
+		color: #777;
+		}
+.tabs li:hover 
+	{
 	text-decoration: none;
 	background-color: #D4D4D4;
 	color: white;
-}
-
-.tabs li a:hover {
-	text-decoration: none;
-	color: white;
-}
-
-.tabs li.current {
-	color: #444;
+	}
+	.tabs li a:hover 
+		{
+		text-decoration: none;
+		color: white;
+		}
+.tabs li.current 
+	{
 	background: #EFEFEF;
-	padding: 0 13px 2px;
 	border: 1px solid #D4D4D4;
 	border-bottom: 1px solid #EFEFEF;
-}
+	}
+	.tabs li.current a
+	{
+		color: #444;
+	}
+	
 .box {
 	display: none;
 	border: 1px solid #D4D4D4;

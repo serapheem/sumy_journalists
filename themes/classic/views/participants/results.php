@@ -9,7 +9,15 @@
     }
 	?>
 	<?php foreach ( $rows AS $k => $row ) : ?>
-		<?php $rate = round( ( $row->rating * 100 / $total ), 2 ); ?>
+		<?php 
+		if ( $total )
+		{
+			$rate = round( ( $row->rating * 100 / $total ), 2 );
+		}
+		else {
+			$rate = 0;
+		} 
+		?>
 	    <div class="vote-block">
             <div class="vote">
             	<a href="/<?php echo $view .'/'. $row->id; ?>">

@@ -111,6 +111,7 @@ class AjaxController extends Controller
 		);
 		echo json_encode( $result );
 		Yii::app( )->end( );
+		return true;
 	}
 	
 	/**
@@ -184,6 +185,80 @@ class AjaxController extends Controller
 		);
 		echo json_encode( $result );
 		Yii::app( )->end( );
+		return true;
+	}
+	
+	/**
+	 * Stores counts of comments
+	 * 
+	 * @access public
+	 * 
+	 * @return void
+	 */
+	public function actionSaveCommentsCount( )
+	{ 
+		if ( empty( $_POST['type'] ) || empty( $_POST['section'] )
+			|| empty( $_POST['id'] ) || !isset( $_POST['num'] ) )
+		{
+			Yii::app( )->end( );
+			return true;
+		}
+		
+		$type = $_POST['type'];
+		$section = $_POST['section'];
+		$id = ( int ) $_POST['id'];
+		$num = ( int ) $_POST['num'];
+			
+		if ( !$id )
+		{
+			Yii::app( )->end( );
+			return true;
+		}
+		
+		$model = new CommentsNumber( );
+		$params = array(
+			'type' => $type,
+			'section' => $section,
+			'item_id' => $id
+		);
+		if ( !$num )
+		{
+			CommentsNumber::model()
+				->deleteAllByAttributes( $params );
+		}
+		else {
+			$record = CommentsNumber::model()
+				->findByAttributes( $params );
+			
+			if ( empty( $record ) )
+			{
+				$record = new CommentsNumber( );
+				$record->type = $type;
+				$record->section = $section;
+				$record->item_id = $id;
+				$record->number = $num;
+				
+				if ( $record->validate( ) )
+				{
+					$record->save( );
+				}
+			}
+			elseif ( $record->number != $num )
+			{
+				CommentsNumber::model()
+					->updateAll( 
+						array( 'number' => $num ), 
+						'type=:type AND section=:section AND item_id=:id',
+						array( 
+							':type' => $type, 
+							':section' => $section, 
+							':id' => $id 
+						) 
+					);
+			}
+		}
+		Yii::app( )->end( );
+		return true;
 	}
 
 }

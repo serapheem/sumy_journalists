@@ -1,7 +1,4 @@
 <?php 
-$link = '/tyca/' . $record->id;
-$link = Yii::app( )
-	->createAbsoluteUrl( $link );
 $created = CLocale::getInstance( 'uk' )
 	->dateFormatter
 	->formatDateTime( $record->created, 'long', null );
@@ -18,6 +15,6 @@ $created = CLocale::getInstance( 'uk' )
 <div id="contentFoot">
     <?php echo Helper::getRatingButtons( 'Tyca', $record ) ?>
     
-    <?php echo Helper::getSocialButtons( $link ) ?>
+    <?php echo Helper::getSocialButtons( 'Tyca', $record ) ?>
 </div>
-<?php echo Helper::getCommentsBlock( $link ) ?>
+<?php echo Helper::getCommentsBlock( 'Tyca', $record ) ?>

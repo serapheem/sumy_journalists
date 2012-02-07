@@ -82,7 +82,7 @@ class SiteController extends Controller
             
             $news->body = Helper::addGallery( $news->body );
 
-            $this->render( 'news', array( 'news' => $news ) );
+            $this->render( 'news', array( 'record' => $news ) );
         } 
         else {
             $this->title = Yii::t( 'news', 'SECTION_NAME' );
