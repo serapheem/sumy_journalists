@@ -14,10 +14,10 @@ class Pages extends ModelBase
 	 * 
 	 * @return object
 	 */
-    public static function model( $className = __CLASS__ ) 
-    {
-        return parent::model( $className );
-    }
+	public static function model( $className = __CLASS__ ) 
+	{
+		return parent::model( $className );
+	}
 	
 	/**
 	 * Returns the name of table
@@ -26,9 +26,54 @@ class Pages extends ModelBase
 	 * 
 	 * @return string
 	 */
-    public function tableName( ) 
-    {
-        return '{{pages}}';
-    }
+	public function tableName( ) 
+	{
+		return '{{pages}}';
+	}
+	
+	/**
+	 * Returns array of rules for different properties
+	 * 
+	 * @access public
+	 * 
+	 * @return array
+	 */
+	public function rules( )
+	{
+		return array(
+			array( 'title, body', 'required' ),
+			array( 'title, alias, body', 'safe' ),
+		);
+	}
+	
+	/**
+	 * Returns labels for properties
+	 * 
+	 * @access public
+	 * 
+	 * @return array
+	 */
+	public function attributeLabels( )
+	{
+		return array(
+			'title' => Yii::t( 'main', 'TITLE' ),
+			'body' => Yii::t( 'main', 'TEXT' ),
+		);
+	}
+	
+	/**
+	 * Returns array of relations with other tables
+	 * 
+	 * @access public
+	 * 
+	 * @return array 
+	 */
+	public function relations( )
+	{
+		return array( 
+			'author' => array( self::BELONGS_TO, 'Users', 'created_by'),
+			'updater' => array( self::BELONGS_TO, 'Users', 'modified_by')
+		);
+	}
 
 }

@@ -137,7 +137,12 @@ ul.tabs
 	{
 		color: #444;
 	}
-	
+
+#admin-form tr 
+	{
+	height: 32px;
+	}
+
 .box {
 	display: none;
 	border: 1px solid #D4D4D4;

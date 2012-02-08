@@ -30,5 +30,47 @@ class PollItems extends ModelBase
     {
         return '{{poll_items}}';
     }
+	
+	/**
+	 * Returns array of rules for different properties
+	 * 
+	 * @access public
+	 * 
+	 * @return array
+	 */
+	public function rules( ) 
+	{
+		return array(
+			array( 'title, poll_id', 'required' ),
+		);
+	}
+	
+	/**
+	 * Returns labels for properties
+	 * 
+	 * @access public
+	 * 
+	 * @return array
+	 */
+	public function attributeLabels( ) 
+	{
+		return array(
+			'title' => Yii::t( 'main', 'TITLE' ),
+		);
+	}
+	
+	/**
+	 * Returns the array with different rules for selection items
+	 * 
+	 * @access public
+	 * 
+	 * @return array
+	 */
+	public function scopes( ) 
+	{
+		return array(
+			'ordering' => array( 'order' => 'ordering ASC' ),
+		);
+	}
     
 }

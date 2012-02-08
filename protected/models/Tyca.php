@@ -30,5 +30,37 @@ class Tyca extends ModelBase
     {
         return '{{tyca}}';
     }
+	
+	/**
+	 * Returns array of rules for different properties
+	 * 
+	 * @access public
+	 * 
+	 * @return array
+	 */
+	public function rules( ) 
+	{
+		return array(
+			array( 'title, body', 'required' ),
+			array( 'title, alias, body, publish', 'safe' ),
+		);
+	}
+
+	/**
+	 * Returns labels for properties
+	 * 
+	 * @access public
+	 * 
+	 * @return array
+	 */
+	public function attributeLabels( ) 
+	{
+		return array(
+			'title' => Yii::t( 'main', 'TITLE' ),
+			'alias' => Yii::t( 'main', 'ALIAS' ),
+			'body' => Yii::t( 'main', 'TEXT' ),
+            'publish' => Yii::t( 'main', 'PUBLISH' ),
+		);
+	}
 
 }

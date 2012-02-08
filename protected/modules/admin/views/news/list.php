@@ -31,7 +31,19 @@ $order_onclick = "$('#admin-form').attr('action', '/admin/{$model_name}/saveorde
 
 <h1 class="main"><?php echo Yii::t( 'main', 'MATERIALS' ) ?></h1>
 
-<?php $this->renderPartial( '/html/submenu', array( 'view' => $model_name ) ); ?>
+<?php 
+$menu_items = array( 
+	'news' => Yii::t( 'news', 'SECTION_NAME' ), 
+	'citystyle' => Yii::t( 'citystyle', 'SECTION_NAME' ), 
+	'knowour' => Yii::t( 'knowour', 'SECTION_NAME' ), 
+	'tyca' => Yii::t( 'tyca', 'SECTION_NAME' ), 
+	'participants' => Yii::t( 'participants', 'SECTION_NAME' ) 
+);
+$this->renderPartial( '/html/submenu', array( 
+	'items' => $menu_items, 
+	'current' => $model_name 
+) ); 
+?>
 
 <div class="box visible">
 <form action="#" method="post" id="admin-form">

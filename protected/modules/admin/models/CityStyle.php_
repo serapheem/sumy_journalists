@@ -1,7 +1,7 @@
 <?php
 
 /**
- * CityStyle Model class
+ * City Style model class
  */
 class CityStyle extends ModelBase 
 {
@@ -16,9 +16,21 @@ class CityStyle extends ModelBase
 	 */
 	public static function model( $className = __CLASS__ ) 
 	{
-	   return parent::model($className);
+		return parent::model( $className );
 	}
-	   
+	
+	/**
+	 * Returns the name of table
+	 * 
+	 * @access public
+	 * 
+	 * @return string
+	 */
+	public function tableName( ) 
+	{
+		return '{{city_style}}';
+	}
+	
 	/**
 	 * Returns array of rules for different properties
 	 * 
@@ -50,17 +62,5 @@ class CityStyle extends ModelBase
 			'publish' => Yii::t( 'main', 'PUBLISH' ),
 		);
 	}
-
-	/**
-	 * Returns the name of table
-	 * 
-	 * @access public
-	 * 
-	 * @return string
-	 */
-	public function tableName() 
-	{
-		return '{{city_style}}';
-	}
 	
-}
+}	

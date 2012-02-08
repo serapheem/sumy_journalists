@@ -30,6 +30,35 @@ class Poll extends ModelBase
     {
         return '{{poll}}';
     }
+	
+	/**
+	 * Returns array of rules for different properties
+	 * 
+	 * @access public
+	 * 
+	 * @return array
+	 */
+	public function rules( ) 
+	{
+		return array(
+			array( 'title, publish', 'required' ),
+		);
+	}
+	
+	/**
+	 * Returns labels for properties
+	 * 
+	 * @access public
+	 * 
+	 * @return array
+	 */
+	public function attributeLabels( ) 
+	{
+		return array(
+			'title' => Yii::t( 'main', 'TITLE' ),
+			'publish' => Yii::t( 'main', 'PUBLISH' ),
+		);
+	}
     
 	/**
 	 * Returns array of relations with other tables

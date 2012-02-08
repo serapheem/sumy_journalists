@@ -20,10 +20,11 @@
                     <li><a href="/admin"><?php echo Yii::t( 'main', 'SETTINGS' ) ?></a></li>
                     <li><a href="/admin/news"><?php echo Yii::t( 'main', 'MATERIALS' ) ?></a></li>
                     <li><a href="/admin/poll"><?php echo Yii::t( 'main', 'POLL' ) ?></a></li>
+                    <li><a href="/admin/statistics"><?php echo Yii::t( 'statistics', 'SECTION_NAME' ) ?></a></li>
                     <li><a href="/admin/users"><?php echo Yii::t( 'main', 'USERS' ) ?></a></li>
                     <li><a href="/admin/pages"><?php echo Yii::t( 'main', 'PAGES' ) ?></a></li>
-                    <li class="right"><a href="/" rel="external"><?php echo Yii::t( 'main', 'LOG_OUT' ) ?></a></li>
-                    <li class="right"><a href="/admin/default/logout"><?php echo Yii::t( 'main', 'VIEW_SITE' ) ?></a></li>
+                    <li class="right"><a href="/admin/default/logout"><?php echo Yii::t( 'main', 'LOG_OUT' ) ?></a></li>
+                    <li class="right"><a href="/" rel="external"><?php echo Yii::t( 'main', 'VIEW_SITE' ) ?></a></li>
                 </ul>
             </div>
             <div id="menu-bg">&nbsp;</div>

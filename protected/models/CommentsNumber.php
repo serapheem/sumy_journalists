@@ -30,5 +30,19 @@ class CommentsNumber extends ModelBase
     {
         return '{{comments_number}}';
     }
-
+	
+	/**
+	 * Returns the array with different rules for selection items
+	 * 
+	 * @access public
+	 * 
+	 * @return array
+	 */
+	public function scopes() 
+    {
+        return array(
+            'ordering' => array( 'order' => 'number DESC' ),
+        );
+    }
+	
 }

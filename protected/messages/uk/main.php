@@ -29,6 +29,8 @@ return array(
 	'LAST_VISITED'		=> 'Був в адмін-панелі',
 	'LAST_IP' 			=> 'Останній IP',
 	'VOTES_NUMBER' 		=> 'Кількість голосів',
+	'COMMENTS_NUMBER' 	=> 'Кількість коментарів',
+	'SECTION' 			=> 'Розділ',
 	
 	'USER_NAME'			=> "Ім'я користувача",
 	'LOGIN'				=> 'Логін',

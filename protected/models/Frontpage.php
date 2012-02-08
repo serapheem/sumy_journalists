@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Frontpage Model class
+ * Front page Model class
  */
 class Frontpage extends CActiveRecord 
 {
@@ -20,6 +20,18 @@ class Frontpage extends CActiveRecord
 	}
 	
 	/**
+	 * Returns the name of table
+	 * 
+	 * @access public
+	 * 
+	 * @return string
+	 */
+	public function tableName() 
+	{
+		return '{{frontpage}}';
+	}
+	
+	/**
 	 * Returns array of rules for different properties
 	 * 
 	 * @access public
@@ -31,18 +43,6 @@ class Frontpage extends CActiveRecord
 		return array(
 			array( 'section, item_id', 'required' ),
 		);
-	}
-	
-	/**
-	 * Returns the name of table
-	 * 
-	 * @access public
-	 * 
-	 * @return string
-	 */
-	public function tableName() 
-	{
-		return '{{frontpage}}';
 	}
 
 }
