@@ -189,13 +189,13 @@ class AjaxController extends Controller
 	}
 	
 	/**
-	 * Stores counts of comments
+	 * Stores number of comments
 	 * 
 	 * @access public
 	 * 
 	 * @return void
 	 */
-	public function actionSaveCommentsCount( )
+	public function actionSaveCommentsNumber( )
 	{ 
 		if ( empty( $_POST['type'] ) || empty( $_POST['section'] )
 			|| empty( $_POST['id'] ) || !isset( $_POST['num'] ) )
