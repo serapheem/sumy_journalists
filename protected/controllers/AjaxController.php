@@ -198,7 +198,9 @@ class AjaxController extends Controller
 	public function actionSaveCommentsNumber( )
 	{ 
 		if ( empty( $_POST['type'] ) || empty( $_POST['section'] )
-			|| empty( $_POST['id'] ) || !isset( $_POST['num'] ) )
+			|| empty( $_POST['id'] ) || !isset( $_POST['num'] ) 
+			|| empty( $_POST['date'] ) || empty( $_POST['sign'] )
+			|| !isset( $_POST['last_comment'] ) )
 		{
 			Yii::app( )->end( );
 			return true;
@@ -208,6 +210,15 @@ class AjaxController extends Controller
 		$section = $_POST['section'];
 		$id = ( int ) $_POST['id'];
 		$num = ( int ) $_POST['num'];
+		$date = $_POST['date'];
+		$sign = $_POST['sign'];
+		$last_comment = $_POST['last_comment'];
+		
+		if ( $sign != md5( 'uJCaEw2tOMoVMcgvFKlc' . $date . $num . $last_comment ) )
+		{
+			Yii::app( )->end( );
+			return true;
+		}
 			
 		if ( !$id )
 		{
@@ -215,7 +226,15 @@ class AjaxController extends Controller
 			return true;
 		}
 		
-		$model = new CommentsNumber( );
+		$timestamp = strtotime( $date );
+		if ( $timestamp )
+		{
+			$date = date( 'Y-m-d H:i:s', $timestamp );
+		}
+		else {
+			$date = date( 'Y-m-d H:i:s' );
+		}
+		
 		$params = array(
 			'type' => $type,
 			'section' => $section,
@@ -237,6 +256,7 @@ class AjaxController extends Controller
 				$record->section = $section;
 				$record->item_id = $id;
 				$record->number = $num;
+				$record->modified = $date;
 				
 				if ( $record->validate( ) )
 				{
@@ -247,7 +267,7 @@ class AjaxController extends Controller
 			{
 				CommentsNumber::model()
 					->updateAll( 
-						array( 'number' => $num ), 
+						array( 'number' => $num, 'modified' => $date ), 
 						'type=:type AND section=:section AND item_id=:id',
 						array( 
 							':type' => $type, 

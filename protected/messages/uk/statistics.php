@@ -5,6 +5,7 @@
 
 return array(
 	'SECTION_NAME' 		=> 'Статистика',
+	'NO_ITEMS'			=> 'Немає жодного запису.',
 	
 	'VKONTAKTE'			=> 'ВКонтакте',
 );
