@@ -39,6 +39,7 @@ class Users extends CActiveRecord
 		return array(
 			array( 'name, username, email, password, password2', 'required' ),
 			array( 'password', 'compare', 'compareAttribute' => 'password2' ),
+			array( 'email', 'email' ),
 		);
 	}
 	
