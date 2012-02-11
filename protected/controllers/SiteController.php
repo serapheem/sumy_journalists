@@ -17,32 +17,35 @@ class SiteController extends Controller
     	// Get published news
     	$command = Yii::app( )->db->createCommand( );
 		
-        $news = $command->selectDistinct( 'tbl.*, f.section' )
-			->from( 'news tbl' )
-			->join( 'frontpage f', 'f.item_id = tbl.id' )
-			->where( array( 'AND', 'f.section = :section', 'tbl.publish = 1' ),
-					array( ':section' => 'News' ) )
-			->order( 'tbl.ordering ASC' )
-			->queryAll( );
+		$fields = array( 'f.*' );
+		$fields_name = array( 'title', 'alias', 'body', 'created', 'modified', 'ordering' => 'item_ordering' );
 		
-		// Get published know ours items
-		$command->reset( );
-		$know_our = $command->selectDistinct( 'tbl.*, f.section' )
-			->from( 'know_our tbl' )
-			->join( 'frontpage f', 'f.item_id = tbl.id' )
-			->where( array( 'AND', 'f.section = :section', 'tbl.publish = 1' ),
-					array( ':section' => 'KnowOur' ) )
-			->order( 'tbl.ordering ASC' )
-			->queryAll( );
-						
-		$news = array_merge( $news, $know_our );
-		
-		foreach ( $news AS $index => &$news_ )
+		// Get fields from other tables
+		foreach ( $fields_name AS $index => $name )
 		{
-			$news_ = (object) $news_;
+			if ( is_numeric( $index ) )
+			{
+				$index = $name;
+			}
+			
+			$fields[] = "CASE f.section"
+						. " WHEN 'KnowOur' THEN (SELECT ko.{$index} FROM know_our AS ko WHERE ko.id = f.item_id )"
+						. " WHEN 'News' THEN (SELECT n.{$index} FROM news AS n WHERE n.id = f.item_id )"
+						. " ELSE null"
+						. " END AS '{$name}'";
 		}
 		
-        $this->render( 'index', array( 'news' => $news ) );
+		$rows = $command->selectDistinct( $fields )
+			->from( 'frontpage AS f' )
+			->order( 'f.ordering ASC, item_ordering ASC, modified DESC' )
+			->queryAll( );
+			
+		foreach ( $rows AS &$row )
+		{
+			$row = (object) $row;
+		}
+		
+        $this->render( 'index', array( 'rows' => $rows ) );
 		return true;
     }
 	

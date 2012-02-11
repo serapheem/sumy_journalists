@@ -33,21 +33,23 @@ class StatisticsController extends AdminController
 		// Get published news
     	$command = Yii::app( )->db->createCommand( );
 		
-		// Get title from other tables
-		$title_query = "CASE cn.section"
-					. " WHEN 'News' THEN (SELECT n.title FROM news AS n WHERE n.id = cn.item_id )"
-					. " WHEN 'Participants' THEN (SELECT p.title FROM participants AS p WHERE p.id = cn.item_id )"
-					. " ELSE null"
-					. " END AS 'title'";
-					
-		// Get alias from other tables
-		$alias_query = "CASE cn.section"
-					. " WHEN 'News' THEN (SELECT n.alias FROM news AS n WHERE n.id = cn.item_id )"
-					. " WHEN 'Participants' THEN (SELECT p.alias FROM participants AS p WHERE p.id = cn.item_id )"
-					. " ELSE null"
-					. " END AS 'alias'";
+		$fields = array( 'cn.*' );
+		$fields_name = array( 'title', 'alias' );
 		
-        $rows = $command->selectDistinct( array( 'cn.*', $title_query, $alias_query ) )
+		// Get fields from other tables
+		foreach ( $fields_name AS $name )
+		{
+			$fields[] = "CASE cn.section"
+						. " WHEN 'CityStyle' THEN (SELECT cs.{$name} FROM city_style AS cs WHERE cs.id = cn.item_id )"
+						. " WHEN 'KnowOur' THEN (SELECT ko.{$name} FROM know_our AS ko WHERE ko.id = cn.item_id )"
+						. " WHEN 'News' THEN (SELECT n.{$name} FROM news AS n WHERE n.id = cn.item_id )"
+						. " WHEN 'Participants' THEN (SELECT p.{$name} FROM participants AS p WHERE p.id = cn.item_id )"
+						. " WHEN 'Tyca' THEN (SELECT t.{$name} FROM tyca AS t WHERE t.id = cn.item_id )"
+						. " ELSE null"
+						. " END AS '{$name}'";
+		}
+		
+		$rows = $command->selectDistinct( $fields )
 			->from( 'comments_number AS cn' )
 			->order( 'cn.modified DESC, cn.number DESC' );
 		
