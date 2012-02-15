@@ -3,7 +3,7 @@
 /**
  * News Controller Class
  */
-class NewsController extends FrontpageController 
+class NewsController extends HomepageController 
 {
 	/**
 	 * Name of default model

@@ -1,9 +1,9 @@
 <?php
 
 /**
- * Admin Controller Class
+ * Home page Controller Class
  */
-class FrontpageController extends AdminController
+class HomepageController extends AdminController
 {
 	/**
 	 * Displays edit form and save changes

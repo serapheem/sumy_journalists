@@ -1,6 +1,6 @@
 <?php
 /**
- * City Style list layout file
+ * Front page list layout file
  */
 $model_name = strtolower( $this->model );
 
@@ -50,9 +50,6 @@ $this->renderPartial( '/html/submenu', array(
 <form action="#" method="post" id="admin-form">
 	<h1><?php echo Yii::t( $model_name, 'SECTION_NAME' ) ?></h1>
 
-	<a href="/admin/<?php echo $model_name ?>/edit" title="<?php echo Yii::t( $model_name, 'ADD_ITEM' ) ?>">
-		<span class="state add"></span> <?php echo Yii::t( $model_name, 'ADD_ITEM' ) ?>
-	</a>
 	<a href="#" title="<?php echo Yii::t( $model_name, 'DELETE_ITEMS' ) ?>" onclick="<?php echo $delete_onclick ?>">
 		<span class="state delete"></span> <?php echo Yii::t( $model_name, 'DELETE_ITEMS' ) ?>
 	</a>
@@ -63,9 +60,9 @@ $this->renderPartial( '/html/submenu', array(
 				<th width="20"><input type="checkbox" value="selectAll" /></th>
 				<th width="20">&nbsp;</th>
 				<th class="tl"><b><?php echo Yii::t( 'main', 'TITLE' ) ?></b></th>
-				<th width="70"><?php echo Yii::t( 'main', 'VIEWS' ) ?></th>
-				<th width="50"><?php echo Yii::t( 'main', 'RATING' ) ?></th>
-				<th width="80"><?php echo Yii::t( 'main', 'PUBLISHED' ) ?></th>
+				<th width="110"><?php echo Yii::t( 'main', 'SECTION' ) ?></th>
+				<th width="20"><?php echo Yii::t( 'main', 'ID' ) ?></th>
+				
 				<th width="90">
 					<?php echo Yii::t( 'main', 'ORDER' ) ?> 
 					<a href="#" title="<?php echo Yii::t( 'main', 'SAVE_ORDER' ) ?>" onclick="<?php echo $order_onclick ?>">
@@ -73,41 +70,27 @@ $this->renderPartial( '/html/submenu', array(
 					</a>
 				</th>
 				<th width="110"><?php echo Yii::t( 'main', 'LAST_UPDATED' ) ?></th>
-				<th width="20"><?php echo Yii::t( 'main', 'ID' ) ?></th>
 			</tr>
 		</thead>
 		<tbody>
 		<?php if ( empty( $rows ) ) : ?>
-			<tr><td colspan="9" class="tc"><?php echo Yii::t( $model_name, 'NO_ITEMS' ) ?></td></tr>
+			<tr><td colspan="7" class="tc"><?php echo Yii::t( $model_name, 'NO_ITEMS' ) ?></td></tr>
 		<?php else : ?>
 			<?php foreach ( $rows AS $k => $row ) : ?>
 				<?php 
 				// Get delete data
+				$id = CHtml::encode( $row->section . ':' . $row->item_id );
 				$delete_onclick = "if ( confirm('" . Yii::t( $model_name, 'DELETE_ITEM' ) 
-								. "?') ) postSend('/admin/{$model_name}/delete', { 'items[]': {$row->id} }); return false;";
-				// Get edit link
-				$link = "/admin/{$model_name}/edit?id={$row->id}";
-				// Get publish data
-				if ($row->publish) 
-				{
-					$publish_title = Yii::t( 'main', 'UNPUBLISH' );
-					$publish_class = 'state publish';
-				} 
-				else {
-					$publish_title = Yii::t( 'main', 'PUBLISH' );
-					$publish_class = 'state unpublish';
-				}
-				$publish_onclick = "postSend('/admin/{$model_name}/edit', { id: {$row->id}, '{$this->model}[publish]': " 
-								. (1 - $row->publish) . " }); return false;";
+								. "?') ) postSend('/admin/{$model_name}/delete', { 'items[]': '{$id}' }); return false;";
 				// Get order data
-				$order_up_onclick = "postSend('/admin/{$model_name}/changeorder', { id: {$row->id}, type: 'up' }); return false;";
-				$order_down_onclick = "postSend('/admin/{$model_name}/changeorder', { id: {$row->id}, type: 'down' }); return false;";
+				$order_up_onclick = "postSend('/admin/{$model_name}/changeorder', { id: '{$id}', type: 'up' }); return false;";
+				$order_down_onclick = "postSend('/admin/{$model_name}/changeorder', { id: '{$id}', type: 'down' }); return false;";
 				// Get modified date
 				$modified_date = CLocale::getInstance( 'uk' )->dateFormatter->formatDateTime( $row->modified, 'long' );
 				?>
 			<tr>
 				<td>
-					<input type="checkbox" name="items[]" value="<?php echo $row->id; ?>" />
+					<input type="checkbox" name="items[]" value="<?php echo $id; ?>" />
 				</td>
 				<td>
 					<a href="#" title="<?php echo Yii::t( 'main', 'REMOVE' ) ?>" onclick="<?php echo $delete_onclick ?>">
@@ -115,17 +98,12 @@ $this->renderPartial( '/html/submenu', array(
 					</a>
 				</td>
 				<td class="tl">
-					<a href="<?php echo $link ?>" title="<?php echo Yii::t( 'main', 'EDIT' ) ?>">
-						<?php echo CHtml::encode( $row->title ) ?>
-					</a>
+					<?php echo CHtml::encode( $row->title ) ?>
 				</td>
-				<td><?php echo $row->views ?></td>
-				<td><?php echo $row->rating ?></td>
 				<td>
-					<a href="#" title="<?php echo $publish_title ?>" onclick="<?php echo $publish_onclick ?>">
-						<span class="<?php echo $publish_class ?>"></span>
-					</a>
+					<?php echo Yii::t( strtolower( $row->section ), 'SECTION_NAME' ) ?>
 				</td>
+				<td><?php echo $row->item_id ?></td>
 				<td>
 					<?php if( $k != 0 ) : ?>
 						<a href="#" title="<?php echo Yii::t( 'main', 'UP' ) ?>" onclick="<?php echo $order_up_onclick ?>">
@@ -143,10 +121,9 @@ $this->renderPartial( '/html/submenu', array(
 						<span class="downarrow inactive"></span>
 					<?php endif; ?>
 						
-					<input type="text" name="order[<?php echo $row->id ?>]" value="<?php echo $row->ordering ?>" size="2" class="tc" />
+					<input type="text" name="order[<?php echo $id ?>]" value="<?php echo $row->ordering ?>" size="2" class="tc" />
 				</td>
 				<td><?php echo $modified_date ?></td>
-				<td><?php echo $row->id ?></td>
 			</tr>
 			<?php endforeach; ?>
 		<?php endif; ?>

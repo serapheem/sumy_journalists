@@ -3,7 +3,7 @@
 /**
  * Know Our Controller Class
  */
-class KnowOurController extends FrontpageController 
+class KnowOurController extends HomepageController 
 {
 	/**
 	 * Name of default model

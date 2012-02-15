@@ -37,7 +37,8 @@ $menu_items = array(
 	'citystyle' => Yii::t( 'citystyle', 'SECTION_NAME' ), 
 	'knowour' => Yii::t( 'knowour', 'SECTION_NAME' ), 
 	'tyca' => Yii::t( 'tyca', 'SECTION_NAME' ), 
-	'participants' => Yii::t( 'participants', 'SECTION_NAME' ) 
+	'participants' => Yii::t( 'participants', 'SECTION_NAME' ),
+	'frontpage' => Yii::t( 'frontpage', 'SECTION_NAME' )
 );
 $this->renderPartial( '/html/submenu', array( 
 	'items' => $menu_items, 
