@@ -8,8 +8,6 @@ class AjaxController extends Controller
 	/**
 	 * Changes rating of the material
 	 *
-	 * @access public
-	 *
 	 * @return void
 	 */
 	public function actionRating( )
@@ -191,16 +189,13 @@ class AjaxController extends Controller
 	/**
 	 * Stores number of comments
 	 * 
-	 * @access public
-	 * 
 	 * @return void
 	 */
 	public function actionSaveCommentsNumber( )
-	{ 
-		if ( empty( $_POST['type'] ) || empty( $_POST['section'] )
-			|| empty( $_POST['id'] ) || !isset( $_POST['num'] ) 
-			|| empty( $_POST['date'] ) || empty( $_POST['sign'] )
-			|| !isset( $_POST['last_comment'] ) )
+	{
+		if ( empty( $_POST['type'] ) 
+			|| empty( $_POST['section'] )
+			|| empty( $_POST['id'] ) )
 		{
 			Yii::app( )->end( );
 			return true;
@@ -209,30 +204,18 @@ class AjaxController extends Controller
 		$type = $_POST['type'];
 		$section = $_POST['section'];
 		$id = ( int ) $_POST['id'];
-		$num = ( int ) $_POST['num'];
-		$date = $_POST['date'];
-		$sign = $_POST['sign'];
-		$last_comment = $_POST['last_comment'];
 		
-		if ( $sign != md5( 'uJCaEw2tOMoVMcgvFKlc' . $date . $num . $last_comment ) )
-		{
-			Yii::app( )->end( );
-			return true;
-		}
-			
 		if ( !$id )
 		{
 			Yii::app( )->end( );
 			return true;
 		}
 		
-		$timestamp = strtotime( $date );
-		if ( $timestamp )
+		$method = '_' . $type . 'Comments';
+		if ( !method_exists( $this, $method ) || !( $comments_params = $this->$method( ) ) )
 		{
-			$date = date( 'Y-m-d H:i:s', $timestamp );
-		}
-		else {
-			$date = date( 'Y-m-d H:i:s' );
+			Yii::app( )->end( );
+			return true;
 		}
 		
 		$params = array(
@@ -240,7 +223,7 @@ class AjaxController extends Controller
 			'section' => $section,
 			'item_id' => $id
 		);
-		if ( !$num )
+		if ( !$comments_params['num'] )
 		{
 			CommentsNumber::model()
 				->deleteAllByAttributes( $params );
@@ -255,8 +238,8 @@ class AjaxController extends Controller
 				$record->type = $type;
 				$record->section = $section;
 				$record->item_id = $id;
-				$record->number = $num;
-				$record->modified = $date;
+				$record->number = $comments_params['num'];
+				$record->modified = $comments_params['modified'];
 				
 				if ( $record->validate( ) )
 				{
@@ -279,6 +262,72 @@ class AjaxController extends Controller
 		}
 		Yii::app( )->end( );
 		return true;
+	}
+	
+	/**
+	 * Returns the data of vkontakte comments
+	 * 
+	 * @return array if data correct or false otherwise
+	 */
+	protected function _vkontakteComments( )
+	{
+		if ( !isset( $_POST['num'] ) || empty( $_POST['date'] ) 
+			|| empty( $_POST['sign'] ) || !isset( $_POST['last_comment'] ) )
+		{
+			return false;
+		}
+		
+		$num = ( int ) $_POST['num'];
+		$date = $_POST['date'];
+		
+		$timestamp = strtotime( $date );
+		if ( $timestamp )
+		{
+			$date = date( 'Y-m-d H:i:s', $timestamp );
+		}
+		else {
+			$date = date( 'Y-m-d H:i:s' );
+		}
+		
+		$params = array(
+			'num' => $num,
+			'modified' => $date
+		);
+		return $params;
+	}
+	
+	/**
+	 * Returns the data of facebook comments
+	 * 
+	 * @return array if data correct or false otherwise
+	 */
+	protected function _facebookComments( )
+	{
+		if ( empty( $_POST['commentID'] ) || empty( $_POST['href'] ) )
+		{
+			return false;
+		}
+		
+		$commentID = $_POST['commentID'];
+		$href = $_POST['href'];
+		
+		$json = json_decode( file_get_contents( 'https://graph.facebook.com/?ids=' . $href ) );
+		
+		if ( empty( $json->$href->comments ) )
+		{
+			$num = 0;
+		}
+		else {
+			$num = $json->$href->comments;
+		}
+		
+		$date = date( 'Y-m-d H:i:s' );
+		
+		$params = array(
+			'num' => $num,
+			'modified' => $date
+		);
+		return $params;
 	}
 
 }
