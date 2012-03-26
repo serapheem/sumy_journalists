@@ -246,11 +246,11 @@ class AjaxController extends Controller
 					$record->save( );
 				}
 			}
-			elseif ( $record->number != $num )
+			elseif ( $record->number != $comments_params['num'] )
 			{
 				CommentsNumber::model()
 					->updateAll( 
-						array( 'number' => $num, 'modified' => $date ), 
+						array( 'number' => $comments_params['num'], 'modified' => $comments_params['modified'] ), 
 						'type=:type AND section=:section AND item_id=:id',
 						array( 
 							':type' => $type, 

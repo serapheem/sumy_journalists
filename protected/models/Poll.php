@@ -3,7 +3,7 @@
 /**
  * Poll model class
  */
-class Poll extends ModelBase 
+class Poll extends CActiveRecord 
 {
     /**
 	 * Returns the model object
