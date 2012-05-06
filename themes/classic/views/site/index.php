@@ -24,7 +24,6 @@ $cs->registerScript(
         <div class="frontImg">
             <?php 
             // Get main image of news
-            $image = '';
             $pattern = '/(img|src)=("|\')[^"\'>]+/i'; 
             preg_match( $pattern, $rows[0]->body, $media );
 
@@ -42,26 +41,16 @@ $cs->registerScript(
                     $image = $url;
                 }
             }
-            if ( empty( $image ) ) 
-            {
-                $image = '/images/no_image_big.png';
-            }
-			$image = Yii::app( )
-				->createAbsoluteUrl( $image );
-			// Get link of article
-			if ( empty( $rows[0]->alias ) )
+			$image = Yii::app( )->createAbsoluteUrl( empty( $image ) ? Yii::app()->theme->baseUrl . '/images/no_image_big.png' : $image );
+			/* $Headers = get_headers( $image );
+			if ( !strpos( $Headers[0], '200' ) )
 			{
-				$link = '/' . strtolower( $rows[0]->section ) . '/' . $rows[0]->item_id;
-			}
-			else {
-				$link = '/' . strtolower( $rows[0]->section ) . '/' . $rows[0]->item_id . ':' . $rows[0]->alias;
-			}
-			$link = Yii::app()
-				->createAbsoluteUrl( $link );
+				$image = Yii::app( )->createAbsoluteUrl( Yii::app()->theme->baseUrl . '/images/no_image_big.png' );
+			} */
+			// Get link of article
+			$link = Yii::app( )->createAbsoluteUrl( '/' . strtolower( $rows[0]->section ) . '/' . $rows[0]->item_id . ( empty( $rows[0]->alias ) ? '' : ':' . $rows[0]->alias ) );
 			// Get created date
-			$date = CLocale::getInstance( 'uk' )
-				->dateFormatter
-				->formatDateTime( $rows[0]->created, 'long', null );
+			$date = CLocale::getInstance( 'uk' )->dateFormatter->formatDateTime( $rows[0]->created, 'long', null );
 			// Get body of article
 			$body = strip_tags( $rows[0]->body );
             $body = wordwrap( $body, 300, '`|+' );
@@ -103,24 +92,16 @@ $cs->registerScript(
 		    if ( !empty( $col1_rows ) ) :
 		        foreach ( $col1_rows AS $row ) :
 					// Get link of article
-					if ( empty( $row->alias ) )
-					{
-						$link = '/' . strtolower( $row->section ) . '/' . $row->item_id;
-					}
-					else {
-						$link = '/' . strtolower( $row->section ) . '/' . $row->item_id . ':' . $row->alias;
-					}
-					$link = Yii::app( )
-						->createAbsoluteUrl( $link );
+					$link = Yii::app( )->createAbsoluteUrl( '/' . strtolower( $row->section ) . '/' . $row->item_id . ( empty( $row->alias ) ? '' : ':' . $row->alias ) );
 					// Get image of article
 					$image = Helper::getThumbImage( $row->body );
-                    if ( empty( $image ) ) 
-                    {
-                        $image = '/images/no_image.png';
-                    }
-					$image = Yii::app( )
-						->createAbsoluteUrl( $image );
-		    ?>
+					$image = Yii::app( )->createAbsoluteUrl( empty( $image ) ? Yii::app()->theme->baseUrl . '/images/no_image.png' : $image );
+					/* $Headers = get_headers( $image );
+					if ( !strpos( $Headers[0], '200' ) )
+					{
+						$image = Yii::app( )->createAbsoluteUrl( Yii::app()->theme->baseUrl . '/images/no_image.png' );
+					} */
+			?>
 	            <div class="frontItem">
 	                <div class="small-image">
 	                	<a href="<?php echo $link ?>">
@@ -139,23 +120,15 @@ $cs->registerScript(
 		    if ( !empty( $col2_rows ) ) :
 		        foreach ( $col2_rows AS $row ) :
 					// Get link of article
-					if ( empty( $row->alias ) )
-					{
-						$link = '/' . strtolower( $row->section ) . '/' . $row->item_id;
-					}
-					else {
-						$link = '/' . strtolower( $row->section ) . '/' . $row->item_id . ':' . $row->alias;
-					}
-					$link = Yii::app( )
-						->createAbsoluteUrl( $link );
+					$link = Yii::app( )->createAbsoluteUrl( '/' . strtolower( $row->section ) . '/' . $row->item_id . ( empty( $row->alias ) ? '' : ':' . $row->alias ) );
 					// Get image of article
 					$image = Helper::getThumbImage( $row->body );
-                    if ( empty( $image ) ) 
-                    {
-                        $image = '/images/no_image.png';
-                    }
-					$image = Yii::app( )
-						->createAbsoluteUrl( $image );
+					$image = Yii::app( )->createAbsoluteUrl( empty( $image ) ? Yii::app()->theme->baseUrl . '/images/no_image.png' : $image );
+					/* $Headers = get_headers( $image );
+					if ( !strpos( $Headers[0], '200' ) )
+					{
+						$image = Yii::app( )->createAbsoluteUrl( Yii::app()->theme->baseUrl . '/images/no_image.png' );
+					} */
 		    ?>
 	            <div class="frontItem">
 	                <div class="small-image">
@@ -181,23 +154,15 @@ $cs->registerScript(
     if ( !empty( $col3_rows ) ) :
         foreach ( $col3_rows AS $row ) :
 			// Get link of article
-			if ( empty( $row->alias ) )
-			{
-				$link = '/' . strtolower( $row->section ) . '/' . $row->item_id;
-			}
-			else {
-				$link = '/' . strtolower( $row->section ) . '/' . $row->item_id . ':' . $row->alias;
-			}
-			$link = Yii::app( )
-				->createAbsoluteUrl( $link );
+			$link = Yii::app( )->createAbsoluteUrl( '/' . strtolower( $row->section ) . '/' . $row->item_id . ( empty( $row->alias ) ? '' : ':' . $row->alias ) );
 			// Get image of article
 			$image = Helper::getThumbImage( $row->body );
-            if ( empty( $image ) ) 
-            {
-                $image = Yii::app()->theme->baseUrl . '/images/no_image.png';
-            }
-			$image = Yii::app( )
-				->createAbsoluteUrl( $image );
+			$image = Yii::app( )->createAbsoluteUrl( empty( $image ) ? Yii::app()->theme->baseUrl . '/images/no_image.png' : $image );
+			/* $Headers = get_headers( $image );
+			if ( !strpos( $Headers[0], '200' ) )
+			{
+				$image = Yii::app( )->createAbsoluteUrl( Yii::app()->theme->baseUrl . '/images/no_image.png' );
+			} */
             ?>
             <div class="frontItem">
                 <div class="small-image">

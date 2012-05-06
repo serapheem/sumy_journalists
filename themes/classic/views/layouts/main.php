@@ -147,6 +147,9 @@ if ( ( stripos( $_SERVER['HTTP_USER_AGENT'], 'msie 6' ) !== false )
         <!-- FOOTER -->
         <div id="footer">
             <img src="<?php echo Yii::app()->theme->baseUrl; ?>/images/icons.png" title="Значки" class="fleft" />
+            <div style="display: none">
+            	<?php // $this->widget( 'application.extensions.GACounter.GACounter' ); ?>
+            </div>
             <div class="fright">
                 Copyright &copy; 2011 Developed by Serapheem
             </div>

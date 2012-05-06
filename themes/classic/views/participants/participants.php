@@ -6,23 +6,9 @@
         foreach ( $rows as $row ):
 			// Get image of item
 			$image = Helper::getThumbImage( $row->body );
-			
-            if ( empty( $image ) ) 
-            {
-                $image = '/images/no_person_image.png';
-            }
-			$image = Yii::app( )
-				->createAbsoluteUrl( $image );
+			$image = Yii::app( )->createAbsoluteUrl( empty( $image ) ? Yii::app()->theme->baseUrl . '/images/no_person_image.png' : $image );
 			// Get link of item
-			if ( empty( $row->alias ) )
-			{
-				$link = '/' . $view . '/' . $row->id;
-			}
-			else {
-				$link = '/' . $view . '/' . $row->id . ':' . $row->alias;
-			}
-			$link = Yii::app( )
-				->createAbsoluteUrl( $link );
+			$link = Yii::app( )->createAbsoluteUrl( '/' . $view . '/' . $row->id . ( empty( $row->alias ) ? '' : ':' . $row->alias ) );
         ?>
             <?php if ( ( ceil( ( $counter - 1 ) / $item_in_line ) == ( $counter - 1 ) / $item_in_line ) || ( $counter == 1 ) ) : ?>
                 <tr class="sectiontableentry" >

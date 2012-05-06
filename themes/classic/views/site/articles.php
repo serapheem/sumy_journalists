@@ -6,23 +6,9 @@
         foreach ( $rows as $row ):
 			// Get image of article
             $image = Helper::getThumbImage( $row->body );
-                
-            if ( empty( $image ) ) 
-            {
-                $image = '/images/no_image_small.png';
-            }
-			$image = Yii::app( )
-				->createAbsoluteUrl( $image );
+            $image = Yii::app( )->createAbsoluteUrl( empty( $image ) ? Yii::app()->theme->baseUrl . '/images/no_image_small.png' : $image );
 			// Get link of article
-			if ( empty( $row->alias ) )
-			{
-				$link = '/' . $view . '/' . $row->id;
-			}
-			else {
-				$link = '/' . $view . '/' . $row->id . ':' . $row->alias;
-			}
-			$link = Yii::app( )
-				->createAbsoluteUrl( $link );
+			$link = Yii::app( )->createAbsoluteUrl( '/' . $view . '/' . $row->id . ( empty( $row->alias ) ? '' : ':' . $row->alias ) );
 			// Get body of article
 			$body = strip_tags( $row->body );
             $body = wordwrap( $body, 300, '`|+' );
