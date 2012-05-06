@@ -17,7 +17,7 @@ class ModelBase extends CActiveRecord
         return array(
             'published' => array(
                 'condition' => 'publish=1',
-                'order' => 'ordering ASC',
+                'order' => 'ordering ASC, id DESC',
             ),
         );
     }
