@@ -1,6 +1,6 @@
 <?php
-// error_reporting(E_ALL);
-// ini_set('display_errors', 1);
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
 
 //define('YII_DEBUG',false);
 //define('YII_ENABLE_ERROR_HANDLER',false);

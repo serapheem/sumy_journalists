@@ -5,7 +5,7 @@ $created = CLocale::getInstance( 'uk' )
 ?>
 <div id="contentText">
     <h1><?php echo CHtml::encode( $record->title ) ?></h1>
-    <span class="note"><?php echo Yii::t( 'main', 'VIEWS' ) ?>: <?php echo $record->views; ?></span>
+    <?php /* <span class="note"><?php echo Yii::t( 'main', 'VIEWS' ) ?>: <?php echo $record->views; ?></span> */ ?>
     <span class="note"><?php echo Yii::t( 'main', 'PUBLISHED' ) ?>: <?php echo $created ?></span>
     <br />
     <br />

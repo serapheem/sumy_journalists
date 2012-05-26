@@ -137,7 +137,20 @@ if ( ( stripos( $_SERVER['HTTP_USER_AGENT'], 'msie 6' ) !== false )
                         } 
                     } 
                     ?>
-
+                    
+                    <div class="advertisement">
+	                    <script type="text/javascript"><!--
+						google_ad_client = "ca-pub-8966739192858537";
+						/* incity-main */
+						google_ad_slot = "8987634972";
+						google_ad_width = 160;
+						google_ad_height = 600;
+						//-->
+						</script>
+						<script type="text/javascript"
+						src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+						</script>
+                    </div>
                 </div>
                 <div class="clear"></div>
             </div>
@@ -147,8 +160,8 @@ if ( ( stripos( $_SERVER['HTTP_USER_AGENT'], 'msie 6' ) !== false )
         <!-- FOOTER -->
         <div id="footer">
             <img src="<?php echo Yii::app()->theme->baseUrl; ?>/images/icons.png" title="Значки" class="fleft" />
-            <div style="display: none">
-            	<?php // $this->widget( 'application.extensions.GACounter.GACounter' ); ?>
+            <div>
+            	<?php $this->widget( 'application.extensions.GACounter.GACounter' ); ?>
             </div>
             <div class="fright">
                 Copyright &copy; 2011 Developed by Serapheem

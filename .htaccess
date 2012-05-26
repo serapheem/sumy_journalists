@@ -1,5 +1,10 @@
 RewriteEngine on
 
+
+RewriteCond %{HTTP_HOST} ^incity\.sumy\.ua
+RewriteRule (.*) http://www.incity.sumy.ua/$1 [R=301,L] 
+
+
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_URI} !/index.php

@@ -283,6 +283,12 @@ h4 {
     margin-bottom: 3px;
 }
 
+#content .col-2 .advertisement 
+	{
+    text-align: center;
+    padding: 20px 0 0;
+	}
+
 #content .stratum {
     height: 20px;
 }

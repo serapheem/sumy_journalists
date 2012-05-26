@@ -44,6 +44,7 @@ return array(
 				'/tyca.html' => '/site/tyca',
 				'/tyca/<slug:(\w|_|-|.|:)+>' => '/site/tyca',
 				'/<alias:(\w|_|-|.|:)+>.html' => '/site/pages',
+				'/<controller>/<action>' => '/<controller>/<action>',
 			),
 		),
 		'db' => array(
