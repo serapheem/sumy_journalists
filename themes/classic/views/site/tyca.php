@@ -24,4 +24,4 @@ $created = CLocale::getInstance( 'uk' )->dateFormatter->formatDateTime( $record-
     
     <div class="clear"></div>
 </div>
-<?php echo Helper::getCommentsBlock( 'Tyca', $record ) ?>
+<?php $this->widget( 'application.extensions.SocialComments.SocialCommentsWidget', array( 'section' => 'Tyca', 'item' => $record ) ); ?>

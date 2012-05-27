@@ -1,9 +1,13 @@
 <?php
+/**
+ * GACounter Widget main class file
+ */
 
-class GACounter extends CWidget 
+class GACounterWidget extends CWidget 
 {
 	/**
 	 * Initialize widget
+	 * @return void
 	 */	
 	public function init() 
 	{
@@ -11,7 +15,11 @@ class GACounter extends CWidget
 		
 		parent::init();
 	}
-
+	
+	/**
+	 * Prepares data before render them
+	 * @return void
+	 */
 	public function run() 
 	{
 		if ( !class_exists( 'gapi' ) ) {
@@ -48,4 +56,5 @@ class GACounter extends CWidget
 		
 		$this->render( 'widget', array( 'today' => $today_count, 'week' => $week_count, 'month' => $ga->getVisits() ) );
 	}
+	
 }

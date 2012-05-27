@@ -24,5 +24,4 @@ $created = CLocale::getInstance( 'uk' )->dateFormatter->formatDateTime( $record-
     
     <div class="clear"></div>
 </div>
-<?php // TODO: move comments to widget ?>
-<?php echo Helper::getCommentsBlock( 'News', $record ) ?>
+<?php $this->widget( 'application.extensions.SocialComments.SocialCommentsWidget', array( 'section' => 'News', 'item' => $record ) ); ?>

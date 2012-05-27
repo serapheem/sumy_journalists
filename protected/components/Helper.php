@@ -11,10 +11,7 @@ class Helper
 	/**
 	 * Function convert cyrillic letters to latin
 	 * 
-	 * @static
-	 * @access public
 	 * @param sting input data
-	 * 
 	 * @return string result of converting
 	 */
 	public static function translit( $string ) 
@@ -114,10 +111,7 @@ class Helper
 	/**
 	 * Get main image of news
 	 * 
-	 * @static
-	 * @access public
 	 * @param sting $text of the item
-	 * 
 	 * @return string
 	 */
 	public static function getThumbImage( $text )
@@ -157,11 +151,8 @@ class Helper
 	 * Check if user already view this item
 	 * and save view in session
 	 * 
-	 * @static
-	 * @access public
 	 * @param string $type name of logical block
 	 * @param object $item 
-	 * 
 	 * @return boolean
 	 */
 	public static function isNewView( $type, $item )
@@ -279,11 +270,8 @@ class Helper
 	/**
 	 * Return block with social buttons
 	 * 
-	 * @static
-	 * @access public
 	 * @param string $section name of the section
 	 * @param object $item current display item
-	 * 
 	 * @return string
 	 */
 	public static function getSocialButtons( $section, $item )
@@ -301,11 +289,8 @@ class Helper
 	/**
 	 * Return block with change rating buttons
 	 * 
-	 * @static
-	 * @access public
 	 * @param string $section name of the section
 	 * @param object $item current display item
-	 * 
 	 * @return string
 	 */
 	public static function getRatingButtons( $section, $item )
@@ -320,26 +305,4 @@ class Helper
 		return $html;
 	}
 	
-	/**
-	 * Return block with comments
-	 * 
-	 * @static
-	 * @access public
-	 * @param string $section name of the section
-	 * @param object $item current display item
-	 * 
-	 * @return string
-	 */
-	public static function getCommentsBlock( $section, $item )
-	{
-		$html = '';		
-		
-		ob_start( );
-		include Yii::app( )->theme->viewPath . '/html/comments.php';
-		$html = ob_get_contents( );
-		ob_end_clean( );
-		
-		return $html;
-	}
-
 }
