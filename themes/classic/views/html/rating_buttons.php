@@ -4,7 +4,7 @@
  */
 ?>
 
-<div id="rating" class="note fleft">
+<div id="rating">
     <?php
     $session = Yii::app( )->session;
     $change_rating = $session->get( 'change_rating' );

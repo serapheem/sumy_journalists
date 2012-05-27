@@ -32,6 +32,6 @@
                 />
             </div>
 	    </div>
-	<?php endforeach ?>
-	<strong><?php echo Yii::t( 'main', 'TOTAL_VOTES' ) ?>: <?php echo $total; ?></strong>
-<?php endif ?>
+	<?php endforeach; ?>
+	<div class="vote-result"><?php echo Yii::t( 'main', 'TOTAL_VOTES' ) ?>: <?php echo $total; ?></div>
+<?php endif; ?>

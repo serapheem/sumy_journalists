@@ -118,12 +118,12 @@ if ( ( stripos( $_SERVER['HTTP_USER_AGENT'], 'msie 6' ) !== false )
                     <div class="stratum"></div>
                     <div class="indent">
                         <div <?php echo $this->class; ?>><?php echo $content; ?></div>
-                        <div class="clear"></div>
                     </div>
                 </div>
                 <div class="col-2">
                     
                     <?php 
+                    // TODO : move poll logic to widget
                     if ( $this->show_poll )
 					{
                         $poll = $this->getPoll( );
@@ -160,7 +160,7 @@ if ( ( stripos( $_SERVER['HTTP_USER_AGENT'], 'msie 6' ) !== false )
         <!-- FOOTER -->
         <div id="footer">
             <img src="<?php echo Yii::app()->theme->baseUrl; ?>/images/icons.png" title="Значки" class="fleft" />
-            <div>
+            <div id="views">
             	<?php $this->widget( 'application.extensions.GACounter.GACounter' ); ?>
             </div>
             <div class="fright">

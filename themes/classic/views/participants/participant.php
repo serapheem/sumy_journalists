@@ -1,17 +1,23 @@
 <?php 
-$created = CLocale::getInstance( 'uk' )
-	->dateFormatter
-	->formatDateTime( $record->created, 'long', null );
+/**
+ * Participant article layout
+ */
+
+$created = CLocale::getInstance( 'uk' )->dateFormatter->formatDateTime( $record->created, 'long', null );
 ?>
-<div id="contentText">
-    <h1><?php echo CHtml::encode( $record->title ) ?></h1>
-    <span class="note"><?php echo Yii::t( 'main', 'VIEWS' ) ?>: <?php echo $record->views; ?></span>
-    <span class="note"><?php echo Yii::t( 'main', 'PUBLISHED' ) ?>: <?php echo $created ?></span>
-    <br />
-    <br />
-    <div><?php echo $record->body; ?></div>
+
+<div class="article-title">
+	<?php echo CHtml::encode( $record->title ); ?>
 </div>
-<div id="contentFoot">
+<div class="article-info">
+	<div class="note"><?php echo Yii::t( 'main', 'PUBLISHED' ); ?>: <?php echo $created; ?></div>
+    <div class="note"><?php echo Yii::t( 'main', 'VIEWS' ); ?>: <?php echo $record->views; ?></div>
+    <div class="clear"></div>
+</div>
+<div class="article-text">
+    <?php echo $record->body; ?>
+</div>
+<div class="article-footer">
 	<?php 
 	if ($record->top10): 
 		$session = Yii::app( )->session;
@@ -40,7 +46,7 @@ $created = CLocale::getInstance( 'uk' )
 		//S. hide change variant
 		//$show_change_rating = false;
 	?>
-    <div class="rating note" id="rating-<?php echo $record->id ?>" style="text-align: center">
+    <div class="rating" id="rating-<?php echo $record->id ?>">
     	<?php echo Yii::t( 'main', 'VOTES' ) ?>: <?php echo $record->rating ?>
     	
     	<?php if ( $show_change_rating ): ?>
@@ -55,5 +61,7 @@ $created = CLocale::getInstance( 'uk' )
 	<?php endif; ?> 
     
     <?php echo Helper::getSocialButtons( 'Participants', $record ) ?>
+    
+    <div class="clear"></div>
 </div>
 <?php echo Helper::getCommentsBlock( 'Participants', $record ) ?>
