@@ -194,10 +194,7 @@ class Helper
 	/**
 	 * Add gallery block to text of item
 	 * 
-	 * @static
-	 * @access public
 	 * @param strign $text of item 
-	 * 
 	 * @return string old text with gallery block
 	 */
 	public static function addGallery( $text )
@@ -241,18 +238,27 @@ class Helper
 			$text = str_replace( $images, '', $text );
 			$text = preg_replace( '#<p>\s*</p>#i', '', $text );
 			
-			$small_images_url = array( );
+			$site_root_path = Yii::app()->getBasePath() . '/..';
+			$small_images = array( );
 			foreach ( $images_url AS $index => $url )
 			{
+				// Checks if there is thumb version of image
 				$smal_image = str_replace( '/upload/image/', '/upload/_thumb/image/', $url );
-				$dir = Yii::app( )->basePath . '/..';
-				if ( file_exists( $dir . $smal_image ) )
+				if ( $file_path = realpath( $site_root_path . $smal_image ) )
 				{
-					$small_images_url[$index] = $smal_image;
+					$url = $smal_image;
 				}
 				else {
-					$small_images_url[$index] = $url;
+					$file_path = realpath( $site_root_path . $url );
 				}
+				// Gets info about image
+				$info = getimagesize( $file_path );
+				$small_images[$index] = array(
+					'width' => $info[0],
+					'height' => $info[1],
+					'path' => $file_path,
+					'url' => $url
+				);
 			}
 			
 			$html = ''; 

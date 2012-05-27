@@ -693,21 +693,34 @@ h4 {
 #gallery  
 	{
 	padding: 10px 0 0 0;
-	margin: 0 0 20px 40px;
-	position: relative;	 
+	margin: 0 auto 20px;
+	position: relative;
+	width: 730px !important;
+	height: 220px;
 	}
-	#gallery a.prev, 
-	#gallery a.next 
+	#gallery a:hover, 
+	#gallery a:active 
+		{
+		border: none;
+		outline: none;
+		}
+	#gallery .prev, 
+	#gallery .next 
 		{
 		display: block;
 		float: left;
 		width: 30px;
 		height: 201px;
+		margin: 0 0 0 10px;
 		text-decoration: none;
 		background: url(images/nav_left.gif) 1px 85px no-repeat;
 		cursor: pointer;
 		}
-	#gallery a.next 
+	#gallery .prev
+		{
+		margin-right: 5px;
+		}
+	#gallery .next 
 		{
 		background-image: url(images/nav_right.gif);
 		}
@@ -721,12 +734,7 @@ h4 {
 			background-image: url(images/nav_left_hover.gif);
 			background-position: -1px 83px;
 			}	
-		#gallery a:hover, 
-		#gallery a:active 
-			{
-			border: none;
-			outline: none;
-			}
+		
 		#gallery a.prev:active,
 		#gallery a.next:active
 			{
@@ -737,9 +745,8 @@ h4 {
 		border: 1px solid black;
 		float: left;
 		background-color: #dfdfdf;
-		width: 650px;
+		width: 640px;
 		overflow: hidden;
-		margin: 0 10px 30px;
 		}
 	#gallery ul 
 		{
@@ -754,6 +761,7 @@ h4 {
 				background-color: #fff;
 				width: 140px;
 				margin: 10px;
+				max-height: 180px;
 				}
 /* 
  * Gallery Block Styles Start 

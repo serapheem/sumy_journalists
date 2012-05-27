@@ -20,7 +20,7 @@ class GACounter extends CWidget
 		}
 		
 		try {
-			$ga = new gapi( 'serapheem013@gmail.com', 'cyoj bpjz fybu ljna' );
+			$ga = new gapi( 'serhii.test@gmail.com', 'g_1973E-' );
 			
 			$ga->requestReportData( '53709199', array( 'year', 'month','day' ), array( 'pageviews', 'visits' ), array( '-year', '-month', '-day' ) );
 			
