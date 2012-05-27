@@ -121,22 +121,9 @@ if ( ( stripos( $_SERVER['HTTP_USER_AGENT'], 'msie 6' ) !== false )
                     </div>
                 </div>
                 <div class="col-2">
-                    
-                    <?php 
-                    // TODO : move poll logic to widget
-                    if ( $this->show_poll )
-					{
-                        $poll = $this->getPoll( );
-                        if ( !empty( $poll ) && !empty( $poll->items ) )
-						{
-						?>
-						<div class="box" id="poll">
-							<?php $this->renderPartial( '/html/poll', array( 'poll' => $poll ) ); ?>
-                        </div>
-                        <?php
-                        } 
-                    } 
-                    ?>
+                    <?php if ( $this->show_poll ) : ?> 
+                    	<div class="box" id="poll"><?php $this->widget( 'application.extensions.Poll.PollWidget' ); ?></div> 
+                    <?php endif; ?>
                     
                     <div class="advertisement">
 	                    <script type="text/javascript"><!--

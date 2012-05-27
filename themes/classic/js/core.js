@@ -94,26 +94,3 @@ function addParticipantVote(id, model)
 			}
 		)
 }
-function addVote() 
-{
-	var poll_id = $('#poll input[name=poll_id]').val();
-	var item_id = $('#poll input[name="vote"]:checked').val(); 
-	
-	$.getJSON('/ajax/addvoite', 
-			{
-				'poll_id': poll_id, 
-				'item_id': item_id
-			}, 
-			function(data) 
-			{
-				if ( !data['error'] ) 
-				{
-					$("#poll").fadeOut(500, function() 
-					{
-						$(this).html(data['html']);
-						$(this).fadeIn(500)
-					})
-				}
-			}
-		)
-}

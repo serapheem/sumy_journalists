@@ -164,12 +164,10 @@ class AjaxController extends Controller
 		
 		// Get poll block
 		$html = '';
-		$poll = Poll::model( )
-			->findByPK( $poll_id );
-		if ( !empty( $poll ) && is_array( $poll->items ) )
+		if ( !$error )
 		{
 			ob_start( );
-			$this->renderPartial( '/html/poll', array( 'poll' => $poll ) );
+			$this->widget( 'application.extensions.Poll.PollWidget', array( 'poll_id' => $poll_id ) );
 			$html = ob_get_contents( );
 			ob_end_clean( );
 		}
@@ -183,7 +181,6 @@ class AjaxController extends Controller
 		);
 		echo json_encode( $result );
 		Yii::app( )->end( );
-		return true;
 	}
 	
 	/**

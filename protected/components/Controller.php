@@ -172,20 +172,4 @@ class Controller extends CController
 		$this->_keywords = $keywords;
 	}
 	
-	/**
-	 * Returns the poll item for current page
-	 * 
-	 * @access public
-	 * 
-	 * @return object
-	 */
-	public function getPoll( )
-	{				
-		$poll = Poll::model( )
-			->published( )
-			->find( );
-			
-		return $poll;
-	}
-	
 }
