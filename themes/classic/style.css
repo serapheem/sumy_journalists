@@ -236,12 +236,15 @@ h4 {
 	position: relative;
 	padding: 0 0 70px;
 	}
+	/* FIXME: don't work on IE7-8 */
 	#content .col-1 
 	{
 		width: 780px;
-		background-image: url(images/body-bg-lighter.png);
-		background-repeat: repeat;
-		background-color: #fff;
+		background: #fffaf0 none 0 0 no-repeat;
+		-moz-box-shadow: inset 6px 6px 18px 8px #d5d0bc, inset -6px -6px 18px 8px #d5d0bc;
+		-webkit-box-shadow: inset 6px 6px 18px 8px #d5d0bc, inset -6px -6px 18px 8px #d5d0bc;
+		-o-box-shadow: inset 6px 6px 18px 8px #d5d0bc, inset -6px -6px 18px 8px #d5d0bc;
+		box-shadow: inset 6px 6px 18px 8px #d5d0bc, inset -6px -6px 18px 8px #d5d0bc;
 	}
 	#content .col-2 
 		{
@@ -266,7 +269,7 @@ h4 {
 		}
 	#content .indent 
 		{
-		padding: 0 20px 20px;
+		padding: 0 25px 25px;
 		border-right: 2px solid #7f7f7f;
 		overflow: hidden;
 		clear: left;
@@ -318,8 +321,7 @@ h4 {
 	{
 	width: 500px;
 	float: left;
-	padding: 0 15px 0 0;
-	margin: 20px 0 0; 
+	padding: 10px 10px 0 0;
 	border-right: 2px solid #7f7f7f;
 	}
 	#main-block div 
@@ -332,7 +334,7 @@ h4 {
 		{
 		width: 450px;
 		border: none;
-		margin: 0 0 20px;
+		margin: 0 auto 20px;
 		}
 	#frontLeft img 
 		{
@@ -358,13 +360,13 @@ h4 {
 		padding: 0 20px;
 		width: 228px;
 		border-right: 2px solid #7f7f7f;
+		margin-top: 20px;
 		}
 #content .front-column 
 	{
 	width: 200px;
 	float: left;
-	padding: 0 0 0 20px;
-	margin: 20px 0 0;
+	padding: 10px 0 0 15px;
 	}
 	#content .front-column .frontItem 
 		{
@@ -420,7 +422,7 @@ h4 {
 		text-decoration: underline;
 		}
 /* Articles */
-.articlesBox { margin: 20px 30px 20px 0; }
+.articlesBox { margin: 20px 10px; }
 	.articlesBox .articlesImg 
 		{
 		width: 200px;
@@ -459,7 +461,7 @@ h4 {
 	}
 .personBox 
 	{
-	margin: 20px 30px 20px 0;
+	margin: 20px auto;
 	width: 150px;
 	text-align: center;
 	}
@@ -516,7 +518,7 @@ h4 {
 		}
 .top10Results .vote-block
 	{
-	margin: 0 0 10px;
+	margin: 10px 0 5px 5px;
 	}
 	.top10Results .vote-block .vote
 		{
@@ -541,6 +543,7 @@ h4 {
 	{
 	color: #000;
 	font: bold 16px/16px Arial, Helvetica, sans-serif;
+	margin: 10px 0 5px 5px;
 	}
 /*
  * List Items Styles End
@@ -566,10 +569,12 @@ h4 {
 		font-size: 12px;
 		border: 1px solid #7F7F7F;
 		}
-#content .article-text 
+#content .article-text,
+#content .page-box 
 	{
 	text-align: justify;
 	}
+
 /*
  * Article Text Style End
  */
@@ -744,7 +749,7 @@ h4 {
 		{
 		border: 1px solid black;
 		float: left;
-		background-color: #dfdfdf;
+		background-color: #e2e2e2;
 		width: 640px;
 		overflow: hidden;
 		}
@@ -772,7 +777,7 @@ h4 {
  */
 #comments
 	{
-	width: 730px;
+	width: 720px;
 	margin-top: 15px;
 	} 
 /* 

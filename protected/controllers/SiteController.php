@@ -7,34 +7,25 @@ class SiteController extends Controller
 {
 	/**
 	 * Displays items on index page
-	 * 
-	 * @access public
-	 * 
 	 * @return void
 	 */
-	public function actionIndex( ) 
+	public function actionIndex() 
 	{
 		$rows = Frontpage::model()->getList( );
 		
 		$this->render( 'index', array( 'rows' => $rows ) );
-		return true;
 	}
 	
 	/**
 	 * Manages operations with news
-	 * 
-	 * @access public
-	 * 
 	 * @return void
 	 */
 	public function actionNews() 
 	{
-		if ( isset( $_GET['slug'] ) && !isset( $_GET['id'] ) )
-		{
+		if ( isset( $_GET['slug'] ) && !isset( $_GET['id'] ) ) {
 			$_GET['id'] = ( int ) $_GET['slug'];
 		}
-		if ( isset( $_GET['id'] ) ) 
-		{
+		if ( isset( $_GET['id'] ) ) {
 			$this->class = 'class="news"';
 
 			$news = News::model( )->findByPk( $_GET['id'] );
@@ -68,26 +59,20 @@ class SiteController extends Controller
 				'view' => 'news'
 			) );
 		}
-		return true;
 	}
 	
 	/**
 	 * Manages operations with know our items
-	 * 
-	 * @access public
-	 * 
 	 * @return void
 	 */
-	public function actionKnowOur( ) 
+	public function actionKnowOur() 
 	{
 		$this->class = 'class="knowour"';
 		
-		if ( isset( $_GET['slug'] ) && !isset( $_GET['id'] ) )
-		{
+		if ( isset( $_GET['slug'] ) && !isset( $_GET['id'] ) ) {
 			$_GET['id'] = ( int ) $_GET['slug'];
 		}
-		if ( isset( $_GET['id'] ) ) 
-		{
+		if ( isset( $_GET['id'] ) ) {
 			$record = KnowOur::model( )->findByPk( $_GET['id'] );
 
 			if ( empty( $record ) ) 
@@ -119,24 +104,18 @@ class SiteController extends Controller
 				'view' => 'knowour'
 			) );
 		}
-		return true;
 	}
 	
 	/**
 	 * Manages operations with city style items
-	 * 
-	 * @access public
-	 * 
 	 * @return void
 	 */
-	public function actionCityStyle( ) 
+	public function actionCityStyle() 
 	{
-		if ( isset( $_GET['slug'] ) && !isset( $_GET['id'] ) )
-		{
+		if ( isset( $_GET['slug'] ) && !isset( $_GET['id'] ) ) {
 			$_GET['id'] = ( int ) $_GET['slug'];
 		}
-		if ( isset( $_GET['id'] ) ) 
-		{
+		if ( isset( $_GET['id'] ) ) {
 			$record = CityStyle::model( )->findByPk( $_GET['id'] );
 
 			if ( empty( $record ) ) 
@@ -170,26 +149,19 @@ class SiteController extends Controller
 				'view' => 'citystyle'
 			) );
 		}
-		return true;
 	}
 	
 	/**
 	 * Manages operations with tyca items
-	 * 
-	 * @access public
-	 * 
 	 * @return void
 	 */
-	public function actionTyca( ) 
+	public function actionTyca() 
 	{
-		if ( isset( $_GET['slug'] ) && !isset( $_GET['id'] ) )
-		{
+		if ( isset( $_GET['slug'] ) && !isset( $_GET['id'] ) ) {
 			$_GET['id'] = ( int ) $_GET['slug'];
 		}
-		if ( isset( $_GET['id'] ) ) 
-		{
-			$record = Tyca::model( )
-				->findByPk( $_GET['id'] );
+		if ( isset( $_GET['id'] ) ) {
+			$record = Tyca::model( )->findByPk( $_GET['id'] );
 
 			if ( empty( $record ) ) 
 			{
@@ -222,19 +194,15 @@ class SiteController extends Controller
 				'view' => 'tyca'
 			) );
 		}
-		return true;
 	}
 	
 	/**
 	 * Manages operations with pages
-	 * 
-	 * @access public
-	 * 
 	 * @return void
 	 */
-	public function actionPages( ) 
+	public function actionPages() 
 	{
-		$this->class = 'class="pageBox"';
+		$this->class = 'class="page-box"';
 
 		$row = Pages::model()->find( 'alias=?', array( $_GET['alias'] ) );
 
@@ -253,34 +221,26 @@ class SiteController extends Controller
 		}
 
 		$this->renderText( $row->body );
-		return true;
 	}
 	
 	/**
 	 * Manages error page
-	 * 
-	 * @access public
-	 * 
 	 * @return void
 	 */
 	public function actionError( ) 
 	{
-		$this->class = 'class="errorBox"';
+		$this->class = 'class="error-box"';
 
-		$error = Yii::app( )
-			->errorHandler
-			->error;
+		$error = Yii::app()->errorHandler->error;
 			
-		if ( $error ) 
-		{
-			if ( Yii::app( )->request->isAjaxRequest )
-			{
+		if ( $error ) {
+			if ( Yii::app()->request->isAjaxRequest ) {
 				echo $error['message'];
 			} 
 			else {
 				$this->render( 'error', $error );
 			}
 		}
-		return true;
 	}
+	
 }
