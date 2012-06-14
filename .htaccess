@@ -5,6 +5,23 @@ RewriteCond %{HTTP_HOST} ^incity\.sumy\.ua
 RewriteRule (.*) http://www.incity.sumy.ua/$1 [R=301,L] 
 
 
+RewriteRule ^news$ http://www.incity.sumy.ua/news.html [R=301,L] 
+RewriteRule ^news/$ http://www.incity.sumy.ua/news.html [R=301,L] 
+RewriteRule ^top10$ http://www.incity.sumy.ua/top10.html [R=301,L] 
+RewriteRule ^top10/$ http://www.incity.sumy.ua/top10.html [R=301,L] 
+RewriteRule ^participants$ http://www.incity.sumy.ua/participants.html [R=301,L] 
+RewriteRule ^participants/$ http://www.incity.sumy.ua/participants.html [R=301,L] 
+RewriteRule ^knowour$ http://www.incity.sumy.ua/knowour.html [R=301,L] 
+RewriteRule ^knowour/$ http://www.incity.sumy.ua/knowour.html [R=301,L] 
+RewriteRule ^citystyle$ http://www.incity.sumy.ua/citystyle.html [R=301,L] 
+RewriteRule ^citystyle/$ http://www.incity.sumy.ua/citystyle.html [R=301,L] 
+RewriteRule ^tyca$ http://www.incity.sumy.ua/tyca.html [R=301,L] 
+RewriteRule ^tyca/$ http://www.incity.sumy.ua/tyca.html [R=301,L] 
+
+Redirect 301 /participant/52 http://www.incity.sumy.ua/participants/52:anzhela
+Redirect 301 /news.html/151:blagodijnist-zarady-zhyttya http://www.incity.sumy.ua/news/151:blagodijnist-zarady-zhyttya
+
+
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_URI} !/index.php
