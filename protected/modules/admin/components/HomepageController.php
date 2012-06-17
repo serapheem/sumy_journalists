@@ -3,7 +3,7 @@
 /**
  * Home page Controller Class
  */
-class HomepageController extends AdminController
+class HomepageController extends AdminAbstractController
 {
 	/**
 	 * Displays edit form and save changes

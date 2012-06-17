@@ -3,7 +3,7 @@
 /**
  * Statistics Controller Class
  */
-class StatisticsController extends AdminController 
+class StatisticsController extends AdminAbstractController 
 {
 	/**
 	 * Displays the main page

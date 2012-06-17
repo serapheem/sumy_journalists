@@ -4,6 +4,7 @@
  */
 
 return array(
+	// Menu items
 	'ADMIN_PANEL' 		=> 'Адмін-панель',
 	'SETTINGS' 			=> 'Установки',
 	'MATERIALS' 		=> 'Матеріали',
@@ -13,14 +14,15 @@ return array(
 	'VIEW_SITE' 		=> 'Перегляд сайту',
 	'LOG_OUT' 			=> 'Вийти',
 	
+	// Names of column or field
 	'TITLE'				=> 'Назва',
 	'NAME' 				=> "Ім'я",
 	'ALIAS' 			=> 'Посилання',
 	'TEXT' 				=> 'Текст',
 	'CHARACTERISTIC' 	=> 'Характеристика',
-	'VIEWS'				=> 'Переглядів',
+	'STATUS'			=> 'Стан',
+	'HITS'				=> 'Переглядів',
 	'RATING'			=> 'Рейтинг',
-	'PUBLISHED'			=> 'Опубліковано',
 	'ON_FRONTPAGE'		=> 'На головній',
 	'ORDER'				=> 'Порядок',
 	'SAVE_ORDER'		=> 'Зберегти порядок',
@@ -32,6 +34,7 @@ return array(
 	'COMMENTS_NUMBER' 	=> 'Кількість коментарів',
 	'SECTION' 			=> 'Розділ',
 	
+	// Fields of the user
 	'USER_NAME'			=> "Ім'я користувача",
 	'LOGIN'				=> 'Логін',
 	'EMAIL'				=> 'Пошта',
@@ -43,6 +46,9 @@ return array(
 	'ONLINE'			=> 'Онлайн',
 	'OFFLINE'			=> 'Оффлайн',
 	
+	// Names of the link, filter or action
+	'PUBLISHED'			=> 'Опубліковані',
+	'UNPUBLISHED'		=> 'Неопубліковані',
 	'REMOVE' 			=> 'Видалити',
 	'EDIT' 				=> 'Редагувати',
 	'PUBLISH' 			=> 'Опублікувати',
@@ -65,12 +71,17 @@ return array(
 	'RESULTS' 			=> 'Результати',
 	'READ_MORE' 		=> 'читати далі',
 	
+	// System notice messages 
+	'SITE_TEMPORARILY_DISABLED' => 'Сайт тимчасово відключений',
 	'SETTINGS_CHANGED' 	=> 'Установки змінені.',
 	'NEW_ORDER_SAVED' 	=> 'Новий порядок збережений.',
+	
+	// System error message
 	'LOGIN_INCORRECT' 	=> "Ім'я користувача неправильне.",
 	'PASSWORD_INCORRECT'=> 'Невірний пароль.',
 	'SOME_TECHNICAL_PROBLEMS' 	=> 'Виникли технічні проблеми!',
+	
 	'TOTAL_VOTES' 		=> 'Всього проголосувало',
 	'YOU_ALREADY_VOTED' => 'Ви уже проголосували!',
-	'SITE_TEMPORARILY_DISABLED' => 'Сайт тимчасово відключений',
+	
 );

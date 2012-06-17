@@ -74,7 +74,50 @@ td { border-bottom: 1px solid #e8e8e8 }
 .row input[type="text"] { border: 1px solid #999; width: 200px } 
 .row .errorMessage { padding: 0 0 0 120px; color: #FF9595; font-size: 9px; }
 
-.info { font-size:11px; background: #E9FFE8 url(../images/info.png) no-repeat 10px 50%; border: 1px solid #CAFFCA; line-height: 36px; padding: 0 45px; margin: 10px; margin-bottom: 0; cursor: pointer; }
+#user-info .notice,
+#user-info .warning,
+#user-info .error 
+	{ 
+	font-size: 11px; 
+	background: #E9FFE8; 
+	border: 1px solid #CAFFCA; 
+	line-height: 36px; 
+	padding: 0 45px; 
+	margin: 10px; 
+	margin-bottom: 0; 
+	cursor: pointer; 
+	position: relative;
+	}
+	#user-info .notice .icon,
+	#user-info .warning .icon,
+	#user-info .error .icon
+		{
+		background: url(../images/info-spline.png) no-repeat 0 0;
+		width: 24px;
+		height: 24px;
+		position: absolute;
+		left: 10px;
+		top: 6px;
+		}
+#user-info .warning
+	{
+	background-color: #E6C8A6;
+	border-color: #FFBB00;
+	}
+	#user-info .warning .icon
+		{
+		background-position: 0 -24px;
+		}
+#user-info .error
+	{
+	background-color: #E6C0C0;
+	border-color: #DE7A7B;
+	}
+	#user-info .error .icon
+		{
+		background-position: 0 -48px;
+		}
+
 
 a { color: #666; text-decoration: underline; }
 a:hover { text-decoration: none; }
@@ -259,6 +302,14 @@ button{
 	margin-top: 10px;
 	margin-bottom: 10px;
 }
+
+/*
+ * Overwrite grid styles
+ */
+.grid-view-loading
+	{
+	background-position: 0 10px;
+	}
 
 .state, .space
 	{

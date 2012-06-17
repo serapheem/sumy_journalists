@@ -3,7 +3,7 @@
 /**
  * Poll Controller Class
  */
-class PollController extends AdminController 
+class PollController extends AdminAbstractControllers 
 {
 	/**
 	 * Name of default model

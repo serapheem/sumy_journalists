@@ -3,7 +3,7 @@
 /**
  * Front page Controller Class
  */
-class FrontpageController extends AdminController 
+class FrontpageController extends AdminAbstractController 
 {
 	/**
 	 * Name of default model

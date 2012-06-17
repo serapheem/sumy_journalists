@@ -3,7 +3,7 @@
 /**
  * Users Controller Class
  */
-class UsersController extends AdminController 
+class UsersController extends AdminAbstractController 
 {
 	/**
 	 * Name of default model

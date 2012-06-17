@@ -2,8 +2,12 @@
 /**
  * File with sub menu
  */
-if ( !empty( $items ) && is_array( $items ) ) :
+
 ?>
+
+<h1 class="main"><?php echo Yii::t( 'main', 'MATERIALS' ) ?></h1>
+
+<?php if ( !empty( $items ) && is_array( $items ) ) : ?>
 <ul class="tabs">
 	<?php foreach ( $items AS $link => $title ) : ?>
 	

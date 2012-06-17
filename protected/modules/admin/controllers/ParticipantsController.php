@@ -3,7 +3,7 @@
 /**
  * Participants Controller Class
  */
-class ParticipantsController extends AdminController 
+class ParticipantsController extends AdminAbstractController 
 {
 	/**
 	 * Name of default model

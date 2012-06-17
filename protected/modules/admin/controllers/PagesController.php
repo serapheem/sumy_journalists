@@ -3,7 +3,7 @@
 /**
  * Pages Controller Class
  */
-class PagesController extends AdminController
+class PagesController extends AdminAbstractController
 {
 	/**
 	 * Name of default model

@@ -3,7 +3,7 @@
 /**
  * Default Controller Class
  */
-class DefaultController extends AdminController 
+class DefaultController extends AdminAbstractController 
 {
 	/**
 	 * Displays and saves change in site configuration

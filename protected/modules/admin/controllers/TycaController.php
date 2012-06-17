@@ -3,7 +3,7 @@
 /**
  * Tyca Controller Class
  */
-class TycaController extends AdminController 
+class TycaController extends AdminAbstractController 
 {
 	/**
 	 * Name of default model

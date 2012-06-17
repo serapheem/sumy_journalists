@@ -3,7 +3,7 @@
 /**
  * City Style Controller Class
  */
-class CityStyleController extends AdminController 
+class CityStyleController extends AdminAbstractController 
 {
 	/**
 	 * Name of default model
