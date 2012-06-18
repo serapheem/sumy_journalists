@@ -67,6 +67,33 @@ class MyDataLinkColumn extends CDataColumn
 	 * @var array the HTML options for the hyperlinks
 	 */
 	public $linkHtmlOptions=array();
+	
+	/**
+	 * @see CDataColumn::renderFilterCellContent
+	 */
+	protected function renderFilterCellContent()
+	{
+		if(is_string($this->filter))
+			echo $this->filter;
+		else if($this->filter!==false && $this->grid->filter!==null && $this->name!==null && strpos($this->name,'.')===false)
+		{
+			if( is_array($this->filter) )
+			{
+				if ( key_exists( 'prompt', $this->filter ) )
+				{
+					$prompt = $this->filter['prompt'];
+					unset ( $this->filter['prompt'] );
+				}
+				else
+					$prompt = '';
+				echo CHtml::activeDropDownList( $this->grid->filter, $this->name, $this->filter, array( 'id' => false, 'prompt' => $prompt ) );
+			}
+			else if($this->filter===null)
+				echo CHtml::activeTextField($this->grid->filter, $this->name, array('id'=>false));
+		}
+		else
+			parent::renderFilterCellContent();
+	}
 
 	/**
 	 * Renders the data cell content.

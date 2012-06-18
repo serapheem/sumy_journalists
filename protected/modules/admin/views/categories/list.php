@@ -56,11 +56,12 @@ $order_onclick = "$('#admin-form').attr('action', '/admin/{$section_id}/saveorde
 				array(
 					'class' => 'MyDataLinkColumn',
 					'name' => 'state',
-					'filter' => array( 0 => Yii::t( 'main', 'UNPUBLISHED' ), 1 => Yii::t( 'main', 'PUBLISHED' ) ),
+					'filter' => array( 'prompt' => Yii::t( 'main', 'SELECT_STATUS' ), 0 => Yii::t( 'main', 'UNPUBLISHED' ), 1 => Yii::t( 'main', 'PUBLISHED' ) ),
 					'labelExpression' => 'GridHelper::getStateLabel( $data->state )',
-					'url' => '#',
+					'urlExpression' => '"/admin/' . $section_id . '/update?id=" . $data->id',
 					'linkHtmlOptions' => array( 'titleExpression' => '$data->state ? Yii::t( "main", "UNPUBLISH" ) : Yii::t( "main", "PUBLISH" )' ),
-					'headerHtmlOptions' => array( 'width' => '150' )
+					'htmlOptions' => array( 'class' => 'link-column button-column' ),
+					'headerHtmlOptions' => array( 'width' => '130' )
 				),
 				array( 
 					'name' => 'modified', 

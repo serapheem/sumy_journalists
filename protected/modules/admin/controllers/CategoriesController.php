@@ -88,7 +88,7 @@ class CategoriesController extends AdminAbstractController
 					Yii::app()->user->setFlash( 'error', Yii::t( $this->getId(), 'DELETE_ITEMS_PARTIAL_ERROR' ) );
 			}
 			else {
-				Yii::app()->user->setFlash( 'error', Yii::t( $this->getId(), 'DELETE_NO_ITEMS_ERROR' ) );
+				Yii::app()->user->setFlash( 'warning', Yii::t( $this->getId(), 'DELETE_NO_ITEMS_ERROR' ) );
 			}
 		}
 		else {

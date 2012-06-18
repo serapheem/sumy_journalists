@@ -47,6 +47,7 @@ return array(
 	'OFFLINE'			=> 'Оффлайн',
 	
 	// Names of the link, filter or action
+	'SELECT_STATUS'		=> '- Виберіть стан -',
 	'PUBLISHED'			=> 'Опубліковані',
 	'UNPUBLISHED'		=> 'Неопубліковані',
 	'REMOVE' 			=> 'Видалити',
