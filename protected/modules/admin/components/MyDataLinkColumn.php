@@ -69,6 +69,71 @@ class MyDataLinkColumn extends CDataColumn
 	public $linkHtmlOptions=array();
 	
 	/**
+	 * @see CDataColumn
+	 */
+	public function init()
+	{
+		parent::init();
+		
+		// Add possibility to change state by Ajax request
+		if( isset( $this->linkHtmlOptions['click'] ) )
+		{
+			if( !isset( $this->linkHtmlOptions['class'] ) )
+				return true;
+			
+			if( Yii::app()->request->enableCsrfValidation )
+			{
+		        $csrfTokenName = Yii::app()->request->csrfTokenName;
+		        $csrfToken = Yii::app()->request->csrfToken;
+		        $csrf = "\n\t\tdata:{ '$csrfTokenName':'$csrfToken' },";
+			}
+			else
+				$csrf = '';
+			
+			if ( $this->linkHtmlOptions['click'] = 'ajaxChange' )
+			{
+				$this->linkHtmlOptions['click'] = <<<EOD
+function() {
+	$.fn.yiiGridView.update('{$this->grid->id}', {
+		type:'POST',
+		url:$(this).attr('href'),$csrf
+		success:function(data) {
+			$.fn.yiiGridView.update('{$this->grid->id}');
+		},
+		error:function() {
+		}
+	});
+	return false;
+}
+EOD;
+			}
+			
+			if( strpos( $this->linkHtmlOptions['click'], 'js:' ) !== 0 )
+				$this->linkHtmlOptions['click'] = 'js:' . $this->linkHtmlOptions['click'];
+			
+			$this->registerClientScript();
+			unset( $this->linkHtmlOptions['click'] );
+		}
+	}
+	
+	/**
+	 * Registers the client scripts for the link column.
+	 */
+	protected function registerClientScript()
+	{
+		$js = '';
+		if( isset( $this->linkHtmlOptions['click'] ) )
+		{
+			$function = CJavaScript::encode( $this->linkHtmlOptions['click'] );
+			$class = preg_replace( '/\s+/', '.', $this->linkHtmlOptions['class'] );
+			$js = "jQuery('#{$this->grid->id} a.{$class}').live('click',$function);";
+		}
+		
+		if( $js )
+			Yii::app()->getClientScript()->registerScript(__CLASS__.'#'.$this->id, $js);
+	}
+	
+	/**
 	 * @see CDataColumn::renderFilterCellContent
 	 */
 	protected function renderFilterCellContent()

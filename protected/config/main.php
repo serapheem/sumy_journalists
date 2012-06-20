@@ -10,8 +10,9 @@ return array(
 	'preload' => array('log'),
 	// autoloading model and component classes
 	'import' => array(
-		'application.models.*',
 		'application.components.*',
+		'application.helpers.*',
+		'application.models.*',
 	),
 	'modules' => array(
 		'gii' => array(

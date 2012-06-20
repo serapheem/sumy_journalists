@@ -83,7 +83,7 @@ class CategoriesController extends AdminAbstractController
 				}
 	
 				if ( $total )
-					Yii::app()->user->setFlash( 'notice', Yii::t( $this->getId(), '1#ITEM_DELETED|n>1#ITEMS_DELETED', $total ) );
+					Yii::app()->user->setFlash( 'success', Yii::t( $this->getId(), '1#ITEM_DELETED|n>1#ITEMS_DELETED', $total ) );
 				if ( !$success )
 					Yii::app()->user->setFlash( 'error', Yii::t( $this->getId(), 'DELETE_ITEMS_PARTIAL_ERROR' ) );
 			}
@@ -99,9 +99,46 @@ class CategoriesController extends AdminAbstractController
 			Yii::app()->getRequest()->redirect( '/admin/' . $this->getId() );
 	}
 	
-	public function actionUpdate( $id = 0 )
+	/**
+	 * Updates the selected item
+	 * @return void
+	 */
+	public function actionUpdate()
 	{
-		var_dump($id); die;
+		if ( Yii::app()->request->isPostRequest )
+		{
+			// we only allow update via POST request
+			$model = $this->loadModel( false );
+			if ( $model )
+			{
+				$model_class = ucfirst( $this->getId() );
+				if ( isset( $_POST[$model_class] ) ) 
+				{
+					$model->attributes = $_POST[$model_class];
+					if ( $model->validate() && $model->save() ) 
+					{
+						Yii::app()->user->setFlash( 'success', Yii::t( $this->getId(), 'ITEM_UPDATED' ) );
+					}
+					else {
+						Yii::app()->user->setFlash( 'error', Yii::t( $this->getId(), 'There were some errors during update item.' ) );
+					}
+				}
+				else {
+					Yii::app()->user->setFlash( 'error', Yii::t( $this->getId(), 'The new attributes for item were not set.' ) );
+				}
+			}
+			else {
+				Yii::app()->user->setFlash( 'error', Yii::t( $this->getId(), 'Can\'t find item with such identifier.' ) );
+			}
+		}
+		else {
+			// Yii::app()->user->setFlash( 'error', Yii::t( $this->getId(), 'Can\'t update item using such type of request.' ) );
+			throw new CHttpException( 400, 'Invalid request. Please do not repeat this request again.' );
+		}
+		
+		// TODO : need to use returnUrl parameter of user object
+		if ( !isset( $_GET['ajax'] ) )
+			Yii::app()->getRequest()->redirect( '/admin/' . $this->getId() );
 	}
 	
 }

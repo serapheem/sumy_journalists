@@ -51,10 +51,10 @@ abstract class AdminAbstractController extends CController
 	}
 
 	/**
-	 * Loads the model object
+	 * Returns the model object or null if there is no model with such identifier
 	 *
 	 * @param boolean $create
-	 * @return object
+	 * @return CActiveRecord|null
 	 */
 	public function loadModel( $create = true )
 	{
@@ -73,11 +73,13 @@ abstract class AdminAbstractController extends CController
 				$this->_model = $model_class::model();
 			}
 
+			// TODO : Check for correct work with other controllers
+			/* 
 			if ( $this->_model === null )
 			{
 				Yii::app()->user->setFlash( 'info', Yii::t( $this->getId(), 'NEW_ITEM' ) );
 				Yii::app()->getRequest()->redirect( '/admin' );
-			}
+			} */
 		}
 
 		return $this->_model;

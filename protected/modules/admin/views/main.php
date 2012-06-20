@@ -55,9 +55,9 @@
 					<span class="icon">&nbsp;</span><?php 
 					echo ( Yii::app( )->user->hasFlash( 'warning' ) ) ? Yii::app( )->user->getFlash( 'warning' ) : '&nbsp;'; 
 				?></div>
-				<div class="notice" onclick="this.style.display='none'"<?php echo ( Yii::app( )->user->hasFlash( 'notice' ) ) ? '' : ' style="display: none"'; ?>>
+				<div class="success" onclick="this.style.display='none'"<?php echo ( Yii::app( )->user->hasFlash( 'success' ) ) ? '' : ' style="display: none"'; ?>>
 					<span class="icon">&nbsp;</span><?php 
-					echo ( Yii::app( )->user->hasFlash( 'notice' ) ) ? Yii::app( )->user->getFlash( 'notice' ) : '&nbsp;'; 
+					echo ( Yii::app( )->user->hasFlash( 'success' ) ) ? Yii::app( )->user->getFlash( 'success' ) : '&nbsp;'; 
 				?></div>
 			</div>
 			
