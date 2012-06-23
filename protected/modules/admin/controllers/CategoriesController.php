@@ -15,9 +15,9 @@ class CategoriesController extends AdminAbstractController
 	{
 		$rules = parent::accessRules();
 		
-		return array_merge_recursive( array( 
+		return array_merge( array( 
 			array( 'allow',  // allow authenticated users to perform 'view' actions
-				'actions' => array( 'admin', 'delete', 'update', 'index', 'view' ),
+				'actions' => array( 'admin', 'edit', 'create', 'update', 'delete' ),
 				'expression' => '$user->id == 1',
 			),
 			/*array('allow', // allow admin role to perform 'admin', 'update' and 'delete' actions
@@ -45,8 +45,8 @@ class CategoriesController extends AdminAbstractController
 		else {
 			$this->_model = new $model_class( 'search' );
 			$this->_model->unsetAttributes(); // clear any default values
-			if( isset( $_GET[$model_class] ) )
-				$this->_model->attributes = $_GET[$model_class];
+			if( $attributes = Yii::app()->getRequest()->getQuery($model_class) )
+				$this->_model->attributes = $attributes;
 			
 			$dataProvider = $this->_model->search( $this->_itemsPerPage );
 		}
@@ -64,38 +64,41 @@ class CategoriesController extends AdminAbstractController
 	 * @return void
 	 */
 	public function actionDelete() 
-	{ 
+	{
+		$request = Yii::app()->getRequest();
+		// we only allow update via POST request
+		if ( !$request->getIsPostRequest() )
+		{
+			throw new CHttpException( 400, 'Invalid request. Please do not repeat this request again.' );
+			//Yii::app()->user->setFlash( 'error', Yii::t( $this->getId(), 'DELETE_BAD_REQUEST_TYPE_ERROR' ) );
+		}
+				 
 		$model_class = ucfirst( $this->getId() );
 		$success = true;
 		
-		if ( Yii::app()->request->isPostRequest )
+		if ( $total = count( $request->getPost('items') ) ) 
 		{
-			if ( isset( $_POST['items'] ) && ($total = count( $_POST['items'] )) ) 
+			$items = ( array ) $request->getPost('items');
+			foreach ( $items as $key => $id )
 			{
-				$items = ( array ) $_POST['items'];
-				foreach ( $items as $key => $id )
+				if ( !$model_class::model()->deleteByPk( $id ) )
 				{
-					if ( !$model_class::model()->deleteByPk( $id ) )
-					{
-						$total--;
-						$success = false;
-					}
+					$total--;
+					$success = false;
 				}
-	
-				if ( $total )
-					Yii::app()->user->setFlash( 'success', Yii::t( $this->getId(), '1#ITEM_DELETED|n>1#ITEMS_DELETED', $total ) );
-				if ( !$success )
-					Yii::app()->user->setFlash( 'error', Yii::t( $this->getId(), 'DELETE_ITEMS_PARTIAL_ERROR' ) );
 			}
-			else {
-				Yii::app()->user->setFlash( 'warning', Yii::t( $this->getId(), 'DELETE_NO_ITEMS_ERROR' ) );
-			}
+
+			if ( $total )
+				Yii::app()->user->setFlash( 'success', Yii::t( $this->getId(), '1#ITEM_DELETED|n>1#ITEMS_DELETED', $total ) );
+			if ( !$success )
+				Yii::app()->user->setFlash( 'error', Yii::t( $this->getId(), 'DELETE_ITEMS_PARTIAL_ERROR' ) );
 		}
 		else {
-			Yii::app()->user->setFlash( 'error', Yii::t( $this->getId(), 'DELETE_BAD_REQUEST_TYPE_ERROR' ) );
+			Yii::app()->user->setFlash( 'warning', Yii::t( $this->getId(), 'DELETE_NO_ITEMS_ERROR' ) );
 		}
-
-		if ( !isset( $_GET['ajax'] ) )
+		
+		// TODO : need to use returnUrl parameter of user object
+		if ( !$request->getIsAjaxRequest() )
 			Yii::app()->getRequest()->redirect( '/admin/' . $this->getId() );
 	}
 	
@@ -105,39 +108,39 @@ class CategoriesController extends AdminAbstractController
 	 */
 	public function actionUpdate()
 	{
-		if ( Yii::app()->request->isPostRequest )
+		$request = Yii::app()->getRequest();
+		// we only allow update via POST request
+		if ( !$request->getIsPostRequest() )
 		{
-			// we only allow update via POST request
-			$model = $this->loadModel( false );
-			if ( $model )
+			throw new CHttpException( 400, 'Invalid request. Please do not repeat this request again.' );
+			//Yii::app()->user->setFlash( 'error', Yii::t( $this->getId(), 'DELETE_BAD_REQUEST_TYPE_ERROR' ) );
+		}
+		
+		$model = $this->loadModel( false );
+		if ( $model )
+		{
+			$model_class = ucfirst( $this->getId() );
+			if ( $attributes = $request->getPost($model_class) ) 
 			{
-				$model_class = ucfirst( $this->getId() );
-				if ( isset( $_POST[$model_class] ) ) 
+				$model->attributes = $attributes;
+				if ( $model->validate() && $model->save() ) 
 				{
-					$model->attributes = $_POST[$model_class];
-					if ( $model->validate() && $model->save() ) 
-					{
-						Yii::app()->user->setFlash( 'success', Yii::t( $this->getId(), 'ITEM_UPDATED' ) );
-					}
-					else {
-						Yii::app()->user->setFlash( 'error', Yii::t( $this->getId(), 'There were some errors during update item.' ) );
-					}
+					Yii::app()->user->setFlash( 'success', Yii::t( $this->getId(), 'ITEM_UPDATED' ) );
 				}
 				else {
-					Yii::app()->user->setFlash( 'error', Yii::t( $this->getId(), 'The new attributes for item were not set.' ) );
+					Yii::app()->user->setFlash( 'error', Yii::t( $this->getId(), 'There were some errors during update item.' ) );
 				}
 			}
 			else {
-				Yii::app()->user->setFlash( 'error', Yii::t( $this->getId(), 'Can\'t find item with such identifier.' ) );
+				Yii::app()->user->setFlash( 'error', Yii::t( $this->getId(), 'The new attributes for item were not set.' ) );
 			}
 		}
 		else {
-			// Yii::app()->user->setFlash( 'error', Yii::t( $this->getId(), 'Can\'t update item using such type of request.' ) );
-			throw new CHttpException( 400, 'Invalid request. Please do not repeat this request again.' );
+			Yii::app()->user->setFlash( 'error', Yii::t( $this->getId(), 'Can\'t find item with such identifier.' ) );
 		}
 		
 		// TODO : need to use returnUrl parameter of user object
-		if ( !isset( $_GET['ajax'] ) )
+		if ( !$request->getIsAjaxRequest() )
 			Yii::app()->getRequest()->redirect( '/admin/' . $this->getId() );
 	}
 	

@@ -70,10 +70,10 @@ abstract class AbstractAdminModel extends CActiveRecord
 			// TODO : always need to use this class
 			if ( !$this->alias )
 			{
-				$this->alias = TranslitHelper::translit( $this->title );
+				$this->alias = TranslitHelper::perform( $this->title );
 			}
 			else {
-				$this->alias = TranslitHelper::translit( $this->alias );
+				$this->alias = TranslitHelper::perform( $this->alias );
 			}
 		}
 		

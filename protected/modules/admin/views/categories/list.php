@@ -3,35 +3,49 @@
  * Layout file for list of categories
  */
 
+Yii::import('zii.widgets.jui.CJuiButton');
+
 $this->breadcrumbs = array(
 	Yii::t( $section_id, 'SECTION_NAME' )
 );
 
-$delete_onclick = "if(confirm('" . Yii::t( $section_id, 'DELETE_ITEMS' ) 
-				. "?')) $('#admin-form').attr('action', '/admin/{$section_id}/delete').submit(); return false;";
 $order_onclick = "$('#admin-form').attr('action', '/admin/{$section_id}/saveorder').submit(); return false;";
 ?>
 
 <?php $this->renderSubmenu(); ?>
 
 <div class="box visible">
-<form action="#" method="post" id="admin-form">
 	<h1><?php echo Yii::t( $section_id, 'SECTION_NAME' ) ?></h1>
 
-	<a href="/admin/<?php echo $section_id ?>/edit" title="<?php echo Yii::t( $section_id, 'ADD_ITEM' ) ?>">
-		<span class="state add">&nbsp;</span> <?php echo Yii::t( $section_id, 'ADD_ITEM' ); 
-	?></a>
-	<a href="#" title="<?php echo Yii::t( $section_id, 'DELETE_ITEMS' ) ?>" onclick="<?php echo $delete_onclick ?>">
-		<span class="state delete">&nbsp;</span> <?php echo Yii::t( $section_id, 'DELETE_ITEMS' ); 
-	?></a>
-	
 	<?php 
+	$this->widget( 'CJuiButton',
+		array(
+			'buttonType' => 'link',
+			'name' => 'edit-button',
+			'caption' => Yii::t( $section_id, 'ADD_ITEM' ),
+			'url' => "/admin/{$section_id}/edit",
+			'htmlOptions' => array( 'title' => Yii::t( $section_id, 'ADD_ITEM' ) )
+		)
+	); 
+	$this->widget( 'MyAdminButton',
+		array(
+			'buttonType' => 'link',
+			'name' => 'delete-button',
+			'caption' => Yii::t( $section_id, 'DELETE_ITEMS' ),
+			'url' => "/admin/{$section_id}/delete",
+			'confirm' => Yii::t( $section_id, 'DELETE_ITEMS' ),
+			'grid_id' => 'categories',
+			'htmlOptions' => array( 'title' => Yii::t( $section_id, 'DELETE_ITEMS' ) )
+		)
+	); 
+	 
 	$this->widget('zii.widgets.grid.CGridView', array(
 		'id' => 'categories',
 		'dataProvider' => $dataProvider,
 		'filter' => $model,
 		'selectableRows' => $itemPerPage,
 		'ajaxUpdate' => 'user-info',
+		// 'updateSelector' => '#categories .pager a, #categories .items thead th a, #admin-form .delete',
 		'beforeAjaxUpdate' => 'updateAjaxRequest',
 		'columns' => array(
 			array(
@@ -68,8 +82,8 @@ $order_onclick = "$('#admin-form').attr('action', '/admin/{$section_id}/saveorde
 			),
 			array( 
 				'name' => 'modified', 
-				'value' => 'CLocale::getInstance( "uk" )->dateFormatter->formatDateTime( $data->modified, "long" )', 
-				'filter' => '',
+				'value' => 'Yii::app()->getDateFormatter()->formatDateTime( $data->modified, "long" )', 
+				'filter' => '', 
 				'headerHtmlOptions' => array( 'width' => '110' ) 
 			),
 			array(
@@ -80,6 +94,4 @@ $order_onclick = "$('#admin-form').attr('action', '/admin/{$section_id}/saveorde
 		),
 	)); 
 	?>
-	
-</form>
 </div>

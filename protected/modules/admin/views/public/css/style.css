@@ -74,6 +74,9 @@ td { border-bottom: 1px solid #e8e8e8 }
 .row input[type="text"] { border: 1px solid #999; width: 200px } 
 .row .errorMessage { padding: 0 0 0 120px; color: #FF9595; font-size: 9px; }
 
+/*
+ * User Info block styles start
+ */
 #user-info .success,
 #user-info .warning,
 #user-info .error 
@@ -117,6 +120,9 @@ td { border-bottom: 1px solid #e8e8e8 }
 		{
 		background-position: 0 -48px;
 		}
+/*
+ * User Info block styles end
+ */
 
 
 a { color: #666; text-decoration: underline; }
@@ -311,6 +317,9 @@ button{
 	background-position: 0 10px;
 	}
 
+/*
+ * State buttons styles start
+ */
 .state, .space
 	{
 	display: inline-block;
@@ -369,6 +378,19 @@ button{
 	{
 	background-position: 0 -12px;
 	}
+#edit-button .ui-button-text
+	{
+	background: url("../images/icon-16-add.png") no-repeat 5px 5px transparent;
+	padding-left: 2.1em;
+	}
+#delete-button .ui-button-text
+	{
+	background: url("../images/icon-16-delete.png") no-repeat 5px 5px transparent;
+	padding-left: 2em;
+	}
+/*
+ * State buttons styles end
+ */
 
 #commentsTable{
 	clear: both;

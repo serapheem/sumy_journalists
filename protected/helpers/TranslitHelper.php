@@ -15,7 +15,7 @@ abstract class TranslitHelper
 	 * @param sting input data
 	 * @return string result of converting
 	 */
-	public static function translit( $string ) 
+	public static function perform( $string ) 
 	{
 		$table = array(
 			'А' => 'A',

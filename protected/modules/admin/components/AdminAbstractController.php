@@ -61,12 +61,15 @@ abstract class AdminAbstractController extends CController
 		$model_class = ucfirst( $this->getId() );
 		if ( !class_exists( $model_class ) )
 			return null;
-		
+
+		$request = Yii::app()->getRequest();
+		$request_method = $request->getIsPostRequest() ? 'getPost' : 'getQuery'; 
+
 		if ( $this->_model === null )
 		{
-			if ( isset( $_REQUEST['id'] ) && ( $_REQUEST['id'] > 0 ) )
+			if ( $id = $request->$request_method('id', 0) )
 			{
-				$this->_model = $model_class::model()->findbyPk( $_REQUEST['id'] );
+				$this->_model = $model_class::model()->findbyPk( $id );
 			}
 			elseif ( $create )
 			{

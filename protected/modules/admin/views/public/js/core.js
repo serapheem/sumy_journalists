@@ -87,7 +87,14 @@ function initExternalLink()
 			links[i].target = '_blank';
 	}
 }
-
+/*
+jQuery(function($) 
+{
+	// initTableRibs();
+	initSelectAllBoxs();
+	initCheckRow();
+	initExternalLink();
+});*/
 function parseUrl( url )
 {
 	// TODO : save this to notebook
@@ -112,13 +119,34 @@ function updateAjaxRequest( id, options )
 		
 		options.data = data;
 		options.url = base_url;
+		
+		// Do some specific operation depending on action
+		var action = base_url.match( /\/\w+\?/i );
+		if ( action == '/delete?' )
+		{
+			var items = new Array();
+			jQuery('#'+id+' table tbody .selected input[type=checkbox]').each(function(index, item)
+			{
+				items.push( parseInt( jQuery(item).attr('value') ) );
+			});
+			if ( items.length )
+				options.data.items = items;
+		}
 	}
-}
-/*
+} /*
 jQuery(function($) 
 {
-	// initTableRibs();
-	initSelectAllBoxs();
-	initCheckRow();
-	initExternalLink();
-});*/
+	// initDeleteSelectedButton
+	jQuery('#admin-form .delete-selected').live('click', function() {
+		$.fn.yiiGridView.update( 'categories', {
+			type:'POST',
+			url:$(this).attr('href'),$csrf
+			success:function(data) {
+				$.fn.yiiGridView.update('{$this->grid->id}');
+			},
+			error:function() {
+			}
+		});
+		return false;
+	});
+}); */
