@@ -52,7 +52,7 @@ abstract class AbstractAdminModel extends CActiveRecord
 	 */
 	protected function beforeSave()
 	{
-		$allowedActions = array( 'update' );
+		$allowedActions = array( 'insert', 'update' );
 		if ( in_array( $this->getScenario(), $allowedActions ) )
 		{
 			$this->modified = date( 'Y-m-d H:i:s' );

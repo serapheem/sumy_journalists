@@ -1,7 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 	<head>
-		<title><?php echo Yii::t( 'main', 'ADMIN_PANEL' ) ?></title>
+		<title><?php echo (( $this->_title ) ? $this->_title .' - ' : '') . Yii::t( 'main', 'ADMIN_PANEL' ); ?></title>
 
 		<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 		<meta http-equiv="X-UA-Compatible" content="IE=7" />
@@ -32,7 +32,7 @@
 				<?php 
 				$this->widget('zii.widgets.CBreadcrumbs', array(
 					'links' => $this->breadcrumbs,
-					'homeLink' => '<a href="/admin">' . Yii::t( 'main', 'ADMIN_PANEL' ) . '</a>',
+					'homeLink' => CHtml::link( Yii::t( 'main', 'ADMIN_PANEL' ), '/admin' ),
 				)); 
 				?><!-- breadcrumbs -->	
 			</div>

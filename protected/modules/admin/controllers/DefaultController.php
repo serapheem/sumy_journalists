@@ -6,6 +6,31 @@
 class DefaultController extends AdminAbstractController 
 {
 	/**
+	 * (non-PHPDoc)
+	 * @see CController::filters
+	 */
+	public function accessRules()
+	{
+		return array( 
+			array( 'allow',
+				'actions' => array( 'login' ),
+				'users' => array( '*' ),
+			),
+			array( 'allow',
+				'actions' => array( 'logout' ),
+				'users' => array( '@' ),
+			),
+			/*array('allow', // allow admin role to perform 'admin', 'update' and 'delete' actions
+				'actions'=>array('admin','delete','update'),
+				'roles'=>array(User::ROLE_ADMIN),
+			),*/
+			array( 'deny',  // deny all users
+				'users' => array( '*' ),
+			) 
+		);
+	}
+	
+	/**
 	 * Displays and saves change in site configuration
 	 * 
 	 * @access public

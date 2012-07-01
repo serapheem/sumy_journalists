@@ -3,8 +3,6 @@
  * Layout file for list of categories
  */
 
-Yii::import('zii.widgets.jui.CJuiButton');
-
 $this->breadcrumbs = array(
 	Yii::t( $section_id, 'SECTION_NAME' )
 );
@@ -18,12 +16,12 @@ $order_onclick = "$('#admin-form').attr('action', '/admin/{$section_id}/saveorde
 	<h1><?php echo Yii::t( $section_id, 'SECTION_NAME' ) ?></h1>
 
 	<?php 
-	$this->widget( 'CJuiButton',
+	$this->widget( 'zii.widgets.jui.CJuiButton',
 		array(
 			'buttonType' => 'link',
 			'name' => 'edit-button',
 			'caption' => Yii::t( $section_id, 'ADD_ITEM' ),
-			'url' => "/admin/{$section_id}/edit",
+			'url' => "/admin/{$section_id}/create",
 			'htmlOptions' => array( 'title' => Yii::t( $section_id, 'ADD_ITEM' ) )
 		)
 	); 
@@ -62,7 +60,7 @@ $order_onclick = "$('#admin-form').attr('action', '/admin/{$section_id}/saveorde
 				'class' => 'MyDataLinkColumn', 
 				'name' => 'title',
 				'labelExpression' => 'CHtml::encode( $data->title )', 
-				'urlExpression' => '"/admin/' . $section_id . '/edit?id=" . $data->id',
+				'urlExpression' => '"/admin/' . $section_id . '/update?id=" . $data->id',
 				'linkHtmlOptions' => array( 'title' => Yii::t( 'main', 'EDIT' ) ),
 				'htmlOptions' => array( 'class' => 'link-column tl' )
 			),

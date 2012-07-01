@@ -26,6 +26,11 @@ abstract class AdminAbstractController extends CController
 	protected $_model = null;
 
 	/**
+	 * @var string The title of the page
+	 */
+	protected $_title = null;
+
+	/**
 	 * Breadcrumbs to current page
 	 * @var array
 	 */
@@ -51,30 +56,53 @@ abstract class AdminAbstractController extends CController
 	}
 
 	/**
+	 * @see CController::filters
+	 */
+	public function filters()
+	{
+		return array(
+			'accessControl', // perform access control for CRUD operations
+		);
+	}
+
+	/**
+	 * @see CController::filters
+	 */
+	public function accessRules()
+	{
+		return array(
+			array( 'allow',  // allow authenticated users to perform 'view' actions
+				'actions' => array( 'admin', 'delete', 'update', 'index', 'view' ),
+				'users' => array( '@' ),
+			),
+			array( 'deny',  // deny all users
+				'users' => array( '*' ),
+			),
+		);
+	}
+	
+	/**
 	 * Returns the model object or null if there is no model with such identifier
 	 *
-	 * @param boolean $create
+	 * @param boolean 	$create 	Created new model object or return null
+	 * @param string 	$scenario 	The new scenario for model
 	 * @return CActiveRecord|null
 	 */
-	public function loadModel( $create = true )
+	protected function loadModel( $create = true, $scenario = '' )
 	{
 		$model_class = ucfirst( $this->getId() );
 		if ( !class_exists( $model_class ) )
 			return null;
 
-		$request = Yii::app()->getRequest();
-		$request_method = $request->getIsPostRequest() ? 'getPost' : 'getQuery'; 
-
 		if ( $this->_model === null )
 		{
-			if ( $id = $request->$request_method('id', 0) )
-			{
+			if ( $id = Yii::app()->request->getParam('id', 0) )
 				$this->_model = $model_class::model()->findbyPk( $id );
-			}
-			elseif ( $create )
-			{
-				$this->_model = $model_class::model();
-			}
+			else 
+				$this->_model = new $model_class();
+			
+			if ( $scenario && $this->_model )
+				$this->_model->setScenario( $scenario );
 
 			// TODO : Check for correct work with other controllers
 			/* 
@@ -109,32 +137,6 @@ abstract class AdminAbstractController extends CController
 		}
 
 		return true;
-	}
-	
-	/**
-	 * @see CController::filters
-	 */
-	public function filters()
-	{
-		return array(
-			'accessControl', // perform access control for CRUD operations
-		);
-	}
-
-	/**
-	 * @see CController::filters
-	 */
-	public function accessRules()
-	{
-		return array(
-			array( 'allow',  // allow authenticated users to perform 'view' actions
-				'actions' => array( 'admin', 'delete', 'update', 'index', 'view' ),
-				'users' => array( '@' ),
-			),
-			array( 'deny',  // deny all users
-				'users' => array( '*' ),
-			),
-		);
 	}
 	
 	/**
