@@ -32,6 +32,7 @@ return array(
             'urlFormat' => 'path',
             'showScriptName' => false,
             'rules' => array(
+                //'/admin' => '',
                 '/news.html' => '/site/news',
                 '/news/<slug:(\w|_|-|.|:)+>' => '/site/news',
                 '/top10.html' => '/participants/top10',

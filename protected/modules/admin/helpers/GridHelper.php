@@ -9,18 +9,19 @@
  */
 class GridHelper
 {
-	/**
-	 * Generates the label for link of item state
-	 * @return string
-	 */
-	public static function getStateLabel( $state = 0 )
-	{
-		$class = 'state';
-		if ( $state )
-			$class .= ' publish';
-		else
-			$class .= ' unpublish';
-		
-		return '<span class="' . $class . '">&nbsp;</span>';
-	}
+    /**
+     * Generates the label for link of item state
+     * @return string
+     */
+    public static function getStateLabel($state = 0)
+    {
+        $class = 'state';
+        if ($state)
+            $class .= ' publish';
+        else
+            $class .= ' unpublish';
+
+        return '<span class="' . $class . '">&nbsp;</span>';
+    }
+
 }
