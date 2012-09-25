@@ -1,6 +1,4 @@
-
-/.settings
 /assets
 /framework
 /upload
-/.project
+/protected/config/db.php
