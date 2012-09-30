@@ -96,7 +96,7 @@ abstract class AdminAbstractController extends CController
 
         if ($this->_model === null)
         {
-            if ($id = Yii::app()->request->getParam('id', 0))
+            if ($id = (int) Yii::app()->request->getParam('id', 0))
                 $this->_model = $model_class::model()->findbyPk($id);
             else
                 $this->_model = new $model_class();
@@ -114,29 +114,6 @@ abstract class AdminAbstractController extends CController
         }
 
         return $this->_model;
-    }
-
-    /**
-     * Validates the identifier
-     * if not valid redirect to admin index page
-     *
-     * @param integer $id
-     * @param boolean $redirect
-     *
-     * @return boolean, or void if no valid
-     */
-    protected function validateID($id, $redirect = true)
-    {
-        if (!is_numeric($id) || ($id == 0))
-        {
-            if ($redirect)
-            {
-                Yii::app()->getRequest()->redirect('/admin');
-            }
-            return false;
-        }
-
-        return true;
     }
 
     /**
@@ -367,13 +344,13 @@ abstract class AdminAbstractController extends CController
     protected function getSubmenuItems()
     {
         return array(
-            'admin/news' => Yii::t('news', 'SECTION_NAME'),
-            'admin/citystyle' => Yii::t('citystyle', 'SECTION_NAME'),
-            'admin/knowour' => Yii::t('knowour', 'SECTION_NAME'),
-            'admin/tyca' => Yii::t('tyca', 'SECTION_NAME'),
-            'admin/participants' => Yii::t('participants', 'SECTION_NAME'),
-            'admin/frontpage' => Yii::t('frontpage', 'SECTION_NAME'),
-            'admin/categories' => Yii::t('categories', 'SECTION_NAME')
+            'admin/news' => Yii::t('news', 'admin.sectionName'),
+            'admin/citystyle' => Yii::t('citystyle', 'admin.sectionName'),
+            'admin/knowour' => Yii::t('knowour', 'admin.sectionName'),
+            'admin/tyca' => Yii::t('tyca', 'admin.sectionName'),
+            'admin/participants' => Yii::t('participants', 'admin.sectionName'),
+            'admin/frontpage' => Yii::t('frontpage', 'admin.sectionName'),
+            'admin/categories' => Yii::t('categories', 'admin.sectionName')
         );
     }
 

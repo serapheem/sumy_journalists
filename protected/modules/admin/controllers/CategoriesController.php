@@ -17,7 +17,7 @@ class CategoriesController extends AdminAbstractController
 
         return array(
             array('allow', // allow authenticated users to perform 'view' actions
-                'actions' => array('admin', 'create', 'update', 'validate', 'delete'),
+                'actions' => array('admin', 'create', 'edit', 'validate', 'delete'),
                 'expression' => '$user->id == 1',
             ),
             /* array('allow', // allow admin role to perform 'admin', 'update' and 'delete' actions
@@ -52,7 +52,7 @@ class CategoriesController extends AdminAbstractController
         }
 
         $this->render('list', array(
-            'section_id' => $this->getId(),
+            'sectionId' => $this->getId(),
             'itemPerPage' => $this->_itemsPerPage,
             'model' => $this->_model,
             'dataProvider' => $dataProvider
@@ -64,53 +64,53 @@ class CategoriesController extends AdminAbstractController
      */
     public function actionCreate()
     {
-        $section_id = $this->getId();
+        $sectionId = $this->getId();
         $request = Yii::app()->request;
         $model = $this->loadModel();
 
         if (!$model)
         {
-            Yii::app()->user->setFlash('error', Yii::t($this->getId(), "Can't create new item."));
-            $this->redirect(array('/admin/' . $this->getId()));
+            Yii::app()->user->setFlash('error', Yii::t($sectionId, 'admin.form.message.error.createItem'));
+            $this->redirect($this->createUrl($this->defaultAction));
         }
 
-        $redirect = false;
+        $canRedirect = false;
         if (($apply = $request->getParam('apply', false)) || $request->getParam('save', false))
         {
-            $model_class = ucfirst($this->getId());
-            if ($attributes = $request->getPost($model_class))
+            $attributes = $request->getPost(ucfirst($sectionId));
+            if ($attributes)
             {
                 $model->attributes = $attributes;
                 if ($model->save())
                 {
-                    Yii::app()->user->setFlash('success', Yii::t($this->getId(), 'ITEM_UPDATED'));
-                    $redirect = true;
+                    Yii::app()->user->setFlash('success', Yii::t($sectionId, 'admin.form.message.success.createItem'));
+                    $canRedirect = true;
                 }
             }
             else
-                Yii::app()->user->setFlash('error', Yii::t($this->getId(), 'The attributes for item were not set.'));
+                Yii::app()->user->setFlash('error', Yii::t($this->getId(), 'admin.form.message.error.noAttrs'));
         }
 
-        if ($redirect)
+        if ($canRedirect)
         {
             // TODO : need to use returnUrl parameter of user object
             if ($apply)
-                $this->redirect(array('/admin/' . $this->getId() . '/update?id=' . $model->id));
+                $this->redirect(array('edit', 'id' => $model->id));
             else
-                $this->redirect(array('/admin/' . $this->getId()));
+                $this->redirect($this->createUrl($this->defaultAction));
         }
         else
         {
-            $config = require( Yii::getPathOfAlias("admin.views.{$section_id}.form") . '.php' );
+            $newItem = true;
+            $config = require( Yii::getPathOfAlias("admin.views.{$sectionId}.form") . '.php' );
             $form = new CForm($config, $model);
 
-            if (isset($model->id))
-                $this->_title = $model->title;
-            else
-                $this->_title = Yii::t($section_id, 'NEW_ITEM');
+            $this->_title = isset($model->id) 
+                ? $model->title 
+                : Yii::t($sectionId, 'admin.form.title.newItem');
 
             $this->breadcrumbs = array(
-                Yii::t($section_id, 'SECTION_NAME') => '/admin/' . $section_id,
+                Yii::t($sectionId, 'admin.sectionName') => $this->createUrl($this->defaultAction),
                 $this->_title
             );
 
@@ -121,56 +121,57 @@ class CategoriesController extends AdminAbstractController
     /**
      * Updates the selected item
      */
-    public function actionUpdate()
+    public function actionEdit()
     {
-        $section_id = $this->getId();
+        $sectionId = $this->getId();
         $request = Yii::app()->request;
         $model = $this->loadModel(false);
 
         if (!$model)
         {
-            // FIXME : need to throw an exception
-            Yii::app()->user->setFlash('error', Yii::t($this->getId(), "Can\'t find item with such identifier."));
-            $this->redirect(array('/admin/' . $this->getId()));
+            Yii::app()->user->setFlash('error', Yii::t($sectionId, 'admin.form.message.error.noItem'));
+            $this->redirect($this->createUrl($this->defaultAction));
         }
 
-        $success = false;
+        $canRedirect = false;
         if (($apply = $request->getParam('apply', false)) || $request->getParam('save', false) || $request->isAjaxRequest)
         {
-            $model_class = ucfirst($this->getId());
-            if ($attributes = $request->getPost($model_class))
+            $attributes = $request->getPost(ucfirst($sectionId));
+            if ($attributes)
             {
                 $model->attributes = $attributes;
-                if ($success = $model->save())
+                if ($model->save())
                 {
-                    Yii::app()->user->setFlash('success', Yii::t($this->getId(), 'ITEM_UPDATED'));
+                    Yii::app()->user->setFlash('success', Yii::t($sectionId, 'admin.form.message.success.editItem'));
+                    $canRedirect = true;
                 }
             }
             else
-                Yii::app()->user->setFlash('error', Yii::t($this->getId(), 'The new attributes for item were not set.'));
+                Yii::app()->user->setFlash('error', Yii::t($sectionId, 'admin.form.message.error.noAttrs'));
         }
 
         if ($request->isAjaxRequest)
         {
             if ($model->hasErrors())
             // FIXME : create better message for this
-                Yii::app()->user->setFlash('error', Yii::t($this->getId(), 'There were some errors during update.'));
+                Yii::app()->user->setFlash('error', Yii::t($sectionId, 'There were some errors during update.'));
         }
         else
         {
-            if ($success && !$apply)
+            if ($canRedirect && !$apply)
             {
                 // TODO : need to use returnUrl parameter of user object
-                $this->redirect(array('/admin/' . $this->getId()));
+                $this->redirect($this->createUrl($this->defaultAction));
             }
             else
             {
-                $config = require( Yii::getPathOfAlias("admin.views.{$section_id}.form") . '.php' );
+                $newItem = false;
+                $config = require( Yii::getPathOfAlias("admin.views.{$sectionId}.form") . '.php' );
                 $form = new CForm($config, $model);
 
                 $this->_title = $model->title;
                 $this->breadcrumbs = array(
-                    Yii::t($section_id, 'SECTION_NAME') => '/admin/' . $section_id,
+                    Yii::t($sectionId, 'admin.sectionName') => $this->createUrl($this->defaultAction),
                     $this->_title
                 );
 
@@ -180,7 +181,7 @@ class CategoriesController extends AdminAbstractController
     }
 
     /**
-     * Performs Ajax validation
+     * Performs Ajax validation during create and edit item
      */
     public function actionValidate()
     {
@@ -191,12 +192,13 @@ class CategoriesController extends AdminAbstractController
             throw new CHttpException(400, 'Invalid request. Please do not repeat this request again.');
         }
 
+        $sectionId = $this->getId();
         $model = $this->loadModel();
-        $model_class = ucfirst($this->getId());
-        if ($attributes = $request->getPost($model_class))
+        $attributes = $request->getPost(ucfirst($sectionId));
+        if ($attributes)
             $model->attributes = $attributes;
 
-        if ($request->getParam('ajax') == ($this->getId() . '-form'))
+        if ($request->getParam('ajax') == ($sectionId . '-form'))
         {
             echo CActiveForm::validate($model);
             Yii::app()->end();
@@ -213,37 +215,42 @@ class CategoriesController extends AdminAbstractController
         if (!$request->getIsPostRequest())
         {
             throw new CHttpException(400, 'Invalid request. Please do not repeat this request again.');
-            //Yii::app()->user->setFlash( 'error', Yii::t( $this->getId(), 'DELETE_BAD_REQUEST_TYPE_ERROR' ) );
         }
 
-        $model_class = ucfirst($this->getId());
-        $success = true;
-
-        if ($total = count($request->getPost('items')))
+        $sectionId = $this->getId();
+        $items = (array) $request->getPost('items', array());
+        if ($total = count($items))
         {
-            $items = (array) $request->getPost('items');
+            $modelClass = ucfirst($sectionId);
+            $error = 0;
             foreach ($items as $key => $id)
             {
-                if (!$model_class::model()->deleteByPk($id))
+                if (!$modelClass::model()->deleteByPk($id))
                 {
-                    $total--;
-                    $success = false;
+                    $error++;
                 }
             }
 
-            if ($total)
-                Yii::app()->user->setFlash('success', Yii::t($this->getId(), '1#ITEM_DELETED|n>1#ITEMS_DELETED', $total));
-            if (!$success)
-                Yii::app()->user->setFlash('error', Yii::t($this->getId(), 'DELETE_ITEMS_PARTIAL_ERROR'));
+            if ($error != $total)
+                Yii::app()->user->setFlash('success', Yii::t($sectionId, 
+                    '1#admin.list.message.success.deleteItem|n>1#admin.list.message.success.deleteItems', $total)
+                );
+            if ($error)
+            {
+                if ($error != $total)
+                    Yii::app()->user->setFlash('error', Yii::t($sectionId, 'admin.list.message.error.deleteSomeItems'));
+                else 
+                    Yii::app()->user->setFlash('error', Yii::t($sectionId, 'admin.list.message.error.deleteItems'));
+            }
         }
         else
         {
-            Yii::app()->user->setFlash('warning', Yii::t($this->getId(), 'DELETE_NO_ITEMS_ERROR'));
+            Yii::app()->user->setFlash('warning', Yii::t($sectionId, 'admin.list.message.warning.deleteNoItems'));
         }
 
         // TODO : need to use returnUrl parameter of user object
         if (!$request->getIsAjaxRequest())
-            Yii::app()->getRequest()->redirect('/admin/' . $this->getId());
+            Yii::app()->getRequest()->redirect($this->createUrl($this->defaultAction));
     }
 
 }

@@ -47,17 +47,17 @@
 			}
 			?>
 			<div id="user-info"<?php echo $user_style; ?>>
-				<div class="error" onclick="this.style.display='none'"<?php echo ( Yii::app( )->user->hasFlash( 'error' ) ) ? '' : ' style="display: none"'; ?>>
+				<div class="success" onclick="this.style.display='none'"<?php echo ( Yii::app( )->user->hasFlash( 'success' ) ) ? '' : ' style="display: none"'; ?>>
 					<span class="icon">&nbsp;</span><?php 
-					echo ( Yii::app( )->user->hasFlash( 'error' ) ) ? Yii::app( )->user->getFlash( 'error' ) : '&nbsp;'; 
+					echo ( Yii::app( )->user->hasFlash( 'success' ) ) ? Yii::app( )->user->getFlash( 'success' ) : '&nbsp;'; 
 				?></div>
 				<div class="warning" onclick="this.style.display='none'"<?php echo ( Yii::app( )->user->hasFlash( 'warning' ) ) ? '' : ' style="display: none"'; ?>>
 					<span class="icon">&nbsp;</span><?php 
 					echo ( Yii::app( )->user->hasFlash( 'warning' ) ) ? Yii::app( )->user->getFlash( 'warning' ) : '&nbsp;'; 
 				?></div>
-				<div class="success" onclick="this.style.display='none'"<?php echo ( Yii::app( )->user->hasFlash( 'success' ) ) ? '' : ' style="display: none"'; ?>>
+				<div class="error" onclick="this.style.display='none'"<?php echo ( Yii::app( )->user->hasFlash( 'error' ) ) ? '' : ' style="display: none"'; ?>>
 					<span class="icon">&nbsp;</span><?php 
-					echo ( Yii::app( )->user->hasFlash( 'success' ) ) ? Yii::app( )->user->getFlash( 'success' ) : '&nbsp;'; 
+					echo ( Yii::app( )->user->hasFlash( 'error' ) ) ? Yii::app( )->user->getFlash( 'error' ) : '&nbsp;'; 
 				?></div>
 			</div>
 			

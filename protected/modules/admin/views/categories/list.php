@@ -4,34 +4,35 @@
  */
 
 $this->breadcrumbs = array(
-    Yii::t($section_id, 'SECTION_NAME')
+    Yii::t($sectionId, 'admin.sectionName')
 );
 
-$order_onclick = "$('#admin-form').attr('action', '/admin/{$section_id}/saveorder').submit(); return false;";
+//$order_onclick = "$('#admin-form').attr('action', '/admin/{$sectionId}/saveorder').submit(); return false;";
 ?>
 
 <?php $this->renderSubmenu(); ?>
 
 <div class="box visible">
-    <h1><?php echo Yii::t($section_id, 'SECTION_NAME') ?></h1>
+    <h1><?php echo Yii::t($sectionId, 'admin.sectionName'); ?></h1>
 
     <?php
     $this->widget('zii.widgets.jui.CJuiButton', array(
         'buttonType' => 'link',
         'name' => 'edit-button',
-        'caption' => Yii::t($section_id, 'ADD_ITEM'),
-        'url' => "/admin/{$section_id}/create",
-        'htmlOptions' => array('title' => Yii::t($section_id, 'ADD_ITEM'))
+        'caption' => Yii::t($sectionId, 'admin.list.action.createItem'),
+        'url' => $this->createUrl('create'),
+        'htmlOptions' => array('title' => Yii::t($sectionId, 'admin.list.action.createItem'))
         )
     );
+    // TODO : Create new confirm message
     $this->widget('MyAdminButton', array(
         'buttonType' => 'link',
         'name' => 'delete-button',
-        'caption' => Yii::t($section_id, 'DELETE_ITEMS'),
-        'url' => "/admin/{$section_id}/delete",
-        'confirm' => Yii::t($section_id, 'DELETE_ITEMS'),
+        'caption' => Yii::t($sectionId, 'admin.list.action.deleteItems'),
+        'url' => $this->createUrl('delete'),
+        'confirm' => Yii::t($sectionId, 'admin.list.action.deleteItems'),
         'grid_id' => 'categories',
-        'htmlOptions' => array('title' => Yii::t($section_id, 'DELETE_ITEMS'))
+        'htmlOptions' => array('title' => Yii::t($sectionId, 'admin.list.action.deleteItems'))
         )
     );
 
@@ -51,34 +52,41 @@ $order_onclick = "$('#admin-form').attr('action', '/admin/{$section_id}/saveorde
             array(
                 'class' => 'CButtonColumn',
                 'template' => '{delete}',
-                'deleteButtonUrl' => 'Yii::app()->controller->createUrl( "delete" ) . "?items=" . $data->primaryKey',
-                'deleteConfirmation' => Yii::t($section_id, 'DELETE_ITEM')
+                'deleteButtonUrl' => 'Yii::app()->controller->createUrl(\'delete\') . \'?items=\' . $data->primaryKey',
+                'deleteConfirmation' => Yii::t($sectionId, 'admin.list.label.deleteConfirm')
             ),
             array(
                 'class' => 'MyDataLinkColumn',
                 'name' => 'title',
-                'labelExpression' => 'CHtml::encode( $data->title )',
-                'urlExpression' => '"/admin/' . $section_id . '/update?id=" . $data->id',
-                'linkHtmlOptions' => array('title' => Yii::t('main', 'EDIT')),
+                'labelExpression' => 'CHtml::encode($data->title)',
+                'urlExpression' => 'Yii::app()->controller->createUrl(\'edit\', array(\'id\' => $data->primaryKey))',
+                'linkHtmlOptions' => array('title' => Yii::t('main', 'admin.list.action.edit')),
                 'htmlOptions' => array('class' => 'link-column tl')
             ),
             array('name' => 'hits', 'filter' => '', 'headerHtmlOptions' => array('width' => '70')),
             array(
                 'class' => 'MyDataLinkColumn',
                 'name' => 'state',
-                'filter' => array('prompt' => Yii::t('main', 'SELECT_STATUS'), 0 => Yii::t('main', 'UNPUBLISHED'), 1 => Yii::t('main', 'PUBLISHED')),
-                'labelExpression' => 'GridHelper::getStateLabel( $data->state )',
-                'urlExpression' => '"/admin/' . $section_id . '/update?id=". $data->id ."&' . ucfirst($section_id) . '[state]=". (1 - $data->state)',
+                'filter' => array(
+                    'prompt' => Yii::t('main', 'admin.list.filter.state.select'), 
+                    0 => Yii::t('main', 'admin.list.filter.state.unpublished'), 
+                    1 => Yii::t('main', 'admin.list.filter.state.published')
+                ),
+                'labelExpression' => 'GridHelper::getStateLabel($data->state)',
+                'urlExpression' => 'Yii::app()->controller->createUrl(\'edit\', array(\'id\' => $data->primaryKey))'
+                    . ' . \'?' . ucfirst($sectionId) . '[state]=\' . (1 - $data->state)',
                 'linkHtmlOptions' => array(
                     'class' => 'state', 'click' => 'ajaxChange',
-                    'titleExpression' => '$data->state ? Yii::t( "main", "UNPUBLISH" ) : Yii::t( "main", "PUBLISH" )'
+                    'titleExpression' => '$data->state '
+                        . '? Yii::t( "main", "admin.list.action.unpublish" ) '
+                        . ': Yii::t( "main", "admin.list.action.publish" )'
                 ),
                 'htmlOptions' => array('class' => 'link-column button-column'),
                 'headerHtmlOptions' => array('width' => '130')
             ),
             array(
                 'name' => 'modified_at',
-                'value' => 'Yii::app()->getDateFormatter()->formatDateTime( $data->modified_at, "long" )',
+                'value' => 'Yii::app()->dateFormatter->formatDateTime( $data->modified_at, "long" )',
                 'filter' => '',
                 'headerHtmlOptions' => array('width' => '110')
             ),

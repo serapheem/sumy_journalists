@@ -3,24 +3,28 @@
  * Category item add/edit form file
  */
 return array(
-    'action' => '/admin/categories/' . (isset($model->id) ? 'update?id=' . $model->id : 'create'),
+    'action' => $newItem 
+        ? $this->createUrl('create') 
+        : $this->createUrl('edit', array('id' => $model->id)),
     'activeForm' => array(
-        'class' => 'CActiveForm',
-        'id' => 'categories-form',
-        'enableAjaxValidation' => true,
-        'enableClientValidation' => false,
-        'clientOptions' => array(
+        'class'                     => 'CActiveForm',
+        'id'                        => 'categories-form',
+        'enableAjaxValidation'      => true,
+        'enableClientValidation'    => false,
+        'clientOptions'             => array(
             'validationUrl' => array('validate'),
             'validateOnSubmit' => true,
             'validateOnChange' => true,
         )
     ),
     'elements' => array(
-        '<h1>' . (isset($model->id) ? Yii::t($this->getId(), 'EDIT_ITEM') : Yii::t($this->getId(), 'NEW_ITEM')) . '</h1>',
+        '<h1>' . Yii::t($this->getId(), $newItem 
+            ? 'admin.form.title.newItem' 
+            : 'admin.form.title.editItem') . '</h1>',
         '<div class="width-65 fleft">',
-        'details' => array(
+        'general' => array(
             'type' => 'form',
-            'title' => Yii::t('main', 'Details'),
+            'title' => Yii::t('main', 'admin.form.section.generalData'),
             'elements' => array(
                 'title' => array(
                     'type' => 'text',
@@ -28,7 +32,7 @@ return array(
                 ),
                 'alias' => array(
                     'type' => 'text',
-                    'maxlength' => 127,
+                    'maxlength' => 255,
                 ),
                 'parent_id' => array(
                     'type' => 'dropdownlist',
@@ -40,17 +44,13 @@ return array(
                     'items' => $model->getStateValues(),
                     'separator' => "\n"
                 ),
-                'section' => array(
-                    'type' => 'text',
-                    'maxlength' => 63,
-                ),
                 'description' => array(
                     'type' => 'application.extensions.NHCKEditor.CKEditorWidget',
                     'attribute' => 'description',
                     'layout' => "{label}\n<br />{input}\n{hint}\n{error}",
                     'editorOptions' => array(
                         'width' => 700,
-                        'height' => 500,
+                        'height' => 200,
                         'language' => 'uk',
                         'toolbar' => 'custom',
                     ),
@@ -68,29 +68,29 @@ return array(
         '<div class="width-35 fleft">',
         'publishing' => array(
             'type' => 'form',
-            'title' => Yii::t('main', 'Publishing Options'),
+            'title' => Yii::t('main', 'admin.from.section.publishData'),
             'elements' => array(
                 'created_by' => array(
                     'type' => 'text',
-                    'value' => ( isset($model->id) ? $model->created_user->name : '' ),
+                    'value' => $newItem ? '' : $model->created_user->name,
                     'disabled' => 'disabled',
                     'class' => 'readonly'
                 ),
-                'created' => array(
+                'created_at' => array(
                     'type' => 'text',
-                    'value' => ( isset($model->id) ? Yii::app()->dateFormatter->formatDateTime($model->created, "long") : '' ),
+                    'value' => $newItem ? '' : Yii::app()->dateFormatter->formatDateTime($model->created_at, 'long'),
                     'disabled' => 'disabled',
                     'class' => 'readonly'
                 ),
                 'modified_by' => array(
                     'type' => 'text',
-                    'value' => ( isset($model->id) ? $model->modified_user->name : '' ),
+                    'value' => $newItem ? '' : $model->modified_user->name,
                     'disabled' => 'disabled',
                     'class' => 'readonly'
                 ),
-                'modified' => array(
+                'modified_at' => array(
                     'type' => 'text',
-                    'value' => ( isset($model->id) ? Yii::app()->dateFormatter->formatDateTime($model->modified, "long") : '' ),
+                    'value' => $newItem ? '' : Yii::app()->dateFormatter->formatDateTime($model->modified_at, 'long'),
                     'disabled' => 'disabled',
                     'class' => 'readonly'
                 ),
@@ -98,17 +98,23 @@ return array(
         ),
         'metadata' => array(
             'type' => 'form',
-            'title' => Yii::t('main', 'Metadata Options'),
+            'title' => Yii::t('main', 'admin.form.section.metaData'),
             'elements' => array(
-                'metadesc' => array(
-                    'type' => 'textarea',
-                    'rows' => 3,
-                    'cols' => 40
+                'meta_title' => array(
+                    'type' => 'text',
+                    'maxlength' => 255
                 ),
-                'metakey' => array(
+                'meta_keywords' => array(
                     'type' => 'textarea',
                     'rows' => 3,
-                    'cols' => 40
+                    'cols' => 43,
+                    'maxlength' => 255
+                ),
+                'meta_description' => array(
+                    'type' => 'textarea',
+                    'rows' => 3,
+                    'cols' => 43,
+                    'maxlength' => 255
                 ),
             )
         ),
@@ -118,12 +124,14 @@ return array(
     'buttons' => array(
         'apply' => array(
             'type' => 'submit',
-            'label' => ( isset($model->id) ? Yii::t('main', 'SAVE') : Yii::t('main', 'ADD') ),
+            'label' => Yii::t('main', 'admin.form.action.' . ($newItem ? 'create' : 'save')),
         ),
         'save' => array(
             'type' => 'submit',
-            'label' => ( isset($model->id) ? Yii::t('main', 'SAVE_AND_CLOSE') : Yii::t('main', 'ADD_AND_CLOSE') ),
+            'label' => Yii::t('main', 'admin.form.action.' . ($newItem ? 'create2close' : 'save2close')),
         ),
-        '<a href="/admin/' . $this->getId() . '">' . ( isset($model->id) ? Yii::t('main', 'CLOSE') : Yii::t('main', 'CANCEL') ) . '</a>',
+        '<a href="' . $this->createUrl($this->defaultAction) . '">' 
+            . Yii::t('main', 'admin.form.action.' . ($newItem ? 'cancel' : 'close')) 
+            . '</a>',
     ),
 );
