@@ -1,13 +1,15 @@
 <?php
 /**
- * File for categories model
+ * File for items model
  */
 
 /**
- * Categories Model class
+ * Items Model class
  */
-class Categories extends AdminAbstractModel
+class Items extends AdminAbstractModel
 {
+    public $featured = 0;
+    
     /**
      * {@inheritdoc}
      */
@@ -21,7 +23,7 @@ class Categories extends AdminAbstractModel
      */
     public function tableName()
     {
-        return '{{categories}}';
+        return '{{items}}';
     }
 
     /**
@@ -30,12 +32,12 @@ class Categories extends AdminAbstractModel
     public function rules()
     {
         return array(
-            array('title, parent_id, state', 'required'),
-            array('alias, description, meta_title, metakey, metadesc', 'safe'),
+            array('title, fulltext, catid, state', 'required'),
+            array('alias, featured, meta_title, metakey, metadesc', 'safe'),
             array('id', 'safe', 'on' => 'search'),
             array('created_at, created_by, modified_at, modified_by', 'safe', 'on' => 'update'),
             array('title, alias, meta_title, metakey, metadesc', 'length', 'max' => 255),
-            array('parent_id, state', 'numerical', 'integerOnly' => true),
+            array('catid, state, ordering', 'numerical', 'integerOnly' => true),
         );
     }
 
@@ -47,9 +49,9 @@ class Categories extends AdminAbstractModel
         return array(
             'title'         => Yii::t('main', 'admin.list.label.title'),
             'alias'         => Yii::t('main', 'admin.list.label.alias'),
-            'description'   => Yii::t('main', 'admin.form.label.text'),
-            'parent_id'     => Yii::t($this->getTableSchema()->name, 'admin.form.label.parent'),
             'state'         => Yii::t('main', 'admin.list.label.status'),
+            'featured'      => Yii::t('main', 'admin.list.label.status'),
+            'fulltext'      => Yii::t('main', 'admin.form.label.text'),
             'hits'          => Yii::t('main', 'admin.list.label.hits'),
             
             'created_by'    => Yii::t('main', 'admin.list.label.createdBy'),
@@ -119,10 +121,10 @@ class Categories extends AdminAbstractModel
      * 
      * @return array
      */
-    public function getParentDropDown()
+    public function getDropDownItems()
     {
         $result = array();
-        $items = $this->findAll();
+        $items = Categories::model()->findAll();
 
         foreach ($items as $item)
             $result[$item->id] = (strtolower($item->title) == 'root') 
@@ -130,6 +132,18 @@ class Categories extends AdminAbstractModel
                 : $item->title;
 
         return $result;
+    }
+
+    /**
+     * @return array The list of possible featured values
+     */
+    public function getFeaturedValues()
+    {
+        $sectionId = $this->getTableSchema()->name;
+        return array(
+            1 => Yii::t($sectionId, 'admin.form.label.featured'), 
+            0 => Yii::t($sectionId, 'admin.form.label.unfeatured')
+        );
     }
 
 }

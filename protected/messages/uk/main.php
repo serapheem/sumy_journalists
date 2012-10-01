@@ -52,8 +52,6 @@ return array(
     'admin.list.action.delete' => 'Видалити',
     'admin.list.action.publish' => 'Опублікувати',
     'admin.list.action.unpublish' => 'Відмінити публікацію',
-    'admin.list.action.featured' => 'Розмістити на головній',
-    'admin.list.action.unfeatured' => 'Забрати з головної',
     
     'admin.list.filter.state.select' => '- Виберіть стан -',
     'admin.list.filter.state.published' => 'Опубліковані',

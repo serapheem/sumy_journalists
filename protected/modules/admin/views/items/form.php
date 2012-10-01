@@ -34,9 +34,9 @@ return array(
                     'type' => 'text',
                     'maxlength' => 255,
                 ),
-                'parent_id' => array(
+                'catid' => array(
                     'type' => 'dropdownlist',
-                    'items' => $model->getParentDropDown(),
+                    'items' => $model->getDropDownItems(),
                 ),
                 'state' => array(
                     'type' => 'radiolist',
@@ -44,9 +44,15 @@ return array(
                     'items' => $model->getStateValues(),
                     'separator' => "\n"
                 ),
-                'description' => array(
+                'featured' => array(
+                    'type' => 'radiolist',
+                    'layout' => "{label}\n<div class=\"radiolist-wrapper\">{input}</div>\n{hint}\n{error}",
+                    'items' => $model->getFeaturedValues(),
+                    'separator' => "\n"
+                ),
+                'fulltext' => array(
                     'type' => 'application.extensions.NHCKEditor.CKEditorWidget',
-                    'attribute' => 'description',
+                    'attribute' => 'fulltext',
                     'layout' => "{label}\n<br />{input}\n{hint}\n{error}",
                     'editorOptions' => array(
                         'width' => 700,

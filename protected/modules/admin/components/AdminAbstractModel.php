@@ -3,9 +3,9 @@
  * Contains abstract model for admin module
  */
 /**
- * Abstract Admin Model class
+ * Admin Abstract Model class
  */
-abstract class AbstractAdminModel extends CActiveRecord
+abstract class AdminAbstractModel extends CActiveRecord
 {
     /**
      * {@inheritdoc}
@@ -77,6 +77,17 @@ abstract class AbstractAdminModel extends CActiveRecord
         }
 
         return parent::beforeSave();
+    }
+
+    /**
+     * @return array The list of possible state values
+     */
+    public function getStateValues()
+    {
+        return array(
+            1 => Yii::t('main', 'admin.list.label.published'), 
+            0 => Yii::t('main', 'admin.list.label.unpublished')
+        );
     }
 
 }
