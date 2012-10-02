@@ -32,7 +32,29 @@ return array(
             'urlFormat' => 'path',
             'showScriptName' => false,
             'rules' => array(
-                //'/admin' => '',
+//                '/admin/news/<action>' => array(
+//                    '/admin/customitems/<action>', 
+//                    //'urlSuffix'=>'.html', 
+//                    'caseSensitive' => false,
+//                    'defaultParams' => array('catid' => 3)
+//                ),
+//                '/admin/news' => array(
+//                    '/admin/customitems', 
+//                    //'urlSuffix'=>'.html', 
+//                    'caseSensitive' => false,
+//                    'defaultParams' => array('catid' => 3)
+//                ),
+//                '/admin/citystyle/<action>' => array(
+//                    '/admin/customitems/<action>', 
+//                    'caseSensitive' => false,
+//                    'defaultParams' => array('catid' => 5)
+//                ),
+//                '/admin/citystyle' => array(
+//                    '/admin/customitems', 
+//                    'caseSensitive' => false,
+//                    'defaultParams' => array('catid' => 5)
+//                ),
+                
                 '/news.html' => '/site/news',
                 '/news/<slug:(\w|_|-|.|:)+>' => '/site/news',
                 '/top10.html' => '/participants/top10',

@@ -1,21 +1,33 @@
 <?php
 /**
- * Language city style file for Ukrainian language
+ * Language news file for Ukrainian language
  */
 
 return array(
-	'SECTION_NAME' 		=> 'Учасники',
-	'TOP_10' 			=> 'Top 10',
-	'ITEM_NOT_FOUND'	=> 'Учасник не знайдений.',
-	'NO_ITEMS'			=> 'Немає жодного учасника.',
-	
-	'ADD_ITEM'			=> 'Додати учасника',
-	'NEW_ITEM' 			=> 'Новий учасник',
-	'EDIT_ITEM' 		=> 'Редагувати учасника',
-	'ITEM_ADDED' 		=> 'Учасник успішно доданий.',
-	'ITEM_UPDATED' 		=> 'Учасник успішно оновлений.',
-	'DELETE_ITEM' 		=> 'Видалити учасника',
-	'DELETE_ITEMS' 		=> 'Видалити вибраних учасників',
-	'1#ITEM_DELETED|n>1#ITEMS_DELETED' => '1#Учасник успішно видалений.|n>1#Вибрані учасника успішно видалені.',
-	'ITEM_ORDER_CHANGED'=> 'Порядок учасника змінений.',
+    // labels and actions
+    'admin.sectionName' => 'Mенеджер учасників',
+    
+    'admin.list.label.deleteConfirm' => 'Видалити статтю?',
+    'admin.list.action.createItem' => 'Створити статтю',
+    'admin.list.action.deleteItems' => 'Видалити вибрані статті',
+    'admin.list.action.featured' => 'Розмістити на головній',
+    'admin.list.action.unfeatured' => 'Забрати з головної',
+    
+    'admin.form.title.newItem' => 'Нова стаття',
+    'admin.form.title.editItem' => 'Редагувати статтю',
+    'admin.form.label.featured' => 'На головній',
+    'admin.form.label.unfeatured' => 'В архіві',
+    
+    // messages
+    '1#admin.list.message.success.deleteItem|n>1#admin.list.message.success.deleteItems' 
+        => '1#Стаття успішно видалена.|n>1#Вибрані статті успішно видалені.',
+    'admin.list.message.warning.deleteNoItems' => 'Не було вибрано жодної статті для видалення.',
+    'admin.list.message.error.deleteSomeItems' => 'Не вдалося видалити деякі статті.',
+    'admin.list.message.error.deleteItems' => 'Не вдалося видалити вибрані статті.',
+    
+    'admin.form.message.success.createItem' => 'Стаття успішно створена.',
+    'admin.form.message.success.editItem' => 'Зміни в статті було збережено.',
+    'admin.form.message.error.createItem' => 'Не вдалося створити нову статтю.',
+    'admin.form.message.error.noItem' => 'Не вдалося знайти статтю з заданим ідентифікатором.',
+    'admin.form.message.error.noAttrs' => 'Дані для нової статті не були встановлені.',
 );

@@ -1,11 +1,11 @@
 <?php
 /**
- * Language city style file for Ukrainian language
+ * Language items file for Ukrainian language
  */
 
 return array(
     // labels and actions
-    'admin.sectionName' => 'Mенеджер новин',
+    'admin.sectionName' => 'Mенеджер статей',
     
     'admin.list.label.deleteConfirm' => 'Видалити статтю?',
     'admin.list.action.createItem' => 'Створити статтю',

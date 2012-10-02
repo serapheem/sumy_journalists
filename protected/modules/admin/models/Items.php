@@ -50,9 +50,11 @@ class Items extends AdminAbstractModel
             'title'         => Yii::t('main', 'admin.list.label.title'),
             'alias'         => Yii::t('main', 'admin.list.label.alias'),
             'state'         => Yii::t('main', 'admin.list.label.status'),
+            'catid'         => Yii::t('main', 'admin.list.label.category'),
             'featured'      => Yii::t('main', 'admin.list.label.status'),
             'fulltext'      => Yii::t('main', 'admin.form.label.text'),
             'hits'          => Yii::t('main', 'admin.list.label.hits'),
+            'rating'        => Yii::t('main', 'admin.list.label.rating'),
             
             'created_by'    => Yii::t('main', 'admin.list.label.createdBy'),
             'created_at'    => Yii::t('main', 'admin.list.label.createdAt'),
@@ -71,6 +73,7 @@ class Items extends AdminAbstractModel
     public function relations()
     {
         return array(
+            'category' => array(self::BELONGS_TO, 'Categories', 'catid'),
             'created_user' => array(self::BELONGS_TO, 'Users', 'created_by'),
             'modified_user' => array(self::BELONGS_TO, 'Users', 'modified_by'),
         );
@@ -88,6 +91,7 @@ class Items extends AdminAbstractModel
         $criteria->compare('t.id', $this->id);
         $criteria->compare('t.title', $this->title, true);
         $criteria->compare('t.alias', $this->alias, true);
+        $criteria->compare('t.catid', $this->catid);
         $criteria->compare('t.state', $this->state);
 
         return new CActiveDataProvider(get_class($this), array(
@@ -124,7 +128,7 @@ class Items extends AdminAbstractModel
     public function getDropDownItems()
     {
         $result = array();
-        $items = Categories::model()->findAll();
+        $items = Categories::model()->findAll('id<>:id', array('id' => 1));
 
         foreach ($items as $item)
             $result[$item->id] = (strtolower($item->title) == 'root') 

@@ -1,7 +1,8 @@
 <?php
 /**
- * Category item add/edit form file
+ * Article item add/edit form file
  */
+
 return array(
     'action' => $newItem 
         ? $this->createUrl('create') 
@@ -18,7 +19,7 @@ return array(
         )
     ),
     'elements' => array(
-        '<h1>' . Yii::t($this->getId(), $newItem 
+        '<h1>' . Yii::t($sectionId, $newItem 
             ? 'admin.form.title.newItem' 
             : 'admin.form.title.editItem') . '</h1>',
         '<div class="width-65 fleft">',

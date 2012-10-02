@@ -53,6 +53,8 @@ abstract class AdminAbstractModel extends CActiveRecord
         $allowedActions = array('insert', 'update');
         if (in_array($this->getScenario(), $allowedActions))
         {
+            $this->title = trim($this->title);
+            
             $this->modified_at = date('Y-m-d H:i:s');
             $this->modified_by = Yii::app()->user->id;
 

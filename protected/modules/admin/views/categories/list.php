@@ -47,7 +47,7 @@ $this->breadcrumbs = array(
         'columns' => array(
             array(
                 'class' => 'CCheckBoxColumn',
-                'id' => 'items'
+                'id' => 'ids'
             ),
             array(
                 'class' => 'CButtonColumn',
@@ -63,7 +63,6 @@ $this->breadcrumbs = array(
                 'linkHtmlOptions' => array('title' => Yii::t('main', 'admin.list.action.edit')),
                 'htmlOptions' => array('class' => 'link-column tl')
             ),
-            array('name' => 'hits', 'filter' => '', 'headerHtmlOptions' => array('width' => '70')),
             array(
                 'class' => 'MyDataLinkColumn',
                 'name' => 'state',
@@ -74,7 +73,7 @@ $this->breadcrumbs = array(
                 ),
                 'labelExpression' => 'GridHelper::getStateLabel($data->state)',
                 'urlExpression' => 'Yii::app()->controller->createUrl(\'edit\', array(\'id\' => $data->primaryKey))'
-                    . ' . \'?' . ucfirst($sectionId) . '[state]=\' . (1 - $data->state)',
+                    . ' . \'?' . $modelClass . '[state]=\' . (1 - $data->state)',
                 'linkHtmlOptions' => array(
                     'class' => 'state', 'click' => 'ajaxChange',
                     'titleExpression' => '$data->state '
@@ -84,11 +83,12 @@ $this->breadcrumbs = array(
                 'htmlOptions' => array('class' => 'link-column button-column'),
                 'headerHtmlOptions' => array('width' => '130')
             ),
+            array('name' => 'hits', 'filter' => '', 'headerHtmlOptions' => array('width' => '70')),
             array(
                 'name' => 'modified_at',
                 'value' => 'Yii::app()->dateFormatter->formatDateTime( $data->modified_at, "long" )',
                 'filter' => '',
-                'headerHtmlOptions' => array('width' => '110')
+                'headerHtmlOptions' => array('width' => '120')
             ),
             array(
                 'name' => 'id',

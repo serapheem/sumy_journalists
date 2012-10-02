@@ -1,6 +1,6 @@
 <?php
 /**
- * Language city style file for Ukrainian language
+ * Language categories file for Ukrainian language
  */
 
 return array(

@@ -6,6 +6,8 @@
 $this->breadcrumbs = array(
     Yii::t($sectionId, 'admin.sectionName')
 );
+
+//$order_onclick = "$('#admin-form').attr('action', '/admin/{$sectionId}/saveorder').submit(); return false;";
 ?>
 
 <?php $this->renderSubmenu(); ?>
@@ -61,7 +63,6 @@ $this->breadcrumbs = array(
                 'linkHtmlOptions' => array('title' => Yii::t('main', 'admin.list.action.edit')),
                 'htmlOptions' => array('class' => 'link-column tl')
             ),
-            // TODO : filter must be as dropdown list
             array(
                 'name' => 'catid',
                 'value' => 'CHtml::encode($data->category->title)',
@@ -89,6 +90,22 @@ $this->breadcrumbs = array(
                 'htmlOptions' => array('class' => 'link-column button-column'),
                 'headerHtmlOptions' => array('width' => '130')
             ),
+//            array(
+//                'class' => 'MyDataLinkColumn',
+//                'name' => 'ordering',
+//                'filter' => '',
+//                //'labelExpression' => 'GridHelper::getStateLabel($data->state)',
+//                'urlExpression' => 'Yii::app()->controller->createUrl(\'edit\', array(\'id\' => $data->primaryKey))'
+//                    . ' . \'?' . ucfirst($sectionId) . '[state]=\' . (1 - $data->state)',
+//                'linkHtmlOptions' => array(
+//                    'class' => 'ordering', 'click' => 'ajaxChange',
+//                    'titleExpression' => '$data->state '
+//                        . '? Yii::t( "main", "admin.list.action.unpublish" ) '
+//                        . ': Yii::t( "main", "admin.list.action.publish" )'
+//                ),
+//                'htmlOptions' => array('class' => 'link-column button-column'),
+//                'headerHtmlOptions' => array('width' => '130')
+//            ),
             array('name' => 'hits', 'filter' => '', 'headerHtmlOptions' => array('width' => '70')),
             array('name' => 'rating', 'filter' => '', 'headerHtmlOptions' => array('width' => '70')),
             array(

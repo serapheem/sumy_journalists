@@ -1,16 +1,16 @@
 <?php
+/**
+ * Contains controller class of Participants
+ */
 
 /**
  * Participants Controller Class
  */
-class ParticipantsController extends AdminAbstractController 
+class ParticipantsController extends CustomitemsController
 {
-	/**
-	 * Name of default model
-	 * 
-	 * @access public
-	 * @var string
-	 */
-	public $model = 'Participants';
-	
+    /**
+     * {@inheritdoc}
+     */
+    protected $_catid = 4;
+
 }

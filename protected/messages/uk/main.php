@@ -16,7 +16,6 @@ return array(
     
     'CHARACTERISTIC' => 'Характеристика',
     
-    'RATING' => 'Рейтинг',
     'ON_FRONTPAGE' => 'На головній',
     'ORDER' => 'Порядок',
     'SAVE_ORDER' => 'Зберегти порядок',
@@ -40,8 +39,10 @@ return array(
     'admin.list.label.title' => 'Назва',
     'admin.list.label.name' => "Ім'я",
     'admin.list.label.alias' => 'Посилання',
+    'admin.list.label.category' => 'Категорія',
     'admin.list.label.status' => 'Стан',
     'admin.list.label.hits' => 'Переглядів',
+    'admin.list.label.rating' => 'Рейтинг',
     'admin.list.label.lastUpdated' => 'Дата оновлення',
     'admin.list.label.createdBy' => 'Автор',
     'admin.list.label.createdAt' => 'Дата створення',

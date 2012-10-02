@@ -1,16 +1,16 @@
 <?php
+/**
+ * Contains controller class of Tyca
+ */
 
 /**
  * Tyca Controller Class
  */
-class TycaController extends AdminAbstractController 
+class TycaController extends CustomitemsController
 {
-	/**
-	 * Name of default model
-	 * 
-	 * @access public
-	 * @var string
-	 */
-	public $model = 'Tyca';
-	
+    /**
+     * {@inheritdoc}
+     */
+    protected $_catid = 6;
+
 }

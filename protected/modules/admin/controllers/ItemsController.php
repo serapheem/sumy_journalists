@@ -15,11 +15,7 @@ class ItemsController extends AdminAbstractController
     {
         return array(
             array('allow', // allow authenticated users to perform 'view' actions
-                'actions' => array('admin', 'create', 'edit', 'validate', 'delete'),
-                'users' => array('@'),
-            ),
-            array('allow', // allow authenticated users to perform 'view' actions
-                'actions' => array('import'),
+                'actions' => array('admin', 'create', 'edit', 'validate', 'delete', 'import'),
                 'users' => array('@'),
                 'expression' => '$user->id == 1',
             ),
@@ -41,12 +37,26 @@ class ItemsController extends AdminAbstractController
         $table = Yii::app()->request->getParam('table');
         
         if (!$table)
-            throw new BadFunctionCallException('Table name wasn\'t set!');
+            throw new BadMethodCallException('Table name wasn\'t set!');
+        
+        $data = array(
+            'news' => array('section' => 'News', 'table' => 'news'),
+            'citystyle' => array('section' => 'CityStyle', 'table' => 'city_style'),
+            'knowour' => array('section' => 'KnowOur', 'table' => 'know_our'),
+            'pages' => array('section' => 'Pages', 'table' => 'pages'),
+            'tyca' => array('section' => 'Tyca', 'table' => 'tyca'),
+            'participants' => array('section' => 'Participants', 'table' => 'participants'),
+        );
+        
+        if (!array_key_exists($table, $data))
+            throw new BadMethodCallException('Incorrect name of the table!');
+        
+        $tableData = $data[$table];
         
         $rows = Yii::app()->db->createCommand()
             ->select('t.*, f.item_id as onfront')
-            ->from($table . ' t')
-            ->leftJoin('frontpage f', 'f.item_id = t.id AND f.section = \'' . ucfirst($table) . '\'')
+            ->from($tableData['table'] . ' t')
+            ->leftJoin('frontpage f', 'f.item_id = t.id AND f.section = \'' . $tableData['section'] . '\'')
             ->queryAll();
         
         if ($rows)
@@ -67,20 +77,61 @@ class ItemsController extends AdminAbstractController
             
             foreach ($rows as $row)
             {
-                Yii::app()->db->createCommand()->insert($this->getId(), array(
-                    'title' => $row['title'], 
-                    'alias' => $row['alias'], 
-                    'fulltext' => $row['body'], 
-                    'catid' => $catid, 
-                    'state' => $row['publish'], 
-                    'created_at' => $row['created'], 
-                    'created_by' => $row['created_by'], 
-                    'modified_at' => $row['modified'], 
-                    'modified_by' => $row['modified_by'], 
-                    'hits' => $row['views'], 
-                    'rating' => $row['rating'], 
-                    'ordering' => $row['ordering'],
-                ));
+                if (in_array($table, array('news', 'citystyle', 'knowour', 'tyca', 'pages')))
+                {
+                    $insertData = array(
+                        'title' => $row['title'], 
+                        'alias' => $row['alias'], 
+                        'fulltext' => $row['body'], 
+                        'catid' => $catid, 
+                        'state' => $row['publish'], 
+                        'created_at' => $row['created'], 
+                        'created_by' => $row['created_by'], 
+                        'modified_at' => $row['modified'], 
+                        'modified_by' => $row['modified_by'], 
+                        'hits' => $row['views'], 
+                        'rating' => $row['rating'], 
+                        'ordering' => $row['ordering'],
+                    );
+                }
+                elseif ($table == 'pages')
+                {
+                    $insertData = array(
+                        'title' => $row['title'], 
+                        'alias' => $row['alias'], 
+                        'fulltext' => $row['body'], 
+                        'catid' => $catid, 
+                        'state' => 1, 
+                        'created_at' => $row['created'], 
+                        'created_by' => $row['created_by'], 
+                        'modified_at' => $row['modified'], 
+                        'modified_by' => $row['modified_by'], 
+                        'hits' => $row['views'], 
+                        'rating' => 0, 
+                        'ordering' => 0,
+                    );
+                }
+                elseif ($table == 'participants')
+                {
+                    $insertData = array(
+                        'title' => $row['title'], 
+                        'alias' => $row['alias'], 
+                        'fulltext' => $row['body'], 
+                        'catid' => $catid, 
+                        'state' => $row['publish'], 
+                        'created_at' => $row['created'], 
+                        'created_by' => $row['created_by'], 
+                        'modified_at' => $row['modified'], 
+                        'modified_by' => $row['modified_by'], 
+                        'hits' => $row['views'], 
+                        'rating' => $row['rating'], 
+                        'ordering' => $row['ordering'],
+                    );
+                }
+                else {
+                    throw new BadMethodCallException('Unsupported name of section!');
+                }
+                Yii::app()->db->createCommand()->insert($this->getId(), $insertData);
                 
                 $ids = Yii::app()->db->createCommand()
                     ->select('max(id)')
@@ -91,7 +142,7 @@ class ItemsController extends AdminAbstractController
                 
                 Yii::app()->db->createCommand()->insert('items_old', array(
                     'item_id' => $lastId, 
-                    'section' => $table, 
+                    'section' => $tableData['section'], 
                     'old_id' => $row['id'], 
                 ));
                 

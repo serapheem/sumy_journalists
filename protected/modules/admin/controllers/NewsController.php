@@ -1,16 +1,16 @@
 <?php
+/**
+ * Contains controller class of News
+ */
 
 /**
  * News Controller Class
  */
-class NewsController extends HomepageController 
+class NewsController extends CustomitemsController
 {
-	/**
-	 * Name of default model
-	 * 
-	 * @access public
-	 * @var string
-	 */
-	public $model = 'News';
-	
+    /**
+     * {@inheritdoc}
+     */
+    protected $_catid = 3;
+
 }

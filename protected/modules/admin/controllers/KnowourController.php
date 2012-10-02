@@ -1,16 +1,16 @@
 <?php
+/**
+ * Contains controller class of Know Our
+ */
 
 /**
  * Know Our Controller Class
  */
-class KnowOurController extends HomepageController 
+class KnowOurController extends CustomitemsController
 {
-	/**
-	 * Name of default model
-	 * 
-	 * @access public
-	 * @var string
-	 */
-	public $model = 'KnowOur';
-	
+    /**
+     * {@inheritdoc}
+     */
+    protected $_catid = 2;
+
 }

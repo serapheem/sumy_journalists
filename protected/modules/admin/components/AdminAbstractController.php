@@ -14,11 +14,16 @@ abstract class AdminAbstractController extends CController
     public $defaultAction = 'admin';
 
     /**
-     * Shows the main layout file
-     * @var string
+     * {@inheritdoc}
      */
     public $layout = 'admin.views.layouts.main';
-
+    
+    /**
+     * Name of the model class
+     * @var string
+     */
+    protected $_modelClass;
+    
     /**
      * The object of model
      * @var object
@@ -80,7 +85,21 @@ abstract class AdminAbstractController extends CController
             ),
         );
     }
-
+    
+    /**
+     * Gets name of the model class
+     * 
+     * @return string
+     */
+    protected function getModelClass()
+    {
+        if (!$this->_modelClass)
+        {
+            $this->_modelClass = ucfirst($this->getId());
+        }
+        return $this->_modelClass;
+    }
+    
     /**
      * Returns the model object or null if there is no model with such identifier
      *
@@ -90,16 +109,16 @@ abstract class AdminAbstractController extends CController
      */
     protected function loadModel($create = true, $scenario = '')
     {
-        $model_class = ucfirst($this->getId());
-        if (!class_exists($model_class))
+        $modelClass = $this->getModelClass();
+        if (!class_exists($modelClass))
             return null;
 
         if ($this->_model === null)
         {
             if ($id = (int) Yii::app()->request->getParam('id', 0))
-                $this->_model = $model_class::model()->findbyPk($id);
+                $this->_model = $modelClass::model()->findbyPk($id);
             else
-                $this->_model = new $model_class();
+                $this->_model = new $modelClass();
 
             if ($scenario && $this->_model)
                 $this->_model->setScenario($scenario);
@@ -121,7 +140,7 @@ abstract class AdminAbstractController extends CController
      */
     public function actionAdmin()
     {
-        $modelClass = ucfirst($this->getId());
+        $modelClass = $this->getModelClass();
         if (!class_exists($modelClass))
         {
             $this->_model = null;
@@ -139,6 +158,7 @@ abstract class AdminAbstractController extends CController
 
         $this->render('list', array(
             'sectionId' => $this->getId(),
+            'modelClass' => $modelClass,
             'itemPerPage' => $this->_itemsPerPage,
             'model' => $this->_model,
             'dataProvider' => $dataProvider
@@ -163,7 +183,7 @@ abstract class AdminAbstractController extends CController
         $canRedirect = false;
         if (($apply = $request->getParam('apply', false)) || $request->getParam('save', false))
         {
-            $attributes = $request->getPost(ucfirst($sectionId));
+            $attributes = $request->getPost($this->getModelClass());
             if ($attributes)
             {
                 $model->attributes = $attributes;
@@ -174,7 +194,7 @@ abstract class AdminAbstractController extends CController
                 }
             }
             else
-                Yii::app()->user->setFlash('error', Yii::t($this->getId(), 'admin.form.message.error.noAttrs'));
+                Yii::app()->user->setFlash('error', Yii::t($sectionId, 'admin.form.message.error.noAttrs'));
         }
 
         if ($canRedirect)
@@ -188,7 +208,11 @@ abstract class AdminAbstractController extends CController
         else
         {
             $newItem = true;
-            $config = require( Yii::getPathOfAlias("admin.views.{$sectionId}.form") . '.php' );
+            if (!file_exists($createForm = Yii::getPathOfAlias("admin.views.{$sectionId}.form") . '.php'))
+            {
+                $createForm = Yii::getPathOfAlias('admin.views.' . $this->getId() . '.form') . '.php';
+            }
+            $config = require($createForm);
             $form = new CForm($config, $model);
 
             $this->_title = isset($model->id) 
@@ -252,7 +276,11 @@ abstract class AdminAbstractController extends CController
             else
             {
                 $newItem = false;
-                $config = require( Yii::getPathOfAlias("admin.views.{$sectionId}.form") . '.php' );
+                if (!file_exists($editForm = Yii::getPathOfAlias("admin.views.{$sectionId}.form") . '.php'))
+                {
+                    $editForm = Yii::getPathOfAlias('admin.views.' . $this->getId() . '.form') . '.php';
+                }
+                $config = require($editForm);
                 $form = new CForm($config, $model);
 
                 $this->_title = $model->title;
@@ -278,13 +306,12 @@ abstract class AdminAbstractController extends CController
             throw new CHttpException(400, 'Invalid request. Please do not repeat this request again.');
         }
 
-        $sectionId = $this->getId();
         $model = $this->loadModel();
-        $attributes = $request->getPost(ucfirst($sectionId));
+        $attributes = $request->getPost($this->getModelClass());
         if ($attributes)
             $model->attributes = $attributes;
 
-        if ($request->getParam('ajax') == ($sectionId . '-form'))
+        if ($request->getParam('ajax') == ($this->getId() . '-form'))
         {
             echo CActiveForm::validate($model);
             Yii::app()->end();
@@ -307,7 +334,7 @@ abstract class AdminAbstractController extends CController
         $ids = (array) $request->getPost('ids', array());
         if ($total = count($ids))
         {
-            $modelClass = ucfirst($sectionId);
+            $modelClass = $this->getModelClass();
             $error = 0;
             foreach ($ids as $id)
             {

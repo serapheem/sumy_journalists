@@ -1,16 +1,16 @@
 <?php
+/**
+ * Contains controller class of City Style
+ */
 
 /**
  * City Style Controller Class
  */
-class CityStyleController extends AdminAbstractController 
+class CitystyleController extends CustomitemsController
 {
-	/**
-	 * Name of default model
-	 * 
-	 * @access public
-	 * @var string
-	 */
-	public $model = 'CityStyle';
-	
+    /**
+     * {@inheritdoc}
+     */
+    protected $_catid = 5;
+
 }
