@@ -1,10 +1,10 @@
 <?php
 /**
- * Layout file for list of categories
+ * Layout file for list of custom items
  */
 
 $this->breadcrumbs = array(
-    Yii::t($sectionId, 'admin.sectionName')
+    Yii::t('main', 'admin.section.' . $sectionId)
 );
 
 //$order_onclick = "$('#admin-form').attr('action', '/admin/{$sectionId}/saveorder').submit(); return false;";
@@ -13,7 +13,7 @@ $this->breadcrumbs = array(
 <?php $this->renderSubmenu(); ?>
 
 <div class="box visible">
-    <h1><?php echo Yii::t($sectionId, 'admin.sectionName'); ?></h1>
+    <h1><?php echo Yii::t('main', 'admin.section.' . $sectionId); ?></h1>
 
     <?php
     $this->widget('zii.widgets.jui.CJuiButton', array(
@@ -96,7 +96,7 @@ $this->breadcrumbs = array(
 //                'filter' => '',
 //                //'labelExpression' => 'GridHelper::getStateLabel($data->state)',
 //                'urlExpression' => 'Yii::app()->controller->createUrl(\'edit\', array(\'id\' => $data->primaryKey))'
-//                    . ' . \'?' . ucfirst($sectionId) . '[state]=\' . (1 - $data->state)',
+//                    . ' . \'?' . $modelClass . '[state]=\' . (1 - $data->state)',
 //                'linkHtmlOptions' => array(
 //                    'class' => 'ordering', 'click' => 'ajaxChange',
 //                    'titleExpression' => '$data->state '

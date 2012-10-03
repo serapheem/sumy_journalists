@@ -4,7 +4,7 @@
  */
 
 $this->breadcrumbs = array(
-    Yii::t($sectionId, 'admin.sectionName')
+    Yii::t('main', 'admin.section.' . $sectionId)
 );
 
 //$order_onclick = "$('#admin-form').attr('action', '/admin/{$sectionId}/saveorder').submit(); return false;";
@@ -13,7 +13,7 @@ $this->breadcrumbs = array(
 <?php $this->renderSubmenu(); ?>
 
 <div class="box visible">
-    <h1><?php echo Yii::t($sectionId, 'admin.sectionName'); ?></h1>
+    <h1><?php echo Yii::t('main', 'admin.section.' . $sectionId); ?></h1>
 
     <?php
     $this->widget('zii.widgets.jui.CJuiButton', array(
@@ -62,6 +62,11 @@ $this->breadcrumbs = array(
                 'urlExpression' => 'Yii::app()->controller->createUrl(\'edit\', array(\'id\' => $data->primaryKey))',
                 'linkHtmlOptions' => array('title' => Yii::t('main', 'admin.list.action.edit')),
                 'htmlOptions' => array('class' => 'link-column tl')
+            ),
+            array(
+                'name' => 'parent_id',
+                'value' => '$data->parent ? CHtml::encode($data->parent->title) : \'\'',
+                'headerHtmlOptions' => array('width' => '160')
             ),
             array(
                 'class' => 'MyDataLinkColumn',

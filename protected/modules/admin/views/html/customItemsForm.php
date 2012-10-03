@@ -1,6 +1,6 @@
 <?php
 /**
- * Category item add/edit form file
+ * Custom Item add/edit form file
  */
 return array(
     'action' => $newItem 
@@ -36,7 +36,7 @@ return array(
                 ),
 //                'catid' => array(
 //                    'type' => 'dropdownlist',
-//                    'items' => $model->getDropDownItems(),
+//                    'items' => $model->getCatidDropDown(),
 //                ),
                 'state' => array(
                     'type' => 'radiolist',
@@ -68,7 +68,7 @@ return array(
         '<div class="width-35 fleft">',
         'publishing' => array(
             'type' => 'form',
-            'title' => Yii::t('main', 'admin.from.section.publishData'),
+            'title' => Yii::t('main', 'admin.form.section.publishData'),
             'elements' => array(
                 'created_by' => array(
                     'type' => 'text',

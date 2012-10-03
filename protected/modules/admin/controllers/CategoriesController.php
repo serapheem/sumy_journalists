@@ -13,8 +13,6 @@ class CategoriesController extends AdminAbstractController
      */
     public function accessRules()
     {
-        //$rules = parent::accessRules();
-
         return array(
             array('allow', // allow authenticated users to perform 'view' actions
                 'actions' => array('admin', 'create', 'edit', 'validate', 'delete'),

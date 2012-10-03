@@ -3,16 +3,29 @@
  * Language main file for Ukrainian language
  */
 return array(
-    // Menu items
-    'ADMIN_PANEL' => 'Адмін-панель',
-    'SETTINGS' => 'Установки',
-    'MATERIALS' => 'Матеріали',
-    'POLL' => 'Голосування',
-    'USERS' => 'Користувачі',
-    'PAGES' => 'Статичні сторінки',
-    'VIEW_SITE' => 'Перегляд сайту',
-    'LOG_OUT' => 'Вийти',
-    // Names of column or field
+    // menu items
+    'admin.menu.adminPanel' => 'Адмін-панель',
+    'admin.menu.settings' => 'Установки',
+    'admin.menu.materials' => 'Матеріали',
+    'admin.menu.participants' => 'Mенеджер учасників',
+    'admin.menu.poll' => 'Голосування',
+    'admin.menu.statistics' => 'Статистика',
+    'admin.menu.users' => 'Користувачі',
+    'admin.menu.viewSite' => 'Перегляд сайту',
+    'admin.menu.logOut' => 'Вийти',
+    
+    // name of sections
+    'admin.section.news' => 'Mенеджер новин',
+    'admin.section.knowour' => 'Знай наших',
+    'admin.section.citystyle' => 'City - стиль',
+    'admin.section.tyca' => 'Tyca',
+    'admin.section.pages' => 'Статичні сторінки',
+    'admin.section.categories' => 'Mенеджер категорій',
+    'admin.section.items' => 'Mенеджер статей',
+    'admin.section.frontpage' => 'Головна сторінка',
+    'admin.section.participants' => 'Учасники',
+    'admin.section.participcats' => 'Категорії',
+    
     
     'CHARACTERISTIC' => 'Характеристика',
     
@@ -35,6 +48,7 @@ return array(
     'ERROR' => 'Помилка',
     'ONLINE' => 'Онлайн',
     'OFFLINE' => 'Оффлайн',
+    
     // Names of the link, filter or action
     'admin.list.label.title' => 'Назва',
     'admin.list.label.name' => "Ім'я",
@@ -59,7 +73,7 @@ return array(
     'admin.list.filter.state.unpublished' => 'Неопубліковані',
     
     'admin.form.section.generalData' => 'Загальні дані',
-    'admin.from.section.publishData' => 'Дані публікації',
+    'admin.form.section.publishData' => 'Дані публікації',
     'admin.form.section.metaData' => 'Метадані',
     
     'admin.list.label.published' => 'Опублікована',

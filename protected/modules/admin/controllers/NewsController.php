@@ -6,7 +6,7 @@
 /**
  * News Controller Class
  */
-class NewsController extends CustomitemsController
+class NewsController extends AdminCustomItemsController
 {
     /**
      * {@inheritdoc}

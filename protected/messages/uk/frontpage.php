@@ -4,7 +4,6 @@
  */
 
 return array(
-	'SECTION_NAME' 		=> 'Головна сторінка',
 	'ITEM_NOT_FOUND'	=> 'Стаття не знайдена.',
 	'NO_ITEMS'			=> 'Немає жодної статті.',
 	

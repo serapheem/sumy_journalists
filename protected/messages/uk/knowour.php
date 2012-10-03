@@ -5,8 +5,6 @@
 
 return array(
     // labels and actions
-    'admin.sectionName' => 'Знай наших',
-    
     'admin.list.label.deleteConfirm' => 'Видалити особу?',
     'admin.list.action.createItem' => 'Додати особу',
     'admin.list.action.deleteItems' => 'Видалити вибраних осіб',

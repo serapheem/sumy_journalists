@@ -6,7 +6,7 @@
 /**
  * City Style Controller Class
  */
-class CitystyleController extends CustomitemsController
+class CitystyleController extends AdminCustomItemsController
 {
     /**
      * {@inheritdoc}

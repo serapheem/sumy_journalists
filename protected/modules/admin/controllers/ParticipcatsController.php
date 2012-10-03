@@ -1,17 +1,17 @@
 <?php
 /**
- * Contains controller class of Participants
+ * Contains controller class of Participants Categories
  */
 
 /**
- * Participants Controller Class
+ * Participants Categories Controller Class
  */
-class ParticipantsController extends AdminCustomItemsController
+class ParticipcatsController extends AdminCustomCategoriesController
 {
     /**
      * {@inheritdoc}
      */
-    protected $_catid = 4;
+    protected $_parentId = 4;
     
     /**
      * Returns list of submenu items

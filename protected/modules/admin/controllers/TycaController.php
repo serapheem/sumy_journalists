@@ -6,7 +6,7 @@
 /**
  * Tyca Controller Class
  */
-class TycaController extends CustomitemsController
+class TycaController extends AdminCustomItemsController
 {
     /**
      * {@inheritdoc}

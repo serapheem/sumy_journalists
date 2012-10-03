@@ -123,12 +123,21 @@ class Items extends AdminAbstractModel
      * Returns the list of existing categories
      * where key is identifier and value is title of the category
      * 
+     * @param int $parentId Identifier of the parent category
+     * 
      * @return array
      */
-    public function getDropDownItems()
+    public function getCatidDropDown($parentId = null)
     {
         $result = array();
-        $items = Categories::model()->findAll('id<>:id', array('id' => 1));
+        $condition = 'id<>:id';
+        $params = array('id' => 1);
+        if ($parentId)
+        {
+            $condition .= ' AND parent_id = :parent_id';
+            $params['parent_id'] = $parentId;
+        }
+        $items = Categories::model()->findAll($condition, $params);
 
         foreach ($items as $item)
             $result[$item->id] = (strtolower($item->title) == 'root') 

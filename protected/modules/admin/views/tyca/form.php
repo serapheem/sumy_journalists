@@ -3,4 +3,4 @@
  * Tyca form layout file
  */
 
-return require Yii::getPathOfAlias('admin.views.customitems.form') . '.php';
+return require Yii::getPathOfAlias('admin.views.html.customItemsForm') . '.php';

@@ -220,7 +220,7 @@ abstract class AdminAbstractController extends CController
                 : Yii::t($sectionId, 'admin.form.title.newItem');
 
             $this->breadcrumbs = array(
-                Yii::t($sectionId, 'admin.sectionName') => $this->createUrl($this->defaultAction),
+                Yii::t('main', 'admin.section.' . $sectionId) => $this->createUrl($this->defaultAction),
                 $this->_title
             );
             
@@ -246,7 +246,7 @@ abstract class AdminAbstractController extends CController
         $canRedirect = false;
         if (($apply = $request->getParam('apply', false)) || $request->getParam('save', false) || $request->isAjaxRequest)
         {
-            $attributes = $request->getPost(ucfirst($sectionId));
+            $attributes = $request->getPost($this->getModelClass());
             if ($attributes)
             {
                 $model->attributes = $attributes;
@@ -285,7 +285,7 @@ abstract class AdminAbstractController extends CController
 
                 $this->_title = $model->title;
                 $this->breadcrumbs = array(
-                    Yii::t($sectionId, 'admin.sectionName') => $this->createUrl($this->defaultAction),
+                    Yii::t('main', 'admin.section.' . $sectionId) => $this->createUrl($this->defaultAction),
                     $this->_title
                 );
 
@@ -368,7 +368,6 @@ abstract class AdminAbstractController extends CController
 
     /**
      * Saves order of items
-     * @return void
      */
     public function actionSaveOrder()
     {
@@ -399,7 +398,6 @@ abstract class AdminAbstractController extends CController
 
     /**
      * Changes order of selected element
-     * @return void
      */
     public function actionChangeOrder()
     {
@@ -432,7 +430,6 @@ abstract class AdminAbstractController extends CController
 
     /**
      * Reorders all elements in the table
-     * @return void
      */
     protected function reorder()
     {
@@ -451,6 +448,32 @@ abstract class AdminAbstractController extends CController
             }
         }
     }
+    
+    /**
+     * Returns list of main menu items
+     * 
+     * @return array
+     */
+    protected function getMainMenuItems()
+    {
+        return array(
+            '/admin' => array('label' => Yii::t('main', 'admin.menu.settings')),
+            '/admin/news' => array('label' => Yii::t('main', 'admin.menu.materials')),
+            '/admin/participants' => array('label' => Yii::t('main', 'admin.menu.participants')),
+            '/admin/poll' => array('label' => Yii::t('main', 'admin.menu.poll')),
+            '/admin/statistics' => array('label' => Yii::t('main', 'admin.menu.statistics')),
+            '/admin/users' => array('label' => Yii::t('main', 'admin.menu.users')),
+            '/admin/default/logout' => array(
+                'label' => Yii::t('main', 'admin.menu.logOut'), 
+                'htmlOptions' => array('class' => 'right')
+            ),
+            '/' => array(
+                'label' => Yii::t('main', 'admin.menu.viewSite'), 
+                'htmlOptions' => array('class' => 'right'), 
+                'linkHtmlOptions' => array('rel' => 'external')
+            ),
+        );
+    }
 
     /**
      * Renders the submenu of current page
@@ -458,7 +481,7 @@ abstract class AdminAbstractController extends CController
     protected function renderSubmenu()
     {
         $this->renderPartial('/html/submenu', array(
-            'sectionTitle' => Yii::t('main', 'MATERIALS'),
+            'sectionTitle' => Yii::t('main', 'admin.menu.materials'),
             'items' => $this->getSubmenuItems(),
             'current' => 'admin/' . $this->getId()
         ));
@@ -466,20 +489,22 @@ abstract class AdminAbstractController extends CController
     
     /**
      * Returns list of submenu items
+     * 
      * @return array
      */
     protected function getSubmenuItems()
     {
-        return array(
-            'admin/news' => Yii::t('news', 'admin.sectionName'),
-            'admin/citystyle' => Yii::t('citystyle', 'admin.sectionName'),
-            'admin/knowour' => Yii::t('knowour', 'admin.sectionName'),
-            'admin/tyca' => Yii::t('tyca', 'admin.sectionName'),
-            'admin/participants' => Yii::t('participants', 'admin.sectionName'),
-            'admin/frontpage' => Yii::t('frontpage', 'admin.sectionName'),
-            'admin/items' => Yii::t('items', 'admin.sectionName'),
-            'admin/categories' => Yii::t('categories', 'admin.sectionName')
+        $sections = array(
+            'news', 'knowour', 'citystyle', 'tyca', 
+            'pages', 'categories', 'items', 'frontpage'
         );
+        $items = array();
+        foreach ($sections as $section)
+        {
+            $items['admin/' . $section] = Yii::t('main', 'admin.section.' . $section);
+        }
+        
+        return $items;
     }
 
 }

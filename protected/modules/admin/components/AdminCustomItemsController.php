@@ -1,12 +1,12 @@
 <?php
 /**
- * Contains controller class of custom items
+ * Contains controller class of custom items for admin
  */
 
 /**
  * Custom Items Controller Class
  */
-abstract class CustomitemsController extends AdminAbstractController
+abstract class AdminCustomItemsController extends AdminAbstractController
 {
     /**
      * {@inheritdoc}

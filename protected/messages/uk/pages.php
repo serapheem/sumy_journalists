@@ -5,8 +5,6 @@
 
 return array(
     // labels and actions
-    'admin.sectionName' => 'Статичні сторінки',
-    
     'admin.list.label.deleteConfirm' => 'Видалити статтю?',
     'admin.list.action.createItem' => 'Створити статтю',
     'admin.list.action.deleteItems' => 'Видалити вибрані статті',

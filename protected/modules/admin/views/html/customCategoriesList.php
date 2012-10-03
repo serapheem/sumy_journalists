@@ -1,11 +1,13 @@
 <?php
 /**
- * Layout file for list of categories
+ * Layout file for list of custom categories
  */
 
 $this->breadcrumbs = array(
     Yii::t('main', 'admin.section.' . $sectionId)
 );
+
+//$order_onclick = "$('#admin-form').attr('action', '/admin/{$sectionId}/saveorder').submit(); return false;";
 ?>
 
 <?php $this->renderSubmenu(); ?>
@@ -61,14 +63,6 @@ $this->breadcrumbs = array(
                 'linkHtmlOptions' => array('title' => Yii::t('main', 'admin.list.action.edit')),
                 'htmlOptions' => array('class' => 'link-column tl')
             ),
-            // TODO : filter must be as dropdown list
-            array(
-                'name' => 'catid',
-                'value' => 'CHtml::encode($data->category->title)',
-                //'filter' => '',
-                'headerHtmlOptions' => array('width' => '150'),
-                'htmlOptions' => array('class' => 'tl')
-            ),
             array(
                 'class' => 'MyDataLinkColumn',
                 'name' => 'state',
@@ -90,7 +84,6 @@ $this->breadcrumbs = array(
                 'headerHtmlOptions' => array('width' => '130')
             ),
             array('name' => 'hits', 'filter' => '', 'headerHtmlOptions' => array('width' => '70')),
-            array('name' => 'rating', 'filter' => '', 'headerHtmlOptions' => array('width' => '70')),
             array(
                 'name' => 'modified_at',
                 'value' => 'Yii::app()->dateFormatter->formatDateTime( $data->modified_at, "long" )',

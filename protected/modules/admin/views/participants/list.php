@@ -3,4 +3,4 @@
  * Participants list layout file
  */
 
-require Yii::getPathOfAlias('admin.views.customitems.list') . '.php';
+require Yii::getPathOfAlias('admin.views.html.customItemsList') . '.php';

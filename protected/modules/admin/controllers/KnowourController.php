@@ -6,7 +6,7 @@
 /**
  * Know Our Controller Class
  */
-class KnowOurController extends CustomitemsController
+class KnowOurController extends AdminCustomItemsController
 {
     /**
      * {@inheritdoc}

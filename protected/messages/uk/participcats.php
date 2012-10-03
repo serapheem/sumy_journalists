@@ -1,6 +1,6 @@
 <?php
 /**
- * Language categories file for Ukrainian language
+ * Language participant categories file for Ukrainian language
  */
 
 return array(

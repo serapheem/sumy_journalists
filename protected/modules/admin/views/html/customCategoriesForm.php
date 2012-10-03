@@ -1,8 +1,7 @@
 <?php
 /**
- * Participants form layout file
+ * Custom category item add/edit form file
  */
-
 return array(
     'action' => $newItem 
         ? $this->createUrl('create') 
@@ -35,25 +34,19 @@ return array(
                     'type' => 'text',
                     'maxlength' => 255,
                 ),
-                'catid' => array(
-                    'type' => 'dropdownlist',
-                    'items' => $model->getCatidDropDown($this->_catid),
-                ),
+//                'parent_id' => array(
+//                    'type' => 'dropdownlist',
+//                    'items' => $model->getParentDropDown(),
+//                ),
                 'state' => array(
                     'type' => 'radiolist',
                     'layout' => "{label}\n<div class=\"radiolist-wrapper\">{input}</div>\n{hint}\n{error}",
                     'items' => $model->getStateValues(),
                     'separator' => "\n"
                 ),
-                'featured' => array(
-                    'type' => 'radiolist',
-                    'layout' => "{label}\n<div class=\"radiolist-wrapper\">{input}</div>\n{hint}\n{error}",
-                    'items' => $model->getFeaturedValues(),
-                    'separator' => "\n"
-                ),
-                'fulltext' => array(
+                'description' => array(
                     'type' => 'application.extensions.NHCKEditor.CKEditorWidget',
-                    'attribute' => 'fulltext',
+                    'attribute' => 'description',
                     'layout' => "{label}\n<br />{input}\n{hint}\n{error}",
                     'editorOptions' => array(
                         'width' => 700,

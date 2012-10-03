@@ -69,6 +69,7 @@ class Categories extends AdminAbstractModel
     public function relations()
     {
         return array(
+            'parent' => array(self::BELONGS_TO, 'Categories', 'parent_id'),
             'created_user' => array(self::BELONGS_TO, 'Users', 'created_by'),
             'modified_user' => array(self::BELONGS_TO, 'Users', 'modified_by'),
         );
@@ -86,6 +87,7 @@ class Categories extends AdminAbstractModel
         $criteria->compare('t.id', $this->id);
         $criteria->compare('t.title', $this->title, true);
         $criteria->compare('t.alias', $this->alias, true);
+        $criteria->compare('t.parent_id', $this->parent_id);
         $criteria->compare('t.state', $this->state);
 
         return new CActiveDataProvider(get_class($this), array(

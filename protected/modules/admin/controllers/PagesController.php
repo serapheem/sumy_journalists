@@ -6,7 +6,7 @@
 /**
  * Pages Controller Class
  */
-class PagesController extends CustomitemsController
+class PagesController extends AdminCustomItemsController
 {
     /**
      * {@inheritdoc}
