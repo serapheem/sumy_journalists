@@ -48,7 +48,8 @@ abstract class AdminCustomItemsController extends AdminAbstractController
             throw new BadMethodCallException('Identifier of the category wasn\'t set!');
         
         $className = $this->getModelClass();
-        $_GET[$className]['catid'] = $this->_catid;
+        if (empty($_GET[$className]['catid']))
+            $_GET[$className]['catid'] = $this->_catid;
         
         parent::actionAdmin();
     }
@@ -62,7 +63,8 @@ abstract class AdminCustomItemsController extends AdminAbstractController
             throw new BadMethodCallException('Identifier of the category wasn\'t set!');
         
         $className = $this->getModelClass();
-        $_POST[$className]['catid'] = $this->_catid;
+        if (empty($_POST[$className]['catid']))
+            $_POST[$className]['catid'] = $this->_catid;
         
         parent::actionCreate();
     }
@@ -76,7 +78,8 @@ abstract class AdminCustomItemsController extends AdminAbstractController
             throw new BadMethodCallException('Identifier of the category wasn\'t set!');
         
         $className = $this->getModelClass();
-        $_POST[$className]['catid'] = $this->_catid;
+        if (empty($_POST[$className]['catid']))
+            $_POST[$className]['catid'] = $this->_catid;
         
         parent::actionEdit();
     }
@@ -90,7 +93,8 @@ abstract class AdminCustomItemsController extends AdminAbstractController
             throw new BadMethodCallException('Identifier of the category wasn\'t set!');
         
         $className = $this->getModelClass();
-        $_POST[$className]['catid'] = $this->_catid;
+        if (empty($_POST[$className]['catid']))
+            $_POST[$className]['catid'] = $this->_catid;
         
         parent::actionValidate();
     }

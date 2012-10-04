@@ -61,21 +61,19 @@ $this->breadcrumbs = array(
                 'linkHtmlOptions' => array('title' => Yii::t('main', 'admin.list.action.edit')),
                 'htmlOptions' => array('class' => 'link-column tl')
             ),
-            // TODO : filter must be as dropdown list
             array(
                 'name' => 'catid',
                 'value' => 'CHtml::encode($data->category->title)',
-                //'filter' => '',
+                'filter' => $model->getCatidFilterValues(),
                 'headerHtmlOptions' => array('width' => '150'),
                 'htmlOptions' => array('class' => 'tl')
             ),
             array(
                 'class' => 'MyDataLinkColumn',
                 'name' => 'state',
-                'filter' => array(
-                    'prompt' => Yii::t('main', 'admin.list.filter.state.select'), 
-                    0 => Yii::t('main', 'admin.list.filter.state.unpublished'), 
-                    1 => Yii::t('main', 'admin.list.filter.state.published')
+                'filter' => array_replace(
+                    array('prompt' => Yii::t('main', 'admin.list.filter.state.select')),
+                    $model->getStateFilterValues()
                 ),
                 'labelExpression' => 'GridHelper::getStateLabel($data->state)',
                 'urlExpression' => 'Yii::app()->controller->createUrl(\'edit\', array(\'id\' => $data->primaryKey))'

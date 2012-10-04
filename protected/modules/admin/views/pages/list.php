@@ -16,14 +16,14 @@ $this->breadcrumbs = array(
     <h1><?php echo Yii::t('main', 'admin.section.' . $sectionId); ?></h1>
 
     <?php
-    $this->widget('zii.widgets.jui.CJuiButton', array(
-        'buttonType' => 'link',
-        'name' => 'edit-button',
-        'caption' => Yii::t($sectionId, 'admin.list.action.createItem'),
-        'url' => $this->createUrl('create'),
-        'htmlOptions' => array('title' => Yii::t($sectionId, 'admin.list.action.createItem'))
-        )
-    );
+//    $this->widget('zii.widgets.jui.CJuiButton', array(
+//        'buttonType' => 'link',
+//        'name' => 'edit-button',
+//        'caption' => Yii::t($sectionId, 'admin.list.action.createItem'),
+//        'url' => $this->createUrl('create'),
+//        'htmlOptions' => array('title' => Yii::t($sectionId, 'admin.list.action.createItem'))
+//        )
+//    );
     // TODO : Create new confirm message
 //    $this->widget('MyAdminButton', array(
 //        'buttonType' => 'link',
@@ -45,10 +45,10 @@ $this->breadcrumbs = array(
         // 'updateSelector' => '#categories .pager a, #categories .items thead th a, #admin-form .delete',
         'beforeAjaxUpdate' => 'updateAjaxRequest',
         'columns' => array(
-            array(
-                'class' => 'CCheckBoxColumn',
-                'id' => 'ids'
-            ),
+//            array(
+//                'class' => 'CCheckBoxColumn',
+//                'id' => 'ids'
+//            ),
 //            array(
 //                'class' => 'CButtonColumn',
 //                'template' => '{delete}',
@@ -62,6 +62,11 @@ $this->breadcrumbs = array(
                 'urlExpression' => 'Yii::app()->controller->createUrl(\'edit\', array(\'id\' => $data->primaryKey))',
                 'linkHtmlOptions' => array('title' => Yii::t('main', 'admin.list.action.edit')),
                 'htmlOptions' => array('class' => 'link-column tl')
+            ),
+            array(
+                'name' => 'alias', 
+                'value' => 'CHtml::encode($data->alias) . \'.html\'', 
+                'headerHtmlOptions' => array('width' => '200')
             ),
 //            array(
 //                'class' => 'MyDataLinkColumn',
