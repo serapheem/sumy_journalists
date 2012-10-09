@@ -1,43 +1,39 @@
 <?php
+/**
+ * Contains controller class of users
+ */
 
 /**
  * Users Controller Class
  */
 class UsersController extends AdminAbstractController 
 {
-	/**
-	 * Name of default model
-	 * 
-	 * @access public
-	 * @var string
-	 */
-	public $model = 'Users';
-	
-	/**
-	 * Displays the list of items
-	 * 
-	 * @access public
-	 * 
-	 * @return void
-	 */
-	public function actionIndex( ) 
-	{
-		$model = $this->model;
-		$rows = $model::model( )
-			->findAll( );
-		
-		$this->render( 'list', array( 'rows' => $rows ) );
-		return true;
-	}
+    /**
+     * {@inheritdoc}
+     */
+    public function accessRules()
+    {
+        return array(
+            array('allow', // allow authenticated users to perform 'view' actions
+                'actions' => array('admin', 'create', 'edit', 'validate', 'delete'),
+                'users' => array('@'),
+            ),
+            /* array('allow', // allow admin role to perform 'admin', 'update' and 'delete' actions
+              'actions'=>array('admin','delete','update'),
+              'roles'=>array(User::ROLE_ADMIN),
+              ), */
+            array('deny', // deny all users
+                'users' => array('*'),
+            )
+        );
+    }
 	
 	/**
 	 * Displays add form and save changes
 	 * 
-	 * @access public
-	 * 
 	 * @return void
 	 */
-	public function actionAdd() 
+	public function actionCreate1() 
 	{
 		$model_name = strtolower( $this->model );
 		
@@ -91,7 +87,7 @@ class UsersController extends AdminAbstractController
 	 * 
 	 * @return void
 	 */
-	public function actionEdit() 
+	public function actionEdit1() 
 	{
 		$model_name = strtolower( $this->model );
 		

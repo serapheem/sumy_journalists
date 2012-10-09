@@ -25,6 +25,7 @@ return array(
     'admin.section.frontpage' => 'Головна сторінка',
     'admin.section.participants' => 'Учасники',
     'admin.section.participcats' => 'Категорії',
+    'admin.section.users' => 'Користувачі',
     
     
     'CHARACTERISTIC' => 'Характеристика',
@@ -33,23 +34,17 @@ return array(
     'ORDER' => 'Порядок',
     'SAVE_ORDER' => 'Зберегти порядок',
     'EDITED' => 'Редагував',
-    'LAST_VISITED' => 'Був в адмін-панелі',
-    'LAST_IP' => 'Останній IP',
     'VOTES_NUMBER' => 'Кількість голосів',
     'COMMENTS_NUMBER' => 'Кількість коментарів',
     'SECTION' => 'Розділ',
     // Fields of the user
-    'USER_NAME' => "Ім'я користувача",
-    'LOGIN' => 'Логін',
-    'EMAIL' => 'Пошта',
-    'PASSWORD' => 'Пароль',
-    'REPEAT_PASSWORD' => 'Повторити пароль',
-    'REMEMBER_ME' => "Запам'ятати мене",
+    
     'ERROR' => 'Помилка',
     'ONLINE' => 'Онлайн',
     'OFFLINE' => 'Оффлайн',
     
     // Names of the link, filter or action
+    'admin.list.label.id' => 'ID',
     'admin.list.label.title' => 'Назва',
     'admin.list.label.name' => "Ім'я",
     'admin.list.label.alias' => 'Посилання',

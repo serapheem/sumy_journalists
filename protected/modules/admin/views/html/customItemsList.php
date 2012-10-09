@@ -63,13 +63,13 @@ $this->breadcrumbs = array(
                 'linkHtmlOptions' => array('title' => Yii::t('main', 'admin.list.action.edit')),
                 'htmlOptions' => array('class' => 'link-column tl')
             ),
-            array(
-                'name' => 'catid',
-                'value' => 'CHtml::encode($data->category->title)',
-                //'filter' => '',
-                'headerHtmlOptions' => array('width' => '150'),
-                'htmlOptions' => array('class' => 'tl')
-            ),
+//            array(
+//                'name' => 'catid',
+//                'value' => 'CHtml::encode($data->category->title)',
+//                //'filter' => '',
+//                'headerHtmlOptions' => array('width' => '150'),
+//                'htmlOptions' => array('class' => 'tl')
+//            ),
             array(
                 'class' => 'MyDataLinkColumn',
                 'name' => 'state',
@@ -114,11 +114,7 @@ $this->breadcrumbs = array(
                 'filter' => '',
                 'headerHtmlOptions' => array('width' => '120')
             ),
-            array(
-                'name' => 'id',
-                'header' => Yii::t('main', 'ID'),
-                'headerHtmlOptions' => array('width' => '30')
-            )
+            array('name' => 'id', 'headerHtmlOptions' => array('width' => '30'))
         ),
     ));
     ?>

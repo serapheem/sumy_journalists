@@ -18,9 +18,9 @@ class ParticipantsController extends AdminCustomItemsController
      */
     public function actionAdmin()
     {
-//        if (!$this->_catid)
-//            throw new BadMethodCallException('Identifier of the category wasn\'t set!');
-//        
+        if (!$this->_catid)
+            throw new BadMethodCallException('Identifier of the category wasn\'t set!');
+        
 //        $className = $this->getModelClass();
 //        if (empty($_GET[$className]['catid']))
 //        {

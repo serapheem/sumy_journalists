@@ -21,39 +21,15 @@ abstract class AdminAbstractModel extends CActiveRecord
     /**
      * {@inheritdoc}
      */
-    public function rules()
-    {
-        // TODO : do something with it
-        return array(
-            array('title, description', 'required'),
-            array('title, alias, description, parent_id, state, section, params, metakey, metadesc, metadata', 'safe'),
-        );
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function attributeLabels()
-    {
-        // TODO : do something with it
-        return array(
-            'title' => Yii::t('main', 'TITLE'),
-            'alias' => Yii::t('main', 'ALIAS'),
-            'body' => Yii::t('main', 'TEXT'),
-            'publish' => Yii::t('main', 'PUBLISH'),
-            'frontpage' => Yii::t('main', 'FEATURED'),
-        );
-    }
-
-    /**
-     * {@inheritdoc}
-     */
     protected function beforeSave()
     {
         $allowedActions = array('insert', 'update');
         if (in_array($this->getScenario(), $allowedActions))
         {
-            $this->title = trim($this->title);
+            if (!empty($this->title))
+                $this->title = trim($this->title);
+            if (!empty($this->name))
+                $this->name = trim($this->name);
             
             $this->modified_at = date('Y-m-d H:i:s');
             $this->modified_by = Yii::app()->user->id;

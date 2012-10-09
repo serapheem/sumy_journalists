@@ -47,7 +47,8 @@ class Items extends AdminAbstractModel
     public function attributeLabels()
     {
         return array(
-            'title'         => Yii::t('main', 'admin.list.label.title'),
+            'id'            => Yii::t('main', 'admin.list.label.id'),
+			'title'         => Yii::t('main', 'admin.list.label.title'),
             'alias'         => Yii::t('main', 'admin.list.label.alias'),
             'state'         => Yii::t('main', 'admin.list.label.status'),
             'catid'         => Yii::t('main', 'admin.list.label.category'),

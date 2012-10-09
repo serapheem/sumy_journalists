@@ -1,40 +1,54 @@
 <?php
-
+/**
+ * User item add/edit form file
+ */
 return array(
-	'elements' => array(
-		'<h1>' . Yii::t( 'users', 'NEW_ITEM' ) . '</h1>',
-		
-		'name' => array(
-			'type' => 'text',
-			'maxlength' => 120,
-		),
-		'username' => array(
-			'type' => 'text',
-			'maxlength' => 120,
-		),
-		'email' => array(
-			'type' => 'text',
-			'maxlength' => 120,
-		),
-		'password' => array(
+    'action' => $newItem 
+        ? $this->createUrl('create') 
+        : $this->createUrl('edit', array('id' => $model->id)),
+    'activeForm' => array(
+        'class'                     => 'CActiveForm',
+        'id'                        => $sectionId . '-form',
+        'enableAjaxValidation'      => true,
+        'enableClientValidation'    => false,
+        'clientOptions'             => array(
+            'validationUrl' => array('validate'),
+            'validateOnSubmit' => true,
+            'validateOnChange' => true,
+        )
+    ),
+    'elements' => array(
+        '<h1>' . Yii::t($sectionId, $newItem 
+            ? 'admin.form.title.newItem' 
+            : 'admin.form.title.editItem') . '</h1>',
+        'name' => array(
+            'type' => 'text',
+            'maxlength' => 128,
+        ),
+        'email' => array(
+            'type' => 'text',
+            'maxlength' => 128,
+        ),
+        'password' => array(
 			'type' => 'password',
-			'maxlength' => 50,
+			'maxlength' => 64,
 		),
 		'password2' => array(
 			'type' => 'password',
-			'maxlength' => 50,
+			'maxlength' => 64,
 		)
-	),
-	'buttons' => array(
-		'apply' => array(
-			'type' => 'submit',
-			'label' => Yii::t( 'main', 'ADD' ),
-		),
-		'save' => array(
-			'type' => 'submit',
-			'label' => Yii::t( 'main', 'ADD_AND_CLOSE' ),
-		),
-		
-		'<a href="/admin/users">' . Yii::t( 'main', 'CANCEL' ) . '</a>',
-	),
+    ),
+    'buttons' => array(
+        'apply' => array(
+            'type' => 'submit',
+            'label' => Yii::t('main', 'admin.form.action.' . ($newItem ? 'create' : 'save')),
+        ),
+        'save' => array(
+            'type' => 'submit',
+            'label' => Yii::t('main', 'admin.form.action.' . ($newItem ? 'create2close' : 'save2close')),
+        ),
+        '<a href="' . $this->createUrl($this->defaultAction) . '">' 
+            . Yii::t('main', 'admin.form.action.' . ($newItem ? 'cancel' : 'close')) 
+            . '</a>',
+    ),
 );

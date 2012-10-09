@@ -45,7 +45,8 @@ class Categories extends AdminAbstractModel
     public function attributeLabels()
     {
         return array(
-            'title'         => Yii::t('main', 'admin.list.label.title'),
+            'id'            => Yii::t('main', 'admin.list.label.id'),
+			'title'         => Yii::t('main', 'admin.list.label.title'),
             'alias'         => Yii::t('main', 'admin.list.label.alias'),
             'description'   => Yii::t('main', 'admin.form.label.text'),
             'parent_id'     => Yii::t($this->getTableSchema()->name, 'admin.form.label.parent'),

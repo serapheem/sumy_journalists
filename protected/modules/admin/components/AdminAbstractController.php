@@ -116,9 +116,15 @@ abstract class AdminAbstractController extends CController
         if ($this->_model === null)
         {
             if ($id = (int) Yii::app()->request->getParam('id', 0))
+            {
                 $this->_model = $modelClass::model()->findbyPk($id);
-            else
+                if ($this->_model)
+                    $this->_model->setScenario('update');
+            }
+            elseif ($create) 
+            {
                 $this->_model = new $modelClass();
+            }
 
             if ($scenario && $this->_model)
                 $this->_model->setScenario($scenario);
@@ -215,9 +221,7 @@ abstract class AdminAbstractController extends CController
             $config = require($createForm);
             $form = new CForm($config, $model);
 
-            $this->_title = isset($model->id) 
-                ? $model->title 
-                : Yii::t($sectionId, 'admin.form.title.newItem');
+            $this->_title = Yii::t($sectionId, 'admin.form.title.newItem');
 
             $this->breadcrumbs = array(
                 Yii::t('main', 'admin.section.' . $sectionId) => $this->createUrl($this->defaultAction),
@@ -283,7 +287,13 @@ abstract class AdminAbstractController extends CController
                 $config = require($editForm);
                 $form = new CForm($config, $model);
 
-                $this->_title = $model->title;
+                if (isset($model->title))
+                {
+                    $this->_title = $model->title;
+                }
+                else { 
+                    $this->_title = $model->name;
+                }
                 $this->breadcrumbs = array(
                     Yii::t('main', 'admin.section.' . $sectionId) => $this->createUrl($this->defaultAction),
                     $this->_title

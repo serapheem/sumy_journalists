@@ -96,11 +96,7 @@ $this->breadcrumbs = array(
                 'filter' => '',
                 'headerHtmlOptions' => array('width' => '120')
             ),
-            array(
-                'name' => 'id',
-                'header' => Yii::t('main', 'ID'),
-                'headerHtmlOptions' => array('width' => '30')
-            )
+            array('name' => 'id', 'headerHtmlOptions' => array('width' => '30'))
         ),
     ));
     ?>
