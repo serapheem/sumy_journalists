@@ -12,7 +12,9 @@ return array(
         'enableAjaxValidation'      => true,
         'enableClientValidation'    => false,
         'clientOptions'             => array(
-            'validationUrl' => array('validate'),
+            'validationUrl' => $newItem 
+                            ? array('validate') 
+                            : array('validate', 'id' => $model->id),
             'validateOnSubmit' => true,
             'validateOnChange' => true,
         )
@@ -32,10 +34,17 @@ return array(
         'password' => array(
 			'type' => 'password',
 			'maxlength' => 64,
+            'value' => ''
+		),
+		'newPassword' => array(
+			'type' => 'password',
+			'maxlength' => 64,
+            'value' => ''
 		),
 		'password2' => array(
 			'type' => 'password',
 			'maxlength' => 64,
+            'value' => ''
 		)
     ),
     'buttons' => array(

@@ -1,130 +1,129 @@
 <?php
+/**
+ * Contains default controller of admin module
+ */
 
 /**
  * Default Controller Class
  */
-class DefaultController extends AdminAbstractController 
+class DefaultController extends AdminAbstractController
 {
-	/**
-	 * (non-PHPDoc)
-	 * @see CController::filters
-	 */
-	public function accessRules()
-	{
-		return array( 
-			array( 'allow',
-				'actions' => array( 'login' ),
-				'users' => array( '*' ),
-			),
-			array( 'allow',
-				'actions' => array( 'logout' ),
-				'users' => array( '@' ),
-			),
-			/*array('allow', // allow admin role to perform 'admin', 'update' and 'delete' actions
-				'actions'=>array('admin','delete','update'),
-				'roles'=>array(User::ROLE_ADMIN),
-			),*/
-			array( 'deny',  // deny all users
-				'users' => array( '*' ),
-			) 
-		);
-	}
-	
-	/**
-	 * Displays and saves change in site configuration
-	 * 
-	 * @access public
-	 * 
-	 * @return void
-	 */
-	public function actionIndex( ) 
-	{
-		$settingsFile = Yii::getPathOfAlias( 'application.config.settings' ) . '.php';
-		$settings = require $settingsFile;
+    /**
+     * {@inheritdoc}
+     */
+    public $defaultAction = 'index';
+    
+    /**
+     * {@inheritdoc}
+     */
+    protected $_modelClass = 'Login';
+    
+    /**
+     * {@inheritdoc}
+     */
+    public function accessRules()
+    {
+        return array(
+            array('allow',
+                'actions' => array('login'),
+                'users' => array('*'),
+            ),
+            array('allow',
+                'actions' => array('logout'),
+                'users' => array('@'),
+            ),
+            array('deny', // deny all users
+                'users' => array('*'),
+            )
+        );
+    }
 
-		if ( isset( $_POST['settings'] ) && is_array( $_POST['settings'] ) ) 
-		{
-			foreach ( $_POST['settings'] AS $key => $value ) 
-			{
-				if ( strpos( $_POST['settings'][$key], "\n" ) )
-				{
-					$_POST['settings'][$key] = nl2br($value);
-				}
-			}
-			
-			$settings = $_POST['settings'];
-			file_put_contents( $settingsFile, '<?php return ' . var_export($settings, true) . ';', LOCK_EX );
+    /**
+     * Conducts the login user and displays the login page
+     */
+    public function actionLogin()
+    {
+        $modelClass = $this->getModelClass();
+        $model = new $modelClass();
 
-			Yii::app( )->user->setFlash( 'info', Yii::t( 'main', 'SETTINGS_CHANGED' ) );
-		}
+        $attributes = Yii::app()->request->getPost($modelClass);
+        if ($attributes)
+        {
+            $model->attributes = $modelClass;
+            if ($model->validate() && $model->login())
+            {
+                $this->redirect('/admin');
+            }
+        }
 
-		foreach ( $settings AS $key => $value ) 
-		{
-			if ( strpos( $settings[$key], "\n" ) )
-			{
-				$settings[$key] = strip_tags( $value );
-			}
-		}
+        $this->renderPartial('login', array('model' => $model));
+    }
 
-		$this->render('index', $settings);
-		return true;
-	}
+    /**
+     * Conducts the logout user
+     * 
+     * @access public
+     * 
+     * @return void
+     */
+    public function actionLogout()
+    {
+        Yii::app()->user->logout();
+        $this->redirect(Yii::app()->homeUrl . 'admin');
+        return true;
+    }
 
-	/**
-	 * Displays error page
-	 * 
-	 * @access public
-	 * 
-	 * @return void
-	 */
-	public function actionError( ) 
-	{
-		$error = Yii::app( )->errorHandler->error;
-		if ( $error )
-		{
-			$this->render( 'error', $error );
-		}
-		return true;
-	}
-	
-	/**
-	 * Conducts the login user
-	 * adn displays the login page
-	 * 
-	 * @access public
-	 * 
-	 * @return void
-	 */
-	public function actionLogin( ) 
-	{
-		$model = new Login( );
+    /**
+     * Displays and saves change in site configuration
+     */
+    public function actionIndex()
+    {
+        $settingsFile = Yii::getPathOfAlias('application.config.settings') . '.php';
+        $settings = require $settingsFile;
 
-		if ( isset( $_POST['Login'] ) ) 
-		{
-			$model->attributes = $_POST['Login'];
+        if (isset($_POST['settings']) && is_array($_POST['settings']))
+        {
+            foreach ($_POST['settings'] AS $key => $value)
+            {
+                if (strpos($_POST['settings'][$key], "\n"))
+                {
+                    $_POST['settings'][$key] = nl2br($value);
+                }
+            }
 
-			if ( $model->validate( ) && $model->login( ) )
-			{
-				$this->redirect('/admin');
-			}
-		}
+            $settings = $_POST['settings'];
+            file_put_contents($settingsFile, '<?php return ' . var_export($settings, true) . ';', LOCK_EX);
 
-		$this->renderPartial( 'login', array( 'model' => $model ) );
-		return true;
-	}
-	
-	/**
-	 * Conducts the logout user
-	 * 
-	 * @access public
-	 * 
-	 * @return void
-	 */
-	public function actionLogout( ) 
-	{
-		Yii::app( )->user->logout( );
-		$this->redirect( Yii::app( )->homeUrl . 'admin' );
-		return true;
-	}
+            Yii::app()->user->setFlash('info', Yii::t('main', 'SETTINGS_CHANGED'));
+        }
+
+        foreach ($settings AS $key => $value)
+        {
+            if (strpos($settings[$key], "\n"))
+            {
+                $settings[$key] = strip_tags($value);
+            }
+        }
+
+        $this->render('index', $settings);
+        return true;
+    }
+
+    /**
+     * Displays error page
+     * 
+     * @access public
+     * 
+     * @return void
+     */
+    public function actionError()
+    {
+        $error = Yii::app()->errorHandler->error;
+        if ($error)
+        {
+            $this->render('error', $error);
+        }
+        return true;
+    }
 
 }

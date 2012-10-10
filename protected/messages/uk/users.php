@@ -17,6 +17,7 @@ return array(
     'admin.form.title.newItem' => 'Новий користувач',
     'admin.form.title.editItem' => 'Редагувати користувача',
     'admin.form.label.password' => 'Пароль',
+    'admin.form.label.newPassword' => 'Новий пароль',
     'admin.form.label.repeatPassword' => 'Повторити пароль',
     'admin.form.label.rememberMe' => 'Запам\'ятати мене',
     
@@ -32,4 +33,5 @@ return array(
     'admin.form.message.error.createItem' => 'Не вдалося створити нового користувача.',
     'admin.form.message.error.noItem' => 'Не вдалося знайти користувача з заданим ідентифікатором.',
     'admin.form.message.error.noAttrs' => 'Дані для нової користувача не були встановлені.',
+    'admin.form.message.error.notCorrectPassword' => 'Ведений пароль невірний.',
 );

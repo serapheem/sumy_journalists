@@ -4,7 +4,12 @@
  */
 
 return array(
-	'CONTROL_PANEL' 		=> 'Панель управління',
+    // labels and actions
+	'admin.form.title.controlPanel' 	=> 'Панель управління',
+    
+    'admin.form.action.enter' => 'Вхід',
+    
+    
 	'SITE_SETTINGS' 		=> 'Установки сайту',
 	
 	'SITE_NAME'				=> 'Назва сайту',

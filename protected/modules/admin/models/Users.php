@@ -10,10 +10,21 @@ class Users extends CActiveRecord
 {
 	/**
 	 * Repeat password data
-	 * 
 	 * @var string
 	 */
 	public $password2;
+    
+    /**
+	 * New password
+	 * @var string
+	 */
+	public $newPassword;
+    
+    /**
+	 * Old password
+	 * @var string
+	 */
+	public $oldPassword;
     
     /**
      * {@inheritdoc}
@@ -49,10 +60,16 @@ class Users extends CActiveRecord
 	{
 		return array(
 			array('name, email', 'required'),
-            array('password, password2', 'required', 'on' => 'insert'),
-            array('password2', 'safe'),
-			array('password', 'compare', 'compareAttribute' => 'password2'),
 			array('email', 'email'),
+            array('email', 'unique'),
+            array('name, email', 'length', 'max' => 128),
+            array('password, password2', 'required', 'on' => 'insert'),
+            array('password, password2', 'safe'),
+            array('newPassword', 'safe', 'on' => 'update'),
+			array('password', 'compare', 'compareAttribute' => 'password2', 'on' => 'insert'),
+            array('password2', 'compare', 'compareAttribute' => 'password', 'on' => 'insert'),
+            array('newPassword', 'compare', 'compareAttribute' => 'password2', 'on' => 'update'),
+            array('password2', 'compare', 'compareAttribute' => 'newPassword', 'on' => 'update'),
 		);
 	}
 	
@@ -69,16 +86,37 @@ class Users extends CActiveRecord
             'lasttime' => Yii::t($secionName, 'admin.list.label.lastVisited'),
 			'ip' => Yii::t($secionName, 'admin.list.label.lastIp'),
 			'password' => Yii::t($secionName, 'admin.form.label.password'),
+            'newPassword' => Yii::t($secionName, 'admin.form.label.newPassword'),
 			'password2' => Yii::t($secionName, 'admin.form.label.repeatPassword'),
 		);
 	}
     
     /**
-     * {@inheritdoc}
-     */
-    protected function beforeValidate()
+	 * {@inheritdoc}
+	 */
+	protected function afterFind()
 	{
-        return parent::beforeValidate();
+		$this->oldPassword = $this->password;
+        parent::afterFind();
+	}
+    
+    /**
+	 * {@inheritdoc}
+	 */
+	public function validate($attributes = null, $clearErrors = true)
+	{
+        $success = parent::validate($attributes, $clearErrors);
+        if ($this->getScenario() == 'update' && $this->newPassword)
+        {
+            if ($this->oldPassword != sha1($this->email . $this->password))
+            {
+                $success = false;
+                $this->addError('password', Yii::t($this->getTableSchema()->name, 
+                    'admin.form.message.error.notCorrectPassword'));
+            }
+        }
+        
+		return $success;
 	}
 
     /**
@@ -86,19 +124,18 @@ class Users extends CActiveRecord
      */
     protected function beforeSave()
     {
-        $allowedActions = array('insert', 'update');
-        if (in_array($this->getScenario(), $allowedActions))
+        $this->name = trim($this->name);
+        $this->email = trim($this->email);
+        if ($this->getScenario() == 'insert')
         {
-            $this->name = trim($this->name);
-            $this->email = trim($this->email);
-            
-            if ($this->password)
+            $this->password = sha1($this->email . $this->password);
+        }
+        elseif ($this->getScenario() == 'update')
+        {
+            unset($this->password);
+            if ($this->newPassword)
             {
-                $this->password = sha1($this->email . $this->password);
-            }
-            if ($this->password2)
-            {
-                $this->password2 = sha1($this->email . $this->password2);
+                $this->password = sha1($this->email . $this->newPassword);
             }
         }
 

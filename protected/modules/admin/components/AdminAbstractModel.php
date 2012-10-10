@@ -48,8 +48,7 @@ abstract class AdminAbstractModel extends CActiveRecord
             {
                 $this->alias = TranslitHelper::perform($this->title);
             }
-            else
-            {
+            else {
                 $this->alias = TranslitHelper::perform($this->alias);
             }
         }
