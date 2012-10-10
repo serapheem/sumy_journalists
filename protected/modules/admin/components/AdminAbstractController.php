@@ -467,7 +467,7 @@ abstract class AdminAbstractController extends CController
     protected function getMainMenuItems()
     {
         return array(
-            '/admin' => array('label' => Yii::t('main', 'admin.menu.settings')),
+            '/admin' => array('label' => Yii::t('main', 'admin.menu.default')),
             '/admin/news' => array('label' => Yii::t('main', 'admin.menu.materials')),
             '/admin/participants' => array('label' => Yii::t('main', 'admin.menu.participants')),
             '/admin/poll' => array('label' => Yii::t('main', 'admin.menu.poll')),

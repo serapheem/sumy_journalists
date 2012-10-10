@@ -89,7 +89,7 @@
             </div>
 
             <div id="content">
-                <?php echo $content ?>
+                <?php echo $content; ?>
             </div>
         </div>
     </body>

@@ -26,6 +26,9 @@ class Login extends CFormModel
      */
     public $rememberMe = false;
     
+    /**
+     * @var UserIdentity 
+     */
     private $_identity;
 
     /**

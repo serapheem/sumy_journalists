@@ -5,23 +5,24 @@
 
 return array(
     // labels and actions
-	'admin.form.title.controlPanel' 	=> 'Панель управління',
+	'admin.form.action.enter' => 'Вхід',
     
-    'admin.form.action.enter' => 'Вхід',
+    'admin.form.label.siteName'	=> 'Назва сайту',
+	'admin.form.label.siteNameDesc' => 'наприклад: "Моя домашня сторінка"',
+	'admin.form.label.siteDescription' => 'Опис (Description) сайту',
+	'admin.form.label.siteDescriptionDesc'	=> 'Короткий опис, не більше 200 символів',
+	'admin.form.label.siteKeywords' 	=> 'Ключові слова (Keywords) для сайту',
+	'admin.form.label.siteKeywordsDesc' => 'Введіть через кому основні ключові слова для вашого сайту',
+	'admin.form.label.siteOff' => 'Вимкнути сайт',
+	'admin.form.label.siteOffDesc' => 'Перевести сайт в стан offline, для проведення технічних робіт',
+	'admin.form.label.online' => 'Онлайн',
+    'admin.form.label.offline' => 'Оффлайн',
+    'admin.form.label.offlineMessage' => 'Повідомлення offline',
+	'admin.form.label.offlineMessageDesc' => 'Повідомлення, яке виводиться якшо сайт у стані offline',
+	'admin.form.label.adminEmail' => 'E-mail адреса адміністратора',
+	'admin.form.label.adminEmailDesc' => 'Введіть e-mail адресу адміністратора сайту',
     
-    
-	'SITE_SETTINGS' 		=> 'Установки сайту',
-	
-	'SITE_NAME'				=> 'Назва сайту',
-	'SITE_NAME_DESC'		=> 'наприклад: "Моя домашня сторінка"',
-	'SITE_DESCRIPTION'		=> 'Опис (Description) сайту',
-	'SITE_DESCRIPTION_DESC'	=> 'Короткий опис, не більше 200 символів',
-	'SITE_KEYWORDS'			=> 'Ключові слова (Keywords) для сайту',
-	'SITE_KEYWORDS_DESC'	=> 'Введіть через кому основні ключові слова для вашого сайту',
-	'OFF_SITE'				=> 'Вимкнути сайт',
-	'OFF_SITE_DESC'			=> 'Перевести сайт в стан offline, для проведення технічних робіт',
-	'OFFLINE_MESSAGE'		=> 'Повідомлення offline',
-	'OFFLINE_MESSAGES_DESC'	=> 'Повідомлення, яке виводиться якшо сайт у стані offline',
-	'ADMIN_EMAIL'			=> 'E-mail адреса адміністратора',
-	'ADMIN_EMAIL_DESC'		=> 'Введіть e-mail адресу адміністратора сайту',
+    // messages
+    'admin.form.message.success.savedSettings' => 'Зміни в установках збережені.',
+    'admin.form.message.error.savedSettings' => 'Виникла помилка при збережені установок.',
 );

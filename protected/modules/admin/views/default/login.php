@@ -3,13 +3,13 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-        <title><?php echo Yii::t('default', 'admin.form.title.controlPanel'); ?></title>
+        <title><?php echo Yii::t('main', 'admin.menu.adminPanel'); ?></title>
         <link href="/protected/modules/admin/views/public/css/reset.css" rel="stylesheet" type="text/css" />
         <link href="/protected/modules/admin/views/public/css/login.css" rel="stylesheet" type="text/css" />
     </head>
     <body>
         <div id="admin-wrapper">
-            <form action="#" method="post">
+            <form action="<?php echo $this->createUrl('login'); ?>" method="post">
                 <?php echo CHTML::errorSummary($model); ?>
 
                 <?php echo CHTML::activeLabelEx($model, 'email'); ?><br />

@@ -5,7 +5,7 @@
 return array(
     // menu items
     'admin.menu.adminPanel' => 'Адмін-панель',
-    'admin.menu.settings' => 'Установки',
+    'admin.menu.default' => 'Установки сайту',
     'admin.menu.materials' => 'Матеріали',
     'admin.menu.participants' => 'Mенеджер учасників',
     'admin.menu.poll' => 'Голосування',
@@ -15,6 +15,7 @@ return array(
     'admin.menu.logOut' => 'Вийти',
     
     // name of sections
+    'admin.section.default' => 'Установки сайту',
     'admin.section.news' => 'Mенеджер новин',
     'admin.section.knowour' => 'Знай наших',
     'admin.section.citystyle' => 'City - стиль',
@@ -40,8 +41,6 @@ return array(
     // Fields of the user
     
     'ERROR' => 'Помилка',
-    'ONLINE' => 'Онлайн',
-    'OFFLINE' => 'Оффлайн',
     
     // Names of the link, filter or action
     'admin.list.label.id' => 'ID',
@@ -95,7 +94,6 @@ return array(
     'READ_MORE' => 'читати далі',
     // System notice messages 
     'SITE_TEMPORARILY_DISABLED' => 'Сайт тимчасово відключений',
-    'SETTINGS_CHANGED' => 'Установки змінені.',
     'NEW_ORDER_SAVED' => 'Новий порядок збережений.',
     // System error message
     'LOGIN_INCORRECT' => "Ім'я користувача неправильне.",

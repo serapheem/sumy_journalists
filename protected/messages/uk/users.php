@@ -5,8 +5,6 @@
 
 return array(
     // labels and actions
-    //'admin.list.label.login' => 'Логін',
-    //'admin.list.label.userName' => 'Ім\'я користувача',
     'admin.list.label.email' => 'Пошта',
     'admin.list.label.lastVisited' => 'Був в адмін-панелі',
     'admin.list.label.lastIp' => 'Останній IP',

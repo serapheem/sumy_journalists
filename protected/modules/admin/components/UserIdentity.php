@@ -15,6 +15,16 @@ class UserIdentity extends CUserIdentity
     private $_id;
 
     /**
+     * Returns the user identifier
+     * 
+     * @return int
+     */
+    public function getId()
+    {
+        return $this->_id;
+    }
+
+    /**
      * Processes authentication of user
      * 
      * @return bool
@@ -43,16 +53,6 @@ class UserIdentity extends CUserIdentity
             $this->errorCode = self::ERROR_NONE;
         }
         return !$this->errorCode;
-    }
-
-    /**
-     * Returns the user identifier
-     * 
-     * @return int
-     */
-    public function getId()
-    {
-        return $this->_id;
     }
 
 }

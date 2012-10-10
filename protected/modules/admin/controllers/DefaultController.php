@@ -29,7 +29,7 @@ class DefaultController extends AdminAbstractController
                 'users' => array('*'),
             ),
             array('allow',
-                'actions' => array('logout'),
+                'actions' => array('index', 'logout'),
                 'users' => array('@'),
             ),
             array('deny', // deny all users
@@ -45,11 +45,11 @@ class DefaultController extends AdminAbstractController
     {
         $modelClass = $this->getModelClass();
         $model = new $modelClass();
-
+        
         $attributes = Yii::app()->request->getPost($modelClass);
         if ($attributes)
         {
-            $model->attributes = $modelClass;
+            $model->attributes = $attributes;
             if ($model->validate() && $model->login())
             {
                 $this->redirect('/admin');
@@ -78,26 +78,31 @@ class DefaultController extends AdminAbstractController
      */
     public function actionIndex()
     {
+        $sectionId = $this->getId();
         $settingsFile = Yii::getPathOfAlias('application.config.settings') . '.php';
         $settings = require $settingsFile;
 
-        if (isset($_POST['settings']) && is_array($_POST['settings']))
+        $attributes = Yii::app()->request->getPost('settings');
+        if ($attributes && is_array($attributes))
         {
-            foreach ($_POST['settings'] AS $key => $value)
+            foreach ($attributes as $key => $value)
             {
-                if (strpos($_POST['settings'][$key], "\n"))
+                if (strpos($attributes[$key], "\n"))
                 {
-                    $_POST['settings'][$key] = nl2br($value);
+                    $attributes[$key] = nl2br($value);
                 }
             }
 
-            $settings = $_POST['settings'];
-            file_put_contents($settingsFile, '<?php return ' . var_export($settings, true) . ';', LOCK_EX);
+            $settings = $attributes;
+            $success = file_put_contents($settingsFile, '<?php return ' . var_export($settings, true) . ';', LOCK_EX);
 
-            Yii::app()->user->setFlash('info', Yii::t('main', 'SETTINGS_CHANGED'));
+            if ($success)
+                Yii::app()->user->setFlash('success', Yii::t($sectionId, 'admin.form.message.success.savedSettings'));
+            else 
+                Yii::app()->user->setFlash('error', Yii::t($sectionId, 'admin.form.message.error.savedSettings'));
         }
 
-        foreach ($settings AS $key => $value)
+        foreach ($settings as $key => $value)
         {
             if (strpos($settings[$key], "\n"))
             {
@@ -105,16 +110,11 @@ class DefaultController extends AdminAbstractController
             }
         }
 
-        $this->render('index', $settings);
-        return true;
+        $this->render('index', array_replace(array('sectionId' => $sectionId), $settings));
     }
 
     /**
      * Displays error page
-     * 
-     * @access public
-     * 
-     * @return void
      */
     public function actionError()
     {
@@ -123,7 +123,6 @@ class DefaultController extends AdminAbstractController
         {
             $this->render('error', $error);
         }
-        return true;
     }
 
 }
