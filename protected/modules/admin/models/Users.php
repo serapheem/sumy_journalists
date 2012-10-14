@@ -25,17 +25,6 @@ class Users extends CActiveRecord
 	 * @var string
 	 */
 	public $oldPassword;
-    
-    /**
-     * {@inheritdoc}
-     */
-    public function __construct($scenario = 'insert')
-    {
-        parent::__construct($scenario);
-
-        // TODO : read more about that
-        //$this->attachEventHandler( 'beforeSave', '' );
-    }
 	
 	/**
 	 * {@inheritdoc}
@@ -72,6 +61,19 @@ class Users extends CActiveRecord
             array('password2', 'compare', 'compareAttribute' => 'newPassword', 'on' => 'update'),
 		);
 	}
+
+    /**
+     * {@inheritdoc}
+     */
+    public function behaviors()
+    {
+        return array(
+            'CleanBehavior' => array(
+                'class' => 'admin.components.behaviors.CleanBehavior',
+                'attributes' => array('name', 'email', 'password', 'password2', 'newPassword'),
+            ),
+        );
+    }
 	
 	/**
 	 * {@inheritdoc}
@@ -148,7 +150,7 @@ class Users extends CActiveRecord
      * @return CActiveDataProvider the data provider that can return the models 
      *          based on the search/filter conditions.
      */
-    public function search($itemPerPage = 25)
+    public function search($itemPerPage = 20)
     {
         $criteria = new CDbCriteria;
         $criteria->compare('t.id', $this->id);

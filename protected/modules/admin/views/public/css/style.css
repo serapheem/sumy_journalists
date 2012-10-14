@@ -378,7 +378,7 @@ button{
 	{
 	background-position: 0 -12px;
 	}
-#edit-button .ui-button-text
+#create-button .ui-button-text
 	{
 	background: url("../images/icon-16-add.png") no-repeat 5px 5px transparent;
 	padding-left: 2.1em;
@@ -474,7 +474,8 @@ input[type="checkbox"]{
 .width-70 { width: 70%; }
 .width-80 { width: 80%; }
 .width-100 { width: 100%; }
-fieldset 
+
+.admin-form fieldset 
 	{
 	margin: 10px;
 	border: 1px #ccc solid;
@@ -482,27 +483,27 @@ fieldset
 	overflow: hidden;
 	text-align: left;
 	}
-	fieldset legend 
-		{
-		color: #146295;
-		font-size: 1.182em;
-		font-weight: bold;
-		}
-	fieldset .readonly
-		{
-		font-family: Arial, Helvetica, sans-serif;
-		font-size: 1.091em;
-		font-weight: bold;
-		color: #666;
-		padding-top: 1px;
-		border: none !important;
-		background-color: #ffffff;
-		}
-	fieldset .radiolist-wrapper label
-		{
-		float: none;
-		padding: 0 10px 0 0;
-		}
+.admin-form legend 
+    {
+    color: #146295;
+    font-size: 1.182em;
+    font-weight: bold;
+    }
+.admin-form .readonly
+    {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 1.091em;
+    font-weight: bold;
+    color: #666;
+    padding-top: 1px;
+    border: none !important;
+    background-color: #ffffff;
+    }
+.admin-form .radiolist-wrapper label
+    {
+    float: none;
+    padding: 0 10px 0 0;
+    }
 /*
  * Form styles end
  */

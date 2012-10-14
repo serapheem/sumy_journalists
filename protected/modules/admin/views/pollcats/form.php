@@ -1,6 +1,6 @@
 <?php
 /**
- * User item add/edit form file
+ * Poll item add/edit form file
  */
 return array(
     'action' => $newItem 
@@ -24,29 +24,16 @@ return array(
         '<h1>' . Yii::t($sectionId, $newItem 
             ? 'admin.form.title.newItem' 
             : 'admin.form.title.editItem') . '</h1>',
-        'name' => array(
+        'title' => array(
             'type' => 'text',
             'maxlength' => 128,
         ),
-        'email' => array(
-            'type' => 'text',
-            'maxlength' => 128,
+        'state' => array(
+            'type' => 'radiolist',
+            'layout' => "{label}\n<div class=\"radiolist-wrapper\">{input}</div>\n{hint}\n{error}",
+            'items' => $model->getStateValues(),
+            'separator' => "\n"
         ),
-        'password' => array(
-			'type' => 'password',
-			'maxlength' => 64,
-            'value' => ''
-		),
-		'newPassword' => array(
-			'type' => 'password',
-			'maxlength' => 64,
-            'value' => ''
-		),
-		'password2' => array(
-			'type' => 'password',
-			'maxlength' => 64,
-            'value' => ''
-		)
     ),
     'buttons' => array(
         'apply' => array(

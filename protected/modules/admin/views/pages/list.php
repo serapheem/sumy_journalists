@@ -18,7 +18,7 @@ $this->breadcrumbs = array(
     <?php
 //    $this->widget('zii.widgets.jui.CJuiButton', array(
 //        'buttonType' => 'link',
-//        'name' => 'edit-button',
+//        'name' => 'create-button',
 //        'caption' => Yii::t($sectionId, 'admin.list.action.createItem'),
 //        'url' => $this->createUrl('create'),
 //        'htmlOptions' => array('title' => Yii::t($sectionId, 'admin.list.action.createItem'))
@@ -30,14 +30,14 @@ $this->breadcrumbs = array(
 //        'name' => 'delete-button',
 //        'caption' => Yii::t($sectionId, 'admin.list.action.deleteItems'),
 //        'url' => $this->createUrl('delete'),
-//        'confirm' => Yii::t($sectionId, 'admin.list.action.deleteItems') . '?',
+//        'confirm' => Yii::t($sectionId, 'admin.list.label.deleteConfirm'),
 //        'grid_id' => 'categories',
 //        'htmlOptions' => array('title' => Yii::t($sectionId, 'admin.list.action.deleteItems'))
 //        )
 //    );
 
     $this->widget('zii.widgets.grid.CGridView', array(
-        'id' => 'categories',
+        'id' => $sectionId,
         'dataProvider' => $dataProvider,
         'filter' => $model,
         'selectableRows' => $itemPerPage,
@@ -64,18 +64,14 @@ $this->breadcrumbs = array(
                 'htmlOptions' => array('class' => 'link-column tl')
             ),
             array(
-                'name' => 'alias', 
-                'value' => 'CHtml::encode($data->alias) . \'.html\'', 
+                'name' => 'slug', 
+                'value' => 'CHtml::encode($data->slug) . \'.html\'', 
                 'headerHtmlOptions' => array('width' => '200')
             ),
 //            array(
 //                'class' => 'MyDataLinkColumn',
 //                'name' => 'state',
-//                'filter' => array(
-//                    'prompt' => Yii::t('main', 'admin.list.filter.state.select'), 
-//                    0 => Yii::t('main', 'admin.list.filter.state.unpublished'), 
-//                    1 => Yii::t('main', 'admin.list.filter.state.published')
-//                ),
+//                'filter' => $model->getStateFilterValues(),
 //                'labelExpression' => 'GridHelper::getStateLabel($data->state)',
 //                'urlExpression' => 'Yii::app()->controller->createUrl(\'edit\', array(\'id\' => $data->primaryKey))'
 //                    . ' . \'?' . $modelClass . '[state]=\' . (1 - $data->state)',

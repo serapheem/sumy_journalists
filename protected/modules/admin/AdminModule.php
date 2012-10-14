@@ -8,7 +8,6 @@
  */
 class AdminModule extends CWebModule
 {
-
     /**
      * Initializes the module
      */
@@ -28,6 +27,7 @@ class AdminModule extends CWebModule
      * 
      * @param   string  $controller 
      * @param   string  $action
+     * 
      * @return  bool
      */
     public function beforeControllerAction($controller, $action)
@@ -44,8 +44,7 @@ class AdminModule extends CWebModule
             Yii::app()->getRequest()->redirect('/admin/default/login');
             return true;
         }
-        else
-        {
+        else {
             return false;
         }
     }

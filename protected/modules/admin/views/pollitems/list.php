@@ -1,13 +1,11 @@
 <?php
 /**
- * Layout file for list of categories
+ * Layout file for list of poll items
  */
 
 $this->breadcrumbs = array(
     Yii::t('main', 'admin.section.' . $sectionId)
 );
-
-//$order_onclick = "$('#admin-form').attr('action', '/admin/{$sectionId}/saveorder').submit(); return false;";
 ?>
 
 <?php $this->renderSubmenu(); ?>
@@ -20,11 +18,10 @@ $this->breadcrumbs = array(
         'buttonType' => 'link',
         'name' => 'create-button',
         'caption' => Yii::t($sectionId, 'admin.list.action.createItem'),
-        'url' => $this->createUrl('create'),
+        'url' => $this->createUrl('create', array('catid' => Yii::app()->request->getQuery('catid') ?: null)),
         'htmlOptions' => array('title' => Yii::t($sectionId, 'admin.list.action.createItem'))
         )
     );
-    // TODO : Create new confirm message
     $this->widget('MyAdminButton', array(
         'buttonType' => 'link',
         'name' => 'delete-button',
@@ -64,34 +61,18 @@ $this->breadcrumbs = array(
                 'htmlOptions' => array('class' => 'link-column tl')
             ),
             array(
-                'name' => 'parent_id',
-                'value' => '$data->parent ? CHtml::encode($data->parent->title) : \'\'',
-                'headerHtmlOptions' => array('width' => '160')
+                'name' => 'poll_id',
+                'value' => 'CHtml::encode($data->poll->title)',
+                'filter' => $model->getPollidFilterValues(),
+                'headerHtmlOptions' => array('width' => '250'),
+                'htmlOptions' => array('class' => 'tl')
             ),
             array(
-                'class' => 'MyDataLinkColumn',
-                'name' => 'state',
-                'filter' => $model->getStateFilterValues(),
-                'labelExpression' => 'GridHelper::getStateLabel($data->state)',
-                'urlExpression' => 'Yii::app()->controller->createUrl(\'edit\', array(\'id\' => $data->primaryKey))'
-                    . ' . \'?' . $modelClass . '[state]=\' . (1 - $data->state)',
-                'linkHtmlOptions' => array(
-                    'class' => 'state', 'click' => 'ajaxChange',
-                    'titleExpression' => '$data->state '
-                        . '? Yii::t( "main", "admin.list.action.unpublish" ) '
-                        . ': Yii::t( "main", "admin.list.action.publish" )'
-                ),
-                'htmlOptions' => array('class' => 'link-column button-column'),
-                'headerHtmlOptions' => array('width' => '130')
-            ),
-            array('name' => 'hits', 'filter' => '', 'headerHtmlOptions' => array('width' => '70')),
-            array(
-                'name' => 'modified_at',
-                'value' => 'Yii::app()->dateFormatter->formatDateTime( $data->modified_at, "long" )',
-                'filter' => '',
+                'name' => 'count', 
+                'filter' => '', 
                 'headerHtmlOptions' => array('width' => '120')
             ),
-            array('name' => 'id', 'headerHtmlOptions' => array('width' => '30'))
+            array('name' => 'id', 'headerHtmlOptions' => array('width' => '30')),
         ),
     ));
     ?>

@@ -1,35 +1,43 @@
 <?php
+/**
+ * Contains controller for poll categories
+ */
 
 /**
- * Poll Controller Class
+ * Poll Categories Controller Class
  */
-class PollController extends AdminAbstractControllers 
+class PollcatsController extends AdminAbstractController
 {
-	/**
-	 * Name of default model
-	 * 
-	 * @access public
-	 * @var string
-	 */
-	public $model = 'Poll';
-	
-	/**
-	 * Displays the list of poll
-	 * 
-	 * @access public
-	 * 
-	 * @return void
-	 */
-	public function actionIndex( ) 
-	{
-		$model = $this->model;
-		
-		$rows = $model::model( )
-			->findAll( );
-		
-		$this->render( 'list', array( 'rows' => $rows ) );
-		return true;
-	}
+    /**
+     * {@inheritdoc}
+     */
+    public function accessRules()
+    {
+        return array(
+            array('allow', // allow authenticated users to perform 'view' actions
+                'actions' => array('admin', 'create', 'edit', 'validate', 'delete'),
+                'users' => array('@'),
+            ),
+            array('deny', // deny all users
+                'users' => array('*'),
+            )
+        );
+    }
+    
+    /**
+     * {@inheritdoc}
+     */
+    protected function getSubmenuItems()
+    {
+        $sections = array('pollcats', 'pollitems');
+        $items = array();
+        foreach ($sections as $section)
+        {
+            $items['admin/' . $section] = Yii::t('main', 'admin.section.' . $section);
+        }
+        
+        return $items;
+    }
 	
 	/**
 	 * Displays the items list of poll

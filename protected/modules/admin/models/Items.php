@@ -33,11 +33,36 @@ class Items extends AdminAbstractModel
     {
         return array(
             array('title, fulltext, catid, state', 'required'),
-            array('alias, featured, meta_title, metakey, metadesc', 'safe'),
+            array('slug, featured, meta_title, metakey, metadesc', 'safe'),
             array('id', 'safe', 'on' => 'search'),
             array('created_at, created_by, modified_at, modified_by', 'safe', 'on' => 'update'),
-            array('title, alias, meta_title, metakey, metadesc', 'length', 'max' => 255),
+            array('title, slug, meta_title, metakey, metadesc', 'length', 'max' => 255),
             array('catid, state, ordering', 'numerical', 'integerOnly' => true),
+        );
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function behaviors()
+    {
+        return array(
+            'CleanBehavior' => array(
+                'class' => 'admin.components.behaviors.CleanBehavior',
+                'attributes' => array('title', 'slug', 'meta_title', 'metakey', 'metadesc'),
+            ),
+            'SlugBehavior' => array(
+                'class' => 'admin.components.behaviors.SlugBehavior',
+            ),
+            'CTimestampBehavior' => array(
+                'class' => 'zii.behaviors.CTimestampBehavior',
+                'createAttribute' => 'created_at',
+                'updateAttribute' => 'modified_at',
+                'setUpdateOnCreate' => true,
+            ),
+            'AuthorBehavior' => array(
+                'class' => 'admin.components.behaviors.AuthorBehavior',
+            ),
         );
     }
 
@@ -49,7 +74,7 @@ class Items extends AdminAbstractModel
         return array(
             'id'            => Yii::t('main', 'admin.list.label.id'),
 			'title'         => Yii::t('main', 'admin.list.label.title'),
-            'alias'         => Yii::t('main', 'admin.list.label.alias'),
+            'slug'          => Yii::t('main', 'admin.list.label.slug'),
             'state'         => Yii::t('main', 'admin.list.label.status'),
             'catid'         => Yii::t('main', 'admin.list.label.category'),
             'featured'      => Yii::t('main', 'admin.list.label.status'),
@@ -86,12 +111,12 @@ class Items extends AdminAbstractModel
      * @return CActiveDataProvider the data provider that can return the models 
      *          based on the search/filter conditions.
      */
-    public function search($itemPerPage = 25)
+    public function search($itemPerPage = 20)
     {
         $criteria = new CDbCriteria;
         $criteria->compare('t.id', $this->id);
         $criteria->compare('t.title', $this->title, true);
-        $criteria->compare('t.alias', $this->alias, true);
+        $criteria->compare('t.slug', $this->slug, true);
         $criteria->compare('t.catid', $this->catid);
         $criteria->compare('t.state', $this->state);
 
@@ -141,7 +166,7 @@ class Items extends AdminAbstractModel
         $items = Categories::model()->findAll($condition, $params);
 
         foreach ($items as $item)
-            $result[$item->id] = (strtolower($item->title) == 'root') 
+            $result[$item->primaryKey] = (strtolower($item->title) == 'root') 
                 ? Yii::t($this->getTableSchema()->name, 'admin.form.label.noParent') 
                 : $item->title;
 

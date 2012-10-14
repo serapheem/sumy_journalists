@@ -13,7 +13,7 @@ $this->breadcrumbs = array(
 <?php
 $this->widget('zii.widgets.jui.CJuiButton', array(
     'buttonType' => 'link',
-    'name' => 'edit-button',
+    'name' => 'create-button',
     'caption' => Yii::t($sectionId, 'admin.list.action.createItem'),
     'url' => $this->createUrl('create'),
     'htmlOptions' => array('title' => Yii::t($sectionId, 'admin.list.action.createItem'))
@@ -25,7 +25,7 @@ $this->widget('MyAdminButton', array(
     'name' => 'delete-button',
     'caption' => Yii::t($sectionId, 'admin.list.action.deleteItems'),
     'url' => $this->createUrl('delete'),
-    'confirm' => Yii::t($sectionId, 'admin.list.action.deleteItems') . '?',
+    'confirm' => Yii::t($sectionId, 'admin.list.label.deleteConfirm'),
     'grid_id' => $sectionId,
     'htmlOptions' => array('title' => Yii::t($sectionId, 'admin.list.action.deleteItems'))
     )

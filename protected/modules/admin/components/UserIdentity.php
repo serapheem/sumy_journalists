@@ -43,12 +43,12 @@ class UserIdentity extends CUserIdentity
             $this->errorCode = self::ERROR_PASSWORD_INVALID;
         }
         else {
-            Users::model()->updateByPk($record->id, array(
+            Users::model()->updateByPk($record->primaryKey, array(
                 'ip' => Yii::app()->request->getUserHostAddress(),
                 'lasttime' => date('Y-m-d H:i:s'),
             ));
 
-            $this->_id = $record->id;
+            $this->_id = $record->primaryKey;
             $this->setState('email', $record->email);
             $this->errorCode = self::ERROR_NONE;
         }

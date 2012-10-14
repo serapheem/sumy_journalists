@@ -26,6 +26,8 @@ return array(
     'admin.section.frontpage' => 'Головна сторінка',
     'admin.section.participants' => 'Учасники',
     'admin.section.participcats' => 'Категорії',
+    'admin.section.pollcats' => 'Голосування',
+    'admin.section.pollitems' => 'Варіанти голосування',
     'admin.section.users' => 'Користувачі',
     
     

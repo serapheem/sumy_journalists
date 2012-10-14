@@ -31,11 +31,36 @@ class Categories extends AdminAbstractModel
     {
         return array(
             array('title, parent_id, state', 'required'),
-            array('alias, description, meta_title, metakey, metadesc', 'safe'),
+            array('slug, description, meta_title, metakey, metadesc', 'safe'),
             array('id', 'safe', 'on' => 'search'),
             array('created_at, created_by, modified_at, modified_by', 'safe', 'on' => 'update'),
-            array('title, alias, meta_title, metakey, metadesc', 'length', 'max' => 255),
+            array('title, slug, meta_title, metakey, metadesc', 'length', 'max' => 255),
             array('parent_id, state', 'numerical', 'integerOnly' => true),
+        );
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function behaviors()
+    {
+        return array(
+            'CleanBehavior' => array(
+                'class' => 'admin.components.behaviors.CleanBehavior',
+                'attributes' => array('title', 'slug', 'meta_title', 'metakey', 'metadesc'),
+            ),
+            'SlugBehavior' => array(
+                'class' => 'admin.components.behaviors.SlugBehavior',
+            ),
+            'CTimestampBehavior' => array(
+                'class' => 'zii.behaviors.CTimestampBehavior',
+                'createAttribute' => 'created_at',
+                'updateAttribute' => 'modified_at',
+                'setUpdateOnCreate' => true,
+            ),
+            'AuthorBehavior' => array(
+                'class' => 'admin.components.behaviors.AuthorBehavior',
+            ),
         );
     }
 
@@ -47,7 +72,7 @@ class Categories extends AdminAbstractModel
         return array(
             'id'            => Yii::t('main', 'admin.list.label.id'),
 			'title'         => Yii::t('main', 'admin.list.label.title'),
-            'alias'         => Yii::t('main', 'admin.list.label.alias'),
+            'slug'          => Yii::t('main', 'admin.list.label.slug'),
             'description'   => Yii::t('main', 'admin.form.label.text'),
             'parent_id'     => Yii::t($this->getTableSchema()->name, 'admin.form.label.parent'),
             'state'         => Yii::t('main', 'admin.list.label.status'),
@@ -82,12 +107,12 @@ class Categories extends AdminAbstractModel
      * @return CActiveDataProvider the data provider that can return the models 
      *          based on the search/filter conditions.
      */
-    public function search($itemPerPage = 25)
+    public function search($itemPerPage = 20)
     {
         $criteria = new CDbCriteria;
         $criteria->compare('t.id', $this->id);
         $criteria->compare('t.title', $this->title, true);
-        $criteria->compare('t.alias', $this->alias, true);
+        $criteria->compare('t.slug', $this->slug, true);
         $criteria->compare('t.parent_id', $this->parent_id);
         $criteria->compare('t.state', $this->state);
 
@@ -128,7 +153,7 @@ class Categories extends AdminAbstractModel
         $items = $this->findAll();
 
         foreach ($items as $item)
-            $result[$item->id] = (strtolower($item->title) == 'root') 
+            $result[$item->primaryKey] = (strtolower($item->title) == 'root') 
                 ? Yii::t($this->getTableSchema()->name, 'admin.form.label.noParent') 
                 : $item->title;
 

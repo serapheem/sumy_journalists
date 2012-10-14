@@ -1,13 +1,11 @@
 <?php
 /**
- * Layout file for list of custom items
+ * Layout file for list of poll categories
  */
 
 $this->breadcrumbs = array(
     Yii::t('main', 'admin.section.' . $sectionId)
 );
-
-//$order_onclick = "$('#admin-form').attr('action', '/admin/{$sectionId}/saveorder').submit(); return false;";
 ?>
 
 <?php $this->renderSubmenu(); ?>
@@ -63,13 +61,14 @@ $this->breadcrumbs = array(
                 'linkHtmlOptions' => array('title' => Yii::t('main', 'admin.list.action.edit')),
                 'htmlOptions' => array('class' => 'link-column tl')
             ),
-//            array(
-//                'name' => 'catid',
-//                'value' => 'CHtml::encode($data->category->title)',
-//                //'filter' => '',
-//                'headerHtmlOptions' => array('width' => '150'),
-//                'htmlOptions' => array('class' => 'tl')
-//            ),
+            array(
+                'class' => 'CLinkColumn',
+                'label' => Yii::t($sectionId, 'admin.list.action.moderateElements'),
+                'urlExpression' => 'Yii::app()->getUrlManager()->createUrl(\'admin/pollitems/admin\', '
+                                . 'array(\'catid\' => $data->primaryKey))',
+                'linkHtmlOptions' => array('title' => Yii::t('main', 'admin.list.action.edit')),
+                'headerHtmlOptions' => array('width' => '130')
+            ),
             array(
                 'class' => 'MyDataLinkColumn',
                 'name' => 'state',
@@ -85,30 +84,6 @@ $this->breadcrumbs = array(
                 ),
                 'htmlOptions' => array('class' => 'link-column button-column'),
                 'headerHtmlOptions' => array('width' => '130')
-            ),
-//            array(
-//                'class' => 'MyDataLinkColumn',
-//                'name' => 'ordering',
-//                'filter' => '',
-//                //'labelExpression' => 'GridHelper::getStateLabel($data->state)',
-//                'urlExpression' => 'Yii::app()->controller->createUrl(\'edit\', array(\'id\' => $data->primaryKey))'
-//                    . ' . \'?' . $modelClass . '[state]=\' . (1 - $data->state)',
-//                'linkHtmlOptions' => array(
-//                    'class' => 'ordering', 'click' => 'ajaxChange',
-//                    'titleExpression' => '$data->state '
-//                        . '? Yii::t( "main", "admin.list.action.unpublish" ) '
-//                        . ': Yii::t( "main", "admin.list.action.publish" )'
-//                ),
-//                'htmlOptions' => array('class' => 'link-column button-column'),
-//                'headerHtmlOptions' => array('width' => '130')
-//            ),
-            array('name' => 'hits', 'filter' => '', 'headerHtmlOptions' => array('width' => '70')),
-            array('name' => 'rating', 'filter' => '', 'headerHtmlOptions' => array('width' => '70')),
-            array(
-                'name' => 'modified_at',
-                'value' => 'Yii::app()->dateFormatter->formatDateTime( $data->modified_at, "long" )',
-                'filter' => '',
-                'headerHtmlOptions' => array('width' => '120')
             ),
             array('name' => 'id', 'headerHtmlOptions' => array('width' => '30'))
         ),

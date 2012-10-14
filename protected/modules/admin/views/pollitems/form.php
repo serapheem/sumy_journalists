@@ -1,6 +1,6 @@
 <?php
 /**
- * User item add/edit form file
+ * Poll item add/edit form file
  */
 return array(
     'action' => $newItem 
@@ -24,29 +24,14 @@ return array(
         '<h1>' . Yii::t($sectionId, $newItem 
             ? 'admin.form.title.newItem' 
             : 'admin.form.title.editItem') . '</h1>',
-        'name' => array(
+        'title' => array(
             'type' => 'text',
             'maxlength' => 128,
         ),
-        'email' => array(
-            'type' => 'text',
-            'maxlength' => 128,
+        'poll_id' => array(
+            'type' => 'dropdownlist',
+            'items' => $model->getPollidDropDown(),
         ),
-        'password' => array(
-			'type' => 'password',
-			'maxlength' => 64,
-            'value' => ''
-		),
-		'newPassword' => array(
-			'type' => 'password',
-			'maxlength' => 64,
-            'value' => ''
-		),
-		'password2' => array(
-			'type' => 'password',
-			'maxlength' => 64,
-            'value' => ''
-		)
     ),
     'buttons' => array(
         'apply' => array(
@@ -57,7 +42,7 @@ return array(
             'type' => 'submit',
             'label' => Yii::t('main', 'admin.form.action.' . ($newItem ? 'create2close' : 'save2close')),
         ),
-        '<a href="' . $this->createUrl($this->defaultAction) . '">' 
+        '<a href="' . $this->createUrl($this->defaultAction, array('catid' => Yii::app()->request->getQuery('catid') ?: null)) . '">' 
             . Yii::t('main', 'admin.form.action.' . ($newItem ? 'cancel' : 'close')) 
             . '</a>',
     ),

@@ -14,9 +14,7 @@ class ParticipcatsController extends AdminCustomCategoriesController
     protected $_parentId = 4;
     
     /**
-     * Returns list of submenu items
-     * 
-     * @return array
+     * {@inheritdoc}
      */
     protected function getSubmenuItems()
     {

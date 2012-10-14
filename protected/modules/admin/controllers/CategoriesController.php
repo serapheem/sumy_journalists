@@ -18,10 +18,6 @@ class CategoriesController extends AdminAbstractController
                 'actions' => array('admin', 'create', 'edit', 'validate', 'delete'),
                 'expression' => '$user->id == 1',
             ),
-            /* array('allow', // allow admin role to perform 'admin', 'update' and 'delete' actions
-              'actions'=>array('admin','delete','update'),
-              'roles'=>array(User::ROLE_ADMIN),
-              ), */
             array('deny', // deny all users
                 'users' => array('*'),
             )

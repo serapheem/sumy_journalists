@@ -49,7 +49,6 @@ abstract class AdminAbstractController extends CController
 
     /**
      * Updates the last visited date before initialize application
-     * @return void
      */
     public function init()
     {
@@ -105,9 +104,10 @@ abstract class AdminAbstractController extends CController
      *
      * @param boolean 	$create 	Created new model object or return null
      * @param string 	$scenario 	The new scenario for model
+     * 
      * @return CActiveRecord|null
      */
-    protected function loadModel($create = true, $scenario = '')
+    protected function loadModel($create = true, $scenario = 'insert')
     {
         $modelClass = $this->getModelClass();
         if (!class_exists($modelClass))
@@ -123,7 +123,7 @@ abstract class AdminAbstractController extends CController
             }
             elseif ($create) 
             {
-                $this->_model = new $modelClass();
+                $this->_model = new $modelClass($scenario);
             }
 
             if ($scenario && $this->_model)
@@ -154,7 +154,7 @@ abstract class AdminAbstractController extends CController
         }
         else
         {
-            $this->_model = new $modelClass('search');
+            $this->_model = $this->loadModel(true, 'search');
             $this->_model->unsetAttributes(); // clear any default values
             if ($attributes = Yii::app()->request->getQuery($modelClass))
                 $this->_model->attributes = $attributes;
@@ -207,7 +207,7 @@ abstract class AdminAbstractController extends CController
         {
             // TODO : need to use returnUrl parameter of user object
             if ($apply)
-                $this->redirect(array('edit', 'id' => $model->id));
+                $this->redirect(array('edit', 'id' => $model->primaryKey));
             else
                 $this->redirect($this->createUrl($this->defaultAction));
         }
@@ -278,12 +278,12 @@ abstract class AdminAbstractController extends CController
                 $this->redirect($this->createUrl($this->defaultAction));
             }
             else
-            {
+            { 
+                if ($canRedirect)
+                    $model = $model->findByPk($model->primaryKey);
+                
                 $newItem = false;
-                if (!file_exists($editForm = Yii::getPathOfAlias("admin.views.{$sectionId}.form") . '.php'))
-                {
-                    $editForm = Yii::getPathOfAlias('admin.views.' . $this->getId() . '.form') . '.php';
-                }
+                $editForm = Yii::getPathOfAlias('admin.views.' . $sectionId . '.form') . '.php';
                 $config = require($editForm);
                 $form = new CForm($config, $model);
 
@@ -470,7 +470,7 @@ abstract class AdminAbstractController extends CController
             '/admin' => array('label' => Yii::t('main', 'admin.menu.default')),
             '/admin/news' => array('label' => Yii::t('main', 'admin.menu.materials')),
             '/admin/participants' => array('label' => Yii::t('main', 'admin.menu.participants')),
-            '/admin/poll' => array('label' => Yii::t('main', 'admin.menu.poll')),
+            '/admin/pollcats' => array('label' => Yii::t('main', 'admin.menu.poll')),
             '/admin/statistics' => array('label' => Yii::t('main', 'admin.menu.statistics')),
             '/admin/users' => array('label' => Yii::t('main', 'admin.menu.users')),
             '/admin/default/logout' => array(

@@ -5,14 +5,17 @@
 return array(
     'action' => $newItem 
         ? $this->createUrl('create') 
-        : $this->createUrl('edit', array('id' => $model->id)),
+        : $this->createUrl('edit', array('id' => $model->primaryKey)),
     'activeForm' => array(
         'class'                     => 'CActiveForm',
         'id'                        => $sectionId . '-form',
         'enableAjaxValidation'      => true,
         'enableClientValidation'    => false,
+        'htmlOptions'               => array('class' => 'admin-form'),
         'clientOptions'             => array(
-            'validationUrl' => array('validate'),
+            'validationUrl' => $newItem 
+                            ? array('validate') 
+                            : array('validate', 'id' => $model->primaryKey),
             'validateOnSubmit' => true,
             'validateOnChange' => true,
         )
@@ -30,7 +33,7 @@ return array(
                     'type' => 'text',
                     'maxlength' => 255,
                 ),
-                'alias' => array(
+                'slug' => array(
                     'type' => 'text',
                     'maxlength' => 255,
                 ),

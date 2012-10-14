@@ -64,7 +64,7 @@ class ItemsController extends AdminAbstractController
             $catids = Yii::app()->db->createCommand()
                 ->select('id')
                 ->from('categories')
-                ->where('alias=:alias', array('alias' => $table))
+                ->where('slug=:slug', array('slug' => $table))
                 ->queryColumn();
             
             if ($catids && is_array($catids))
@@ -81,7 +81,7 @@ class ItemsController extends AdminAbstractController
                 {
                     $insertData = array(
                         'title' => $row['title'], 
-                        'alias' => $row['alias'], 
+                        'slug' => $row['alias'], 
                         'fulltext' => $row['body'], 
                         'catid' => $catid, 
                         'state' => $row['publish'], 
@@ -98,7 +98,7 @@ class ItemsController extends AdminAbstractController
                 {
                     $insertData = array(
                         'title' => $row['title'], 
-                        'alias' => $row['alias'], 
+                        'slug' => $row['alias'], 
                         'fulltext' => $row['body'], 
                         'catid' => $catid, 
                         'state' => 1, 
@@ -115,7 +115,7 @@ class ItemsController extends AdminAbstractController
                 {
                     $insertData = array(
                         'title' => $row['title'], 
-                        'alias' => $row['alias'], 
+                        'slug' => $row['alias'], 
                         'fulltext' => $row['body'], 
                         'catid' => $catid, 
                         'state' => $row['publish'], 

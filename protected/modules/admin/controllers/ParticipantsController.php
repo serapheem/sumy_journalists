@@ -29,7 +29,7 @@ class ParticipantsController extends AdminCustomItemsController
 //                ->findAllByAttributes(array('parent_id' => $this->_catid));
 //            foreach ($items as $item)
 //            {
-//                $result[] = $item->id;
+//                $result[] = $item->primaryKey;
 //            }
 //            $_GET[$className]['catid'] = $result;
 //        }
@@ -38,9 +38,7 @@ class ParticipantsController extends AdminCustomItemsController
     }
     
     /**
-     * Returns list of submenu items
-     * 
-     * @return array
+     * {@inheritdoc}
      */
     protected function getSubmenuItems()
     {
