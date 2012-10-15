@@ -32,6 +32,7 @@ return array(
             'type' => 'dropdownlist',
             'items' => $model->getPollidDropDown(),
         ),
+        '<input type="hidden" name="returnUrl" value="' . $returnUrl . '" />',
     ),
     'buttons' => array(
         'apply' => array(
@@ -42,7 +43,7 @@ return array(
             'type' => 'submit',
             'label' => Yii::t('main', 'admin.form.action.' . ($newItem ? 'create2close' : 'save2close')),
         ),
-        '<a href="' . $this->createUrl($this->defaultAction, array('catid' => Yii::app()->request->getQuery('catid') ?: null)) . '">' 
+        '<a href="' . $returnUrl . '">' 
             . Yii::t('main', 'admin.form.action.' . ($newItem ? 'cancel' : 'close')) 
             . '</a>',
     ),

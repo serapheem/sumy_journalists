@@ -78,6 +78,9 @@ class Pollcats extends AdminAbstractModel
     public function scopes()
     {
         return array(
+            'ordering' => array(
+                'order' => 'title ASC',
+            ),
             'published' => array(
                 'condition' => 'state=1',
                 'order' => 'RAND() ASC',

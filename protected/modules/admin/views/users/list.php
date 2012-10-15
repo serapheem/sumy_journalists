@@ -19,7 +19,6 @@ $this->widget('zii.widgets.jui.CJuiButton', array(
     'htmlOptions' => array('title' => Yii::t($sectionId, 'admin.list.action.createItem'))
     )
 );
-// TODO : Create new confirm message
 $this->widget('MyAdminButton', array(
     'buttonType' => 'link',
     'name' => 'delete-button',

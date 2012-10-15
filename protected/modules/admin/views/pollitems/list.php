@@ -28,7 +28,7 @@ $this->breadcrumbs = array(
         'caption' => Yii::t($sectionId, 'admin.list.action.deleteItems'),
         'url' => $this->createUrl('delete'),
         'confirm' => Yii::t($sectionId, 'admin.list.label.deleteConfirm'),
-        'grid_id' => 'categories',
+        'grid_id' => $sectionId,
         'htmlOptions' => array('title' => Yii::t($sectionId, 'admin.list.action.deleteItems'))
         )
     );
@@ -39,7 +39,6 @@ $this->breadcrumbs = array(
         'filter' => $model,
         'selectableRows' => $itemPerPage,
         'ajaxUpdate' => 'user-info',
-        // 'updateSelector' => '#categories .pager a, #categories .items thead th a, #admin-form .delete',
         'beforeAjaxUpdate' => 'updateAjaxRequest',
         'columns' => array(
             array(

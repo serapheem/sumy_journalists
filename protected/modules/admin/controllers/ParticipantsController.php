@@ -13,28 +13,13 @@ class ParticipantsController extends AdminCustomItemsController
      */
     protected $_catid = 4;
     
+    
     /**
      * {@inheritdoc}
      */
-    public function actionAdmin()
+    protected function getSubmenuTitle()
     {
-        if (!$this->_catid)
-            throw new BadMethodCallException('Identifier of the category wasn\'t set!');
-        
-//        $className = $this->getModelClass();
-//        if (empty($_GET[$className]['catid']))
-//        {
-//            $result = array($this->_catid);
-//            $items = Categories::model()
-//                ->findAllByAttributes(array('parent_id' => $this->_catid));
-//            foreach ($items as $item)
-//            {
-//                $result[] = $item->primaryKey;
-//            }
-//            $_GET[$className]['catid'] = $result;
-//        }
-        
-        parent::actionAdmin();
+        return Yii::t('main', 'admin.menu.participants');
     }
     
     /**
@@ -42,7 +27,7 @@ class ParticipantsController extends AdminCustomItemsController
      */
     protected function getSubmenuItems()
     {
-        $sections = array('participants', 'participcats');
+        $sections = array('participcats', 'participants');
         $items = array();
         foreach ($sections as $section)
         {
@@ -51,5 +36,53 @@ class ParticipantsController extends AdminCustomItemsController
         
         return $items;
     }
+    
+    /**
+     * {@inheritdoc}
+     */
+    public function actionAdmin()
+    {
+        if (!$this->_catid)
+            throw new BadMethodCallException('Identifier of the category wasn\'t set!');
+        
+        $r = Yii::app()->request;
+        $modelClass = $this->getModelClass();
+        $attributes = $r->getQuery($modelClass);
+        
+        if (!$attributes && ($catid = $r->getQuery('catid')))
+        {
+            $_GET[$modelClass] = array('catid' => $catid);
+        }
+        
+        parent::actionAdmin();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function actionCreate($returnUrl = null)
+    {
+        $r = Yii::app()->request;
+        if (!$r->getPost('returnUrl') && ($catid = Yii::app()->request->getQuery('catid')))
+        {
+            $returnUrl = $this->createUrl('admin', array('catid' => $catid));
+        }
+        
+        parent::actionCreate($returnUrl);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function actionEdit($returnUrl = null)
+    {
+        $r = Yii::app()->request;
+        if (!$r->getPost('returnUrl') && ($catid = Yii::app()->request->getQuery('catid')))
+        {
+            $returnUrl = $this->createUrl('admin', array('catid' => $catid));
+        }
+        
+        parent::actionEdit($returnUrl);
+	}
 
 }

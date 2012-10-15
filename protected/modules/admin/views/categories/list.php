@@ -24,14 +24,13 @@ $this->breadcrumbs = array(
         'htmlOptions' => array('title' => Yii::t($sectionId, 'admin.list.action.createItem'))
         )
     );
-    // TODO : Create new confirm message
     $this->widget('MyAdminButton', array(
         'buttonType' => 'link',
         'name' => 'delete-button',
         'caption' => Yii::t($sectionId, 'admin.list.action.deleteItems'),
         'url' => $this->createUrl('delete'),
         'confirm' => Yii::t($sectionId, 'admin.list.label.deleteConfirm'),
-        'grid_id' => 'categories',
+        'grid_id' => $sectionId,
         'htmlOptions' => array('title' => Yii::t($sectionId, 'admin.list.action.deleteItems'))
         )
     );
@@ -42,7 +41,6 @@ $this->breadcrumbs = array(
         'filter' => $model,
         'selectableRows' => $itemPerPage,
         'ajaxUpdate' => 'user-info',
-        // 'updateSelector' => '#categories .pager a, #categories .items thead th a, #admin-form .delete',
         'beforeAjaxUpdate' => 'updateAjaxRequest',
         'columns' => array(
             array(
@@ -66,6 +64,7 @@ $this->breadcrumbs = array(
             array(
                 'name' => 'parent_id',
                 'value' => '$data->parent ? CHtml::encode($data->parent->title) : \'\'',
+                'filter' => $model->getCatidFilterValues(),
                 'headerHtmlOptions' => array('width' => '160')
             ),
             array(

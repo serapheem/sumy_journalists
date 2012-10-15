@@ -8,7 +8,7 @@ return array(
     'admin.list.label.deleteConfirm' => 'Видалити голосування?',
     'admin.list.action.createItem' => 'Створити голосування',
     'admin.list.action.deleteItems' => 'Видалити вибрані голосування',
-    'admin.list.action.moderateElements' => 'Редагувати елементи',
+    'admin.list.action.moderateItems' => 'Редагувати варіанти',
     
     'admin.form.title.newItem' => 'Нове голосування',
     'admin.form.title.editItem' => 'Редагувати голосування',

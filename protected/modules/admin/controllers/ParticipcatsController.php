@@ -13,12 +13,21 @@ class ParticipcatsController extends AdminCustomCategoriesController
      */
     protected $_parentId = 4;
     
+    
+    /**
+     * {@inheritdoc}
+     */
+    protected function getSubmenuTitle()
+    {
+        return Yii::t('main', 'admin.menu.participants');
+    }
+    
     /**
      * {@inheritdoc}
      */
     protected function getSubmenuItems()
     {
-        $sections = array('participants', 'participcats');
+        $sections = array('participcats', 'participants');
         $items = array();
         foreach ($sections as $section)
         {

@@ -24,14 +24,13 @@ $this->breadcrumbs = array(
 //        'htmlOptions' => array('title' => Yii::t($sectionId, 'admin.list.action.createItem'))
 //        )
 //    );
-    // TODO : Create new confirm message
 //    $this->widget('MyAdminButton', array(
 //        'buttonType' => 'link',
 //        'name' => 'delete-button',
 //        'caption' => Yii::t($sectionId, 'admin.list.action.deleteItems'),
 //        'url' => $this->createUrl('delete'),
 //        'confirm' => Yii::t($sectionId, 'admin.list.label.deleteConfirm'),
-//        'grid_id' => 'categories',
+//        'grid_id' => $sectionId,
 //        'htmlOptions' => array('title' => Yii::t($sectionId, 'admin.list.action.deleteItems'))
 //        )
 //    );

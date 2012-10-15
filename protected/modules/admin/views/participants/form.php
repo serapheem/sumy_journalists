@@ -123,7 +123,8 @@ return array(
             )
         ),
         '</div>',
-        '<div class="clrbth"></div>'
+        '<div class="clrbth"></div>',
+        '<input type="hidden" name="returnUrl" value="' . $returnUrl . '" />',
     ),
     'buttons' => array(
         'apply' => array(
@@ -134,7 +135,7 @@ return array(
             'type' => 'submit',
             'label' => Yii::t('main', 'admin.form.action.' . ($newItem ? 'create2close' : 'save2close')),
         ),
-        '<a href="' . $this->createUrl($this->defaultAction) . '">' 
+        '<a href="' . $returnUrl . '">' 
             . Yii::t('main', 'admin.form.action.' . ($newItem ? 'cancel' : 'close')) 
             . '</a>',
     ),

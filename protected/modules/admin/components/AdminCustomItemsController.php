@@ -18,22 +18,7 @@ abstract class AdminCustomItemsController extends AdminAbstractController
      * @var int
      */
     protected $_catid;
-
-    /**
-     * {@inheritdoc}
-     */
-    public function accessRules()
-    {
-        return array(
-            array('allow', // allow authenticated users to perform 'view' actions
-                'actions' => array('admin', 'create', 'edit', 'validate', 'delete'),
-                'users' => array('@'),
-            ),
-            array('deny', // deny all users
-                'users' => array('*'),
-            )
-        );
-    }
+    
     
     /**
      * {@inheritdoc}
@@ -53,7 +38,7 @@ abstract class AdminCustomItemsController extends AdminAbstractController
     /**
      * {@inheritdoc}
      */
-    public function actionCreate()
+    public function actionCreate($returnUrl = null)
     {
         if (!$this->_catid)
             throw new BadMethodCallException('Identifier of the category wasn\'t set!');
@@ -62,13 +47,13 @@ abstract class AdminCustomItemsController extends AdminAbstractController
         if (empty($_POST[$className]['catid']))
             $_POST[$className]['catid'] = $this->_catid;
         
-        parent::actionCreate();
+        parent::actionCreate($returnUrl);
     }
     
     /**
      * {@inheritdoc}
      */
-    public function actionEdit()
+    public function actionEdit($returnUrl = null)
     {
         if (!$this->_catid)
             throw new BadMethodCallException('Identifier of the category wasn\'t set!');
@@ -77,7 +62,7 @@ abstract class AdminCustomItemsController extends AdminAbstractController
         if (empty($_POST[$className]['catid']))
             $_POST[$className]['catid'] = $this->_catid;
         
-        parent::actionEdit();
+        parent::actionEdit($returnUrl);
     }
     
     /**

@@ -11,6 +11,19 @@ class Items extends AdminAbstractModel
     public $featured = 0;
     
     /**
+	 * {@inheritdoc}
+	 */
+	protected function afterConstruct()
+	{
+		parent::afterConstruct();
+        
+        if ($catid = Yii::app()->request->getQuery('catid'))
+        {
+            $this->catid = $catid;
+        }
+    }
+    
+    /**
      * {@inheritdoc}
      */
     public static function model($className = __CLASS__)
@@ -163,7 +176,7 @@ class Items extends AdminAbstractModel
             $condition .= ' AND parent_id = :parent_id';
             $params['parent_id'] = $parentId;
         }
-        $items = Categories::model()->findAll($condition, $params);
+        $items = Categories::model()->orderByTitle()->findAll($condition, $params);
 
         foreach ($items as $item)
             $result[$item->primaryKey] = (strtolower($item->title) == 'root') 

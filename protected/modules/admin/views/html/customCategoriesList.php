@@ -24,14 +24,13 @@ $this->breadcrumbs = array(
         'htmlOptions' => array('title' => Yii::t($sectionId, 'admin.list.action.createItem'))
         )
     );
-    // TODO : Create new confirm message
     $this->widget('MyAdminButton', array(
         'buttonType' => 'link',
         'name' => 'delete-button',
         'caption' => Yii::t($sectionId, 'admin.list.action.deleteItems'),
         'url' => $this->createUrl('delete'),
         'confirm' => Yii::t($sectionId, 'admin.list.label.deleteConfirm'),
-        'grid_id' => 'categories',
+        'grid_id' => $sectionId,
         'htmlOptions' => array('title' => Yii::t($sectionId, 'admin.list.action.deleteItems'))
         )
     );
@@ -42,7 +41,6 @@ $this->breadcrumbs = array(
         'filter' => $model,
         'selectableRows' => $itemPerPage,
         'ajaxUpdate' => 'user-info',
-        // 'updateSelector' => '#categories .pager a, #categories .items thead th a, #admin-form .delete',
         'beforeAjaxUpdate' => 'updateAjaxRequest',
         'columns' => array(
             array(
@@ -77,6 +75,14 @@ $this->breadcrumbs = array(
                         . ': Yii::t( "main", "admin.list.action.publish" )'
                 ),
                 'htmlOptions' => array('class' => 'link-column button-column'),
+                'headerHtmlOptions' => array('width' => '130')
+            ),
+            array(
+                'class' => 'CLinkColumn',
+                'label' => Yii::t($sectionId, 'admin.list.action.moderateItems'),
+                'urlExpression' => 'Yii::app()->getUrlManager()->createUrl(\'admin/participants/admin\', '
+                                . 'array(\'catid\' => $data->primaryKey))',
+                'linkHtmlOptions' => array('title' => Yii::t($sectionId, 'admin.list.action.moderateItems')),
                 'headerHtmlOptions' => array('width' => '130')
             ),
             array('name' => 'hits', 'filter' => '', 'headerHtmlOptions' => array('width' => '70')),
