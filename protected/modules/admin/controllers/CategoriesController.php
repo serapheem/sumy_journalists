@@ -16,6 +16,7 @@ class CategoriesController extends AdminAbstractController
         return array(
             array('allow', // allow authenticated users to perform 'view' actions
                 'actions' => array('admin', 'create', 'edit', 'validate', 'delete'),
+                'users' => array('@'),
                 'expression' => '$user->id == 1',
             ),
             array('deny', // deny all users

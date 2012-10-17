@@ -80,16 +80,16 @@ class Users extends CActiveRecord
 	 */
 	public function attributeLabels() 
 	{
-        $secionName = $this->getTableSchema()->name;
+        $sectionId = strtolower(__CLASS__);
 		return array(
             'id' => Yii::t('main', 'admin.list.label.id'),
 			'name' => Yii::t('main', 'admin.list.label.name'),
-			'email' => Yii::t($secionName, 'admin.list.label.email'),
-            'lasttime' => Yii::t($secionName, 'admin.list.label.lastVisited'),
-			'ip' => Yii::t($secionName, 'admin.list.label.lastIp'),
-			'password' => Yii::t($secionName, 'admin.form.label.password'),
-            'newPassword' => Yii::t($secionName, 'admin.form.label.newPassword'),
-			'password2' => Yii::t($secionName, 'admin.form.label.repeatPassword'),
+			'email' => Yii::t($sectionId, 'admin.list.label.email'),
+            'lasttime' => Yii::t($sectionId, 'admin.list.label.lastVisited'),
+			'ip' => Yii::t($sectionId, 'admin.list.label.lastIp'),
+			'password' => Yii::t($sectionId, 'admin.form.label.password'),
+            'newPassword' => Yii::t($sectionId, 'admin.form.label.newPassword'),
+			'password2' => Yii::t($sectionId, 'admin.form.label.repeatPassword'),
 		);
 	}
     
@@ -113,7 +113,8 @@ class Users extends CActiveRecord
             if ($this->oldPassword != sha1($this->email . $this->password))
             {
                 $success = false;
-                $this->addError('password', Yii::t($this->getTableSchema()->name, 
+                $sectionId = strtolower(__CLASS__);
+                $this->addError('password', Yii::t($sectionId, 
                     'admin.form.message.error.notCorrectPassword'));
             }
         }

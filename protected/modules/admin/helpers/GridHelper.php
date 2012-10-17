@@ -23,5 +23,20 @@ class GridHelper
 
         return '<span class="' . $class . '">&nbsp;</span>';
     }
+    
+    /**
+     * Generates the label for link of item featured
+     * @return string
+     */
+    public static function getFeaturedLabel($featured = 0)
+    {
+        $class = 'state';
+        if ($featured)
+            $class .= ' featured';
+        else
+            $class .= ' unfeatured';
+
+        return '<span class="' . $class . '">&nbsp;</span>';
+    }
 
 }

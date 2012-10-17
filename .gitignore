@@ -1,4 +1,7 @@
-/assets
-/framework
-/upload
-/protected/config/db.php
+assets
+framework
+upload
+protected/config/db.php
+
+.settings
+.project

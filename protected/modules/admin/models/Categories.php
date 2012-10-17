@@ -69,12 +69,13 @@ class Categories extends AdminAbstractModel
      */
     public function attributeLabels()
     {
+        $sectionId = strtolower(__CLASS__);
         return array(
             'id'            => Yii::t('main', 'admin.list.label.id'),
 			'title'         => Yii::t('main', 'admin.list.label.title'),
             'slug'          => Yii::t('main', 'admin.list.label.slug'),
             'description'   => Yii::t('main', 'admin.form.label.text'),
-            'parent_id'     => Yii::t($this->getTableSchema()->name, 'admin.form.label.parent'),
+            'parent_id'     => Yii::t($sectionId, 'admin.form.label.parent'),
             'state'         => Yii::t('main', 'admin.list.label.status'),
             'hits'          => Yii::t('main', 'admin.list.label.hits'),
             
@@ -164,9 +165,10 @@ class Categories extends AdminAbstractModel
         $result = array();
         $items = $this->findAll();
 
+        $sectionId = strtolower(__CLASS__);
         foreach ($items as $item)
             $result[$item->primaryKey] = (strtolower($item->title) == 'root') 
-                ? Yii::t($this->getTableSchema()->name, 'admin.form.label.noParent') 
+                ? Yii::t($sectionId, 'admin.form.label.noParent') 
                 : $item->title;
 
         return $result;

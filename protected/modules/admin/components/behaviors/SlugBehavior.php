@@ -27,7 +27,7 @@ class SlugBehavior extends CActiveRecordBehavior
     public $maxLength = 255;
 
     /**
-     * Responds to {@link CModel::onBeforeSave} event.
+     * Responds to {@link CActiveRecord::onBeforeSave} event.
      * Sets the values of the slug attribute
      *
      * @param CModelEvent $event event parameter

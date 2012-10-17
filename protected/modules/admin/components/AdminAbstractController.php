@@ -353,7 +353,8 @@ abstract class AdminAbstractController extends CController
             $error = 0;
             foreach ($ids as $id)
             {
-                if (!$modelClass::model()->deleteByPk($id))
+                $r = $modelClass::model()->findByPk($id);
+                if (!$r || !$r->delete())
                 {
                     $error++;
                 }
@@ -481,7 +482,7 @@ abstract class AdminAbstractController extends CController
             '/admin/statistics' => array('label' => Yii::t('main', 'admin.menu.statistics')),
             '/admin/users' => array('label' => Yii::t('main', 'admin.menu.users')),
             '/admin/default/logout' => array(
-                'label' => Yii::t('main', 'admin.menu.logOut'), 
+                'label' => Yii::t('main', 'admin.menu.logOut') . ' (' . Yii::app()->user->email . ')', 
                 'htmlOptions' => array('class' => 'right')
             ),
             '/' => array(
@@ -521,10 +522,12 @@ abstract class AdminAbstractController extends CController
      */
     protected function getSubmenuItems()
     {
-        $sections = array(
-            'news', 'knowour', 'citystyle', 'tyca', 
-            'pages', 'categories', 'items', 'frontpage'
-        );
+        $sections = array('news', 'knowour', 'citystyle', 'tyca', 'pages');
+        if (Yii::app()->user->id == 1)
+        {
+            $sections = array_merge($sections, array('categories', 'items'));
+        }
+        $sections = array_merge($sections, array('frontpage'));
         $items = array();
         foreach ($sections as $section)
         {

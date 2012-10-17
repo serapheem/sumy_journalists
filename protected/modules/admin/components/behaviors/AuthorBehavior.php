@@ -27,7 +27,7 @@ class AuthorBehavior extends CActiveRecordBehavior
     public $setUpdateOnCreate = true;
 
     /**
-     * Responds to {@link CModel::onBeforeSave} event.
+     * Responds to {@link CActiveRecord::onBeforeSave} event.
      * Sets the values of the creation or modified attributes as configured
      *
      * @param CModelEvent $event event parameter

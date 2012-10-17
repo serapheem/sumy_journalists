@@ -148,7 +148,7 @@ class ItemsController extends AdminAbstractController
                 
                 if ($row['onfront'])
                 {
-                    Yii::app()->db->createCommand()->insert('featured', array(
+                    Yii::app()->db->createCommand()->insert('featured_items', array(
                         'section' => $this->getId(), 
                         'item_id' => $lastId, 
                     ));
