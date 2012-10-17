@@ -76,7 +76,7 @@ abstract class AdminAbstractController extends CController
     {
         return array(
             array('allow', // allow authenticated users to perform 'view' actions
-                'actions' => array('admin', 'create', 'update', 'delete', 'validate'),
+                'actions' => array('admin', 'create', 'edit', 'delete', 'validate'),
                 'users' => array('@'),
             ),
             array('deny', // deny all users

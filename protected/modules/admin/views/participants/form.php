@@ -48,12 +48,12 @@ return array(
                     'items' => $model->getStateValues(),
                     'separator' => "\n"
                 ),
-                'featured' => array(
-                    'type' => 'radiolist',
-                    'layout' => "{label}\n<div class=\"radiolist-wrapper\">{input}</div>\n{hint}\n{error}",
-                    'items' => $model->getFeaturedValues(),
-                    'separator' => "\n"
-                ),
+                // 'featured' => array(
+                    // 'type' => 'radiolist',
+                    // 'layout' => "{label}\n<div class=\"radiolist-wrapper\">{input}</div>\n{hint}\n{error}",
+                    // 'items' => $model->getFeaturedValues(),
+                    // 'separator' => "\n"
+                // ),
                 'fulltext' => array(
                     'type' => 'application.extensions.NHCKEditor.CKEditorWidget',
                     'attribute' => 'fulltext',

@@ -84,6 +84,22 @@ $this->breadcrumbs = array(
                 'htmlOptions' => array('class' => 'link-column button-column'),
                 'headerHtmlOptions' => array('width' => '130')
             ),
+            array(
+                'class' => 'MyDataLinkColumn',
+                'name' => 'featured',
+                'filter' => $model->getFeaturedFilterValues(),
+                'labelExpression' => 'GridHelper::getFeaturedLabel(!empty($data->featured))',
+                'urlExpression' => 'Yii::app()->controller->createUrl(\'edit\', array(\'id\' => $data->primaryKey))'
+                    . ' . \'?' . $modelClass . '[featured]=\' . (1 - !empty($data->featured))',
+                'linkHtmlOptions' => array(
+                    'class' => 'feature', 'click' => 'ajaxChange',
+                    'titleExpression' => 'empty($data->featured) '
+                        . '? Yii::t( "' . $sectionId . '", "admin.list.action.feature" ) '
+                        . ': Yii::t( "' . $sectionId . '", "admin.list.action.unfeature" )'
+                ),
+                'htmlOptions' => array('class' => 'link-column button-column'),
+                'headerHtmlOptions' => array('width' => '130')
+            ),
 //            array(
 //                'class' => 'MyDataLinkColumn',
 //                'name' => 'ordering',

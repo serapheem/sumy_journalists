@@ -21,7 +21,7 @@ class FeaturedBehavior extends CActiveRecordBehavior
     
     /**
      * Responds to {@link CModel::onAfterConstruct} event.
-     * Adds required attribute to model instance
+     * Sets default attribute value to model instance
      * 
      * @param CEvent $event event parameter
      */
@@ -97,6 +97,17 @@ class FeaturedBehavior extends CActiveRecordBehavior
             Yii::app()->user->setFlash('error', 
                 Yii::t($sectionId, 'admin.list.message.error.unfeatureItem'));
         }
+    }
+
+    /**
+     * Responds to {@link CActiveRecord::onAfterFind} event.
+     * Sets int value instead of object as attribute value
+     * 
+     * @param CEvent $event event parameter
+     */
+    public function afterFind(CEvent $event)
+    {
+        $this->getOwner()->featured = (int) !empty($this->getOwner()->featured);
     }
 
 }
