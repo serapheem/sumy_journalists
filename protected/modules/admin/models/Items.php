@@ -115,11 +115,13 @@ class Items extends AdminAbstractModel
      */
     public function relations()
     {
+        $sectionId = strtolower(__CLASS__);
         return array(
             'category' => array(self::BELONGS_TO, 'Categories', 'catid'),
             'created_user' => array(self::BELONGS_TO, 'Users', 'created_by'),
             'modified_user' => array(self::BELONGS_TO, 'Users', 'modified_by'),
-            'featured' => array(self::HAS_ONE, 'Frontpage', 'item_id', 'condition' => 'featured.section=\'items\'' ),
+            'featured' => array(self::HAS_ONE, 'Frontpage', 'item_id', 
+                            'condition' => 'featured.section=\'' . $sectionId . '\'' ),
         );
     }
 
@@ -137,6 +139,11 @@ class Items extends AdminAbstractModel
         $criteria->compare('t.slug', $this->slug, true);
         $criteria->compare('t.catid', $this->catid);
         $criteria->compare('t.state', $this->state);
+        
+        // $sectionId = strtolower(__CLASS__);
+        // $criteria->with = array('featured'); var_dump($criteria->toArray()); die;
+        //$criteria->compare('users.full_name', $this->search_user, true);
+        //$criteria->compare('t.featured', $this->featured);
 
         return new CActiveDataProvider(get_class($this), array(
                 'criteria' => $criteria,

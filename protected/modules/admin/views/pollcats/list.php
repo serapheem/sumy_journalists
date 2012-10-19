@@ -22,7 +22,7 @@ $this->breadcrumbs = array(
         'htmlOptions' => array('title' => Yii::t($sectionId, 'admin.list.action.createItem'))
         )
     );
-    $this->widget('MyAdminButton', array(
+    $this->widget('admin.components.grid.MyAdminButton', array(
         'buttonType' => 'link',
         'name' => 'delete-button',
         'caption' => Yii::t($sectionId, 'admin.list.action.deleteItems'),
@@ -52,7 +52,7 @@ $this->breadcrumbs = array(
                 'deleteConfirmation' => Yii::t($sectionId, 'admin.list.label.deleteConfirm')
             ),
             array(
-                'class' => 'MyDataLinkColumn',
+                'class' => 'admin.components.grid.MyDataLinkColumn',
                 'name' => 'title',
                 'labelExpression' => 'CHtml::encode($data->title)',
                 'urlExpression' => 'Yii::app()->controller->createUrl(\'edit\', array(\'id\' => $data->primaryKey))',
@@ -68,7 +68,7 @@ $this->breadcrumbs = array(
                 'headerHtmlOptions' => array('width' => '130')
             ),
             array(
-                'class' => 'MyDataLinkColumn',
+                'class' => 'admin.components.grid.MyDataLinkColumn',
                 'name' => 'state',
                 'filter' => $model->getStateFilterValues(),
                 'labelExpression' => 'GridHelper::getStateLabel($data->state)',
