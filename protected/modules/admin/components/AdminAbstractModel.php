@@ -13,12 +13,12 @@ abstract class AdminAbstractModel extends CActiveRecord
      */
     public function getCatidFilterValues($parentId = null)
     {
-        $attrs = array('state' => 1);
+        $attrs = array();
         if ($parentId)
         {
             $attrs['parent_id'] = $parentId;
         }
-        $items = Categories::model()->findAllByAttributes($attrs);
+        $items = Categories::model()->orderByTitle()->findAllByAttributes($attrs);
         
         $result = array();
         foreach ($items as $item)

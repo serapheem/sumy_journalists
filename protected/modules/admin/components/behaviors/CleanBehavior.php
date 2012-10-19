@@ -14,7 +14,7 @@ class CleanBehavior extends CActiveRecordBehavior
     public $attributes = array();
 
     /**
-     * Responds to {@link CModel::onBeforeValidate} event.
+     * Responds to {@link CActiveRecord::onBeforeValidate} event.
      * Cleans the attributes from the list
      *
      * @param CModelEvent $event event parameter

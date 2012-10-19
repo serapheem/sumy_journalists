@@ -6,10 +6,15 @@
 return array(
     // labels and actions
     'admin.list.label.deleteConfirm' => 'Видалити статтю?',
+    'admin.list.label.featured' => 'Стан',
     'admin.list.action.createItem' => 'Створити статтю',
     'admin.list.action.deleteItems' => 'Видалити вибрані статті',
-    'admin.list.action.featured' => 'Розмістити на головній',
-    'admin.list.action.unfeatured' => 'Забрати з головної',
+    'admin.list.action.feature' => 'Розмістити на головній',
+    'admin.list.action.unfeature' => 'Забрати з головної',
+    
+    'admin.list.filter.featured.select' => '- Виберіть стан -',
+    'admin.list.filter.featured.featured' => 'На головній',
+    'admin.list.filter.featured.unfeatured' => 'В архіві',
     
     'admin.form.title.newItem' => 'Нова стаття',
     'admin.form.title.editItem' => 'Редагувати статтю',

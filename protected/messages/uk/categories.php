@@ -6,13 +6,20 @@
 return array(
     // labels and actions
     'admin.list.label.deleteConfirm' => 'Видалити категорію?',
+    'admin.list.label.featured' => 'Стан',
     'admin.list.action.createItem' => 'Створити нову категорію',
     'admin.list.action.deleteItems' => 'Видалити вибрані категорії',
+    
+    'admin.list.filter.featured.select' => '- Виберіть стан -',
+    'admin.list.filter.featured.featured' => 'Активне',
+    'admin.list.filter.featured.unfeatured' => 'Не активне',
     
     'admin.form.title.newItem' => 'Нова категорія',
     'admin.form.title.editItem' => 'Редагувати категорію',
     'admin.form.label.parent' => 'Батьківська категорія',
     'admin.form.label.noParent' => '- Нова секція -',
+    'admin.form.label.featured' => 'Активне',
+    'admin.form.label.unfeatured' => 'Не активне',
     
     // messages
     '1#admin.list.message.success.deleteItem|n>1#admin.list.message.success.deleteItems' 

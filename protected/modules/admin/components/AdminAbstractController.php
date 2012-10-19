@@ -76,7 +76,7 @@ abstract class AdminAbstractController extends CController
     {
         return array(
             array('allow', // allow authenticated users to perform 'view' actions
-                'actions' => array('admin', 'delete', 'update', 'index', 'view'),
+                'actions' => array('admin', 'create', 'edit', 'delete', 'validate'),
                 'users' => array('@'),
             ),
             array('deny', // deny all users
@@ -161,7 +161,7 @@ abstract class AdminAbstractController extends CController
 
             $dataProvider = $this->_model->search($this->_itemsPerPage);
         }
-
+//var_dump($dataProvider->getData()); die;
         $this->render('list', array(
             'sectionId' => $this->getId(),
             'modelClass' => $modelClass,
@@ -173,11 +173,14 @@ abstract class AdminAbstractController extends CController
 
     /**
      * Creates the new item
+     * 
+     * @param string|null $returnUrl The URL address to redirect after successful item creation
      */
-    public function actionCreate()
+    public function actionCreate($returnUrl = null)
     {
         $sectionId = $this->getId();
         $request = Yii::app()->request;
+        $returnUrl = $returnUrl ?: $request->getPost('returnUrl') ?: $this->createUrl($this->defaultAction);
         $model = $this->loadModel();
 
         if (!$model)
@@ -208,8 +211,8 @@ abstract class AdminAbstractController extends CController
             // TODO : need to use returnUrl parameter of user object
             if ($apply)
                 $this->redirect(array('edit', 'id' => $model->primaryKey));
-            else
-                $this->redirect($this->createUrl($this->defaultAction));
+            else 
+                $this->redirect($returnUrl);
         }
         else
         {
@@ -224,7 +227,7 @@ abstract class AdminAbstractController extends CController
             $this->_title = Yii::t($sectionId, 'admin.form.title.newItem');
 
             $this->breadcrumbs = array(
-                Yii::t('main', 'admin.section.' . $sectionId) => $this->createUrl($this->defaultAction),
+                Yii::t('main', 'admin.section.' . $sectionId) => $returnUrl,
                 $this->_title
             );
             
@@ -234,11 +237,14 @@ abstract class AdminAbstractController extends CController
 
     /**
      * Updates the selected item
+     * 
+     * @param string|null $returnUrl The URL address to redirect after successful item update
      */
-    public function actionEdit()
+    public function actionEdit($returnUrl = null)
     {
         $sectionId = $this->getId();
         $request = Yii::app()->request;
+        $returnUrl = $returnUrl ?: $request->getPost('returnUrl') ?: $this->createUrl($this->defaultAction);
         $model = $this->loadModel(false);
 
         if (!$model)
@@ -274,8 +280,7 @@ abstract class AdminAbstractController extends CController
         {
             if ($canRedirect && !$apply)
             {
-                // TODO : need to use returnUrl parameter of user object
-                $this->redirect($this->createUrl($this->defaultAction));
+                $this->redirect($returnUrl);
             }
             else
             { 
@@ -295,7 +300,7 @@ abstract class AdminAbstractController extends CController
                     $this->_title = $model->name;
                 }
                 $this->breadcrumbs = array(
-                    Yii::t('main', 'admin.section.' . $sectionId) => $this->createUrl($this->defaultAction),
+                    Yii::t('main', 'admin.section.' . $sectionId) => $returnUrl,
                     $this->_title
                 );
 
@@ -348,7 +353,8 @@ abstract class AdminAbstractController extends CController
             $error = 0;
             foreach ($ids as $id)
             {
-                if (!$modelClass::model()->deleteByPk($id))
+                $r = $modelClass::model()->findByPk($id);
+                if (!$r || !$r->delete())
                 {
                     $error++;
                 }
@@ -371,9 +377,11 @@ abstract class AdminAbstractController extends CController
             Yii::app()->user->setFlash('warning', Yii::t($sectionId, 'admin.list.message.warning.deleteNoItems'));
         }
 
-        // TODO : need to use returnUrl parameter of user object
         if (!$request->getIsAjaxRequest())
-            Yii::app()->getRequest()->redirect($this->createUrl($this->defaultAction));
+        {
+            $returnUrl = $request->getPost('returnUrl') ?: $this->createUrl($this->defaultAction);
+            Yii::app()->getRequest()->redirect($returnUrl);
+        }
     }
 
     /**
@@ -469,12 +477,12 @@ abstract class AdminAbstractController extends CController
         return array(
             '/admin' => array('label' => Yii::t('main', 'admin.menu.default')),
             '/admin/news' => array('label' => Yii::t('main', 'admin.menu.materials')),
-            '/admin/participants' => array('label' => Yii::t('main', 'admin.menu.participants')),
+            '/admin/participcats' => array('label' => Yii::t('main', 'admin.menu.participants')),
             '/admin/pollcats' => array('label' => Yii::t('main', 'admin.menu.poll')),
             '/admin/statistics' => array('label' => Yii::t('main', 'admin.menu.statistics')),
             '/admin/users' => array('label' => Yii::t('main', 'admin.menu.users')),
             '/admin/default/logout' => array(
-                'label' => Yii::t('main', 'admin.menu.logOut'), 
+                'label' => Yii::t('main', 'admin.menu.logOut') . ' (' . Yii::app()->user->email . ')', 
                 'htmlOptions' => array('class' => 'right')
             ),
             '/' => array(
@@ -491,10 +499,20 @@ abstract class AdminAbstractController extends CController
     protected function renderSubmenu()
     {
         $this->renderPartial('/html/submenu', array(
-            'sectionTitle' => Yii::t('main', 'admin.menu.materials'),
+            'sectionTitle' => $this->getSubmenuTitle(),
             'items' => $this->getSubmenuItems(),
             'current' => 'admin/' . $this->getId()
         ));
+    }
+    
+    /**
+     * Returns title of submenu
+     * 
+     * @return string
+     */
+    protected function getSubmenuTitle()
+    {
+        return Yii::t('main', 'admin.menu.materials');
     }
     
     /**
@@ -504,10 +522,12 @@ abstract class AdminAbstractController extends CController
      */
     protected function getSubmenuItems()
     {
-        $sections = array(
-            'news', 'knowour', 'citystyle', 'tyca', 
-            'pages', 'categories', 'items', 'frontpage'
-        );
+        $sections = array('news', 'knowour', 'citystyle', 'tyca', 'pages');
+        if (Yii::app()->user->id == 1)
+        {
+            $sections = array_merge($sections, array('categories', 'items'));
+        }
+        $sections = array_merge($sections, array('frontpage'));
         $items = array();
         foreach ($sections as $section)
         {

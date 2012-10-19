@@ -18,22 +18,7 @@ abstract class AdminCustomCategoriesController extends AdminAbstractController
      * @var int
      */
     protected $_parentId;
-
-    /**
-     * {@inheritdoc}
-     */
-    public function accessRules()
-    {
-        return array(
-            array('allow', // allow authenticated users to perform 'view' actions
-                'actions' => array('admin', 'create', 'edit', 'validate', 'delete'),
-                'users' => array('@'),
-            ),
-            array('deny', // deny all users
-                'users' => array('*'),
-            )
-        );
-    }
+    
     
     /**
      * {@inheritdoc}
@@ -52,7 +37,7 @@ abstract class AdminCustomCategoriesController extends AdminAbstractController
     /**
      * {@inheritdoc}
      */
-    public function actionCreate()
+    public function actionCreate($returnUrl = null)
     {
         if (!$this->_parentId)
             throw new BadMethodCallException('Identifier of the parent category wasn\'t set!');
@@ -60,13 +45,13 @@ abstract class AdminCustomCategoriesController extends AdminAbstractController
         $className = $this->getModelClass();
         $_POST[$className]['parent_id'] = $this->_parentId;
         
-        parent::actionCreate();
+        parent::actionCreate($returnUrl);
     }
     
     /**
      * {@inheritdoc}
      */
-    public function actionEdit()
+    public function actionEdit($returnUrl = null)
     {
         if (!$this->_parentId)
             throw new BadMethodCallException('Identifier of the parent category wasn\'t set!');
@@ -74,7 +59,7 @@ abstract class AdminCustomCategoriesController extends AdminAbstractController
         $className = $this->getModelClass();
         $_POST[$className]['parent_id'] = $this->_parentId;
         
-        parent::actionEdit();
+        parent::actionEdit($returnUrl);
     }
     
     /**

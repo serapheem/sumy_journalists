@@ -19,8 +19,7 @@ $this->widget('zii.widgets.jui.CJuiButton', array(
     'htmlOptions' => array('title' => Yii::t($sectionId, 'admin.list.action.createItem'))
     )
 );
-// TODO : Create new confirm message
-$this->widget('MyAdminButton', array(
+$this->widget('admin.components.grid.MyAdminButton', array(
     'buttonType' => 'link',
     'name' => 'delete-button',
     'caption' => Yii::t($sectionId, 'admin.list.action.deleteItems'),
@@ -50,7 +49,7 @@ $this->widget('zii.widgets.grid.CGridView', array(
             'deleteConfirmation' => Yii::t($sectionId, 'admin.list.label.deleteConfirm')
         ),
         array(
-            'class' => 'MyDataLinkColumn',
+            'class' => 'admin.components.grid.MyDataLinkColumn',
             'name' => 'name',
             'labelExpression' => 'CHtml::encode($data->name)',
             'urlExpression' => 'Yii::app()->controller->createUrl(\'edit\', array(\'id\' => $data->primaryKey))',

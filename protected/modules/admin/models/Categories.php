@@ -31,7 +31,7 @@ class Categories extends AdminAbstractModel
     {
         return array(
             array('title, parent_id, state', 'required'),
-            array('slug, description, meta_title, metakey, metadesc', 'safe'),
+            array('slug, featured, description, meta_title, metakey, metadesc', 'safe'),
             array('id', 'safe', 'on' => 'search'),
             array('created_at, created_by, modified_at, modified_by', 'safe', 'on' => 'update'),
             array('title, slug, meta_title, metakey, metadesc', 'length', 'max' => 255),
@@ -61,6 +61,9 @@ class Categories extends AdminAbstractModel
             'AuthorBehavior' => array(
                 'class' => 'admin.components.behaviors.AuthorBehavior',
             ),
+            'FeaturedBehavior' => array(
+                'class' => 'admin.components.behaviors.FeaturedBehavior',
+            ),
         );
     }
 
@@ -69,13 +72,15 @@ class Categories extends AdminAbstractModel
      */
     public function attributeLabels()
     {
+        $sectionId = strtolower(__CLASS__);
         return array(
             'id'            => Yii::t('main', 'admin.list.label.id'),
 			'title'         => Yii::t('main', 'admin.list.label.title'),
             'slug'          => Yii::t('main', 'admin.list.label.slug'),
             'description'   => Yii::t('main', 'admin.form.label.text'),
-            'parent_id'     => Yii::t($this->getTableSchema()->name, 'admin.form.label.parent'),
+            'parent_id'     => Yii::t($sectionId, 'admin.form.label.parent'),
             'state'         => Yii::t('main', 'admin.list.label.status'),
+            'featured'      => Yii::t($sectionId, 'admin.list.label.featured'),
             'hits'          => Yii::t('main', 'admin.list.label.hits'),
             
             'created_by'    => Yii::t('main', 'admin.list.label.createdBy'),
@@ -94,10 +99,25 @@ class Categories extends AdminAbstractModel
      */
     public function relations()
     {
+        $sectionId = strtolower(__CLASS__);
         return array(
             'parent' => array(self::BELONGS_TO, 'Categories', 'parent_id'),
             'created_user' => array(self::BELONGS_TO, 'Users', 'created_by'),
             'modified_user' => array(self::BELONGS_TO, 'Users', 'modified_by'),
+            'featured' => array(self::HAS_ONE, 'Frontpage', 'item_id', 
+                            'condition' => 'featured.section=\'' . $sectionId . '\'' ),
+        );
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function scopes()
+    {
+        return array(
+            'orderByTitle' => array(
+                'order' => 'title ASC',
+            ),
         );
     }
 
@@ -152,12 +172,38 @@ class Categories extends AdminAbstractModel
         $result = array();
         $items = $this->findAll();
 
+        $sectionId = strtolower(__CLASS__);
         foreach ($items as $item)
             $result[$item->primaryKey] = (strtolower($item->title) == 'root') 
-                ? Yii::t($this->getTableSchema()->name, 'admin.form.label.noParent') 
+                ? Yii::t($sectionId, 'admin.form.label.noParent') 
                 : $item->title;
 
         return $result;
+    }
+
+    /**
+     * @return array The list of possible featured values for filter
+     */
+    public function getFeaturedFilterValues()
+    {
+        $sectionId = strtolower(__CLASS__);
+        return array(
+            'prompt' => Yii::t($sectionId, 'admin.list.filter.featured.select'),
+            1 => Yii::t($sectionId, 'admin.list.filter.featured.featured'), 
+            0 => Yii::t($sectionId, 'admin.list.filter.featured.unfeatured')
+        );
+    }
+
+    /**
+     * @return array The list of possible featured values
+     */
+    public function getFeaturedValues()
+    {
+        $sectionId = strtolower(__CLASS__);
+        return array(
+            1 => Yii::t($sectionId, 'admin.form.label.featured'), 
+            0 => Yii::t($sectionId, 'admin.form.label.unfeatured')
+        );
     }
 
 }

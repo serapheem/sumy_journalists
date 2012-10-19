@@ -8,6 +8,9 @@ return array(
     'admin.list.label.deleteConfirm' => 'Видалити категорію?',
     'admin.list.action.createItem' => 'Створити нову категорію',
     'admin.list.action.deleteItems' => 'Видалити вибрані категорії',
+    'admin.list.action.moderateItems' => 'Редагувати учасників',
+    'admin.list.action.feature' => 'Активувати',
+    'admin.list.action.unfeature' => 'Деактивувати',
     
     'admin.form.title.newItem' => 'Нова категорія',
     'admin.form.title.editItem' => 'Редагувати категорію',

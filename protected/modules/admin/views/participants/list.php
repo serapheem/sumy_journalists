@@ -20,18 +20,17 @@ $this->breadcrumbs = array(
         'buttonType' => 'link',
         'name' => 'create-button',
         'caption' => Yii::t($sectionId, 'admin.list.action.createItem'),
-        'url' => $this->createUrl('create'),
+        'url' => $this->createUrl('create', array('catid' => Yii::app()->request->getQuery('catid') ?: null)),
         'htmlOptions' => array('title' => Yii::t($sectionId, 'admin.list.action.createItem'))
         )
     );
-    // TODO : Create new confirm message
-    $this->widget('MyAdminButton', array(
+    $this->widget('admin.components.grid.MyAdminButton', array(
         'buttonType' => 'link',
         'name' => 'delete-button',
         'caption' => Yii::t($sectionId, 'admin.list.action.deleteItems'),
         'url' => $this->createUrl('delete'),
         'confirm' => Yii::t($sectionId, 'admin.list.label.deleteConfirm'),
-        'grid_id' => 'categories',
+        'grid_id' => $sectionId,
         'htmlOptions' => array('title' => Yii::t($sectionId, 'admin.list.action.deleteItems'))
         )
     );
@@ -42,7 +41,6 @@ $this->breadcrumbs = array(
         'filter' => $model,
         'selectableRows' => $itemPerPage,
         'ajaxUpdate' => 'user-info',
-        // 'updateSelector' => '#categories .pager a, #categories .items thead th a, #admin-form .delete',
         'beforeAjaxUpdate' => 'updateAjaxRequest',
         'columns' => array(
             array(
@@ -56,7 +54,7 @@ $this->breadcrumbs = array(
                 'deleteConfirmation' => Yii::t($sectionId, 'admin.list.label.deleteConfirm')
             ),
             array(
-                'class' => 'MyDataLinkColumn',
+                'class' => 'admin.components.grid.MyDataLinkColumn',
                 'name' => 'title',
                 'labelExpression' => 'CHtml::encode($data->title)',
                 'urlExpression' => 'Yii::app()->controller->createUrl(\'edit\', array(\'id\' => $data->primaryKey))',
@@ -71,7 +69,7 @@ $this->breadcrumbs = array(
                 'htmlOptions' => array('class' => 'tl')
             ),
             array(
-                'class' => 'MyDataLinkColumn',
+                'class' => 'admin.components.grid.MyDataLinkColumn',
                 'name' => 'state',
                 'filter' => $model->getStateFilterValues(),
                 'labelExpression' => 'GridHelper::getStateLabel($data->state)',
@@ -87,7 +85,7 @@ $this->breadcrumbs = array(
                 'headerHtmlOptions' => array('width' => '130')
             ),
 //            array(
-//                'class' => 'MyDataLinkColumn',
+//                'class' => 'admin.components.grid.MyDataLinkColumn',
 //                'name' => 'ordering',
 //                'filter' => '',
 //                //'labelExpression' => 'GridHelper::getStateLabel($data->state)',

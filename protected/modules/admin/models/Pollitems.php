@@ -123,7 +123,7 @@ class Pollitems extends CActiveRecord
      */
     public function getPollidFilterValues()
     {
-        $items = Pollcats::model()->findAll();
+        $items = Pollcats::model()->ordering()->findAll();
         
         $result = array();
         foreach ($items as $item)
@@ -142,7 +142,7 @@ class Pollitems extends CActiveRecord
     public function getPollidDropDown()
     {
         $result = array();
-        $items = Pollcats::model()->findAll();
+        $items = Pollcats::model()->ordering()->findAll();
 
         foreach ($items as $item)
             $result[$item->primaryKey] = $item->title;
