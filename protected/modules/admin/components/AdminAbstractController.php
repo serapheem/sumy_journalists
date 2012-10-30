@@ -161,7 +161,6 @@ abstract class AdminAbstractController extends CController
 
             $dataProvider = $this->_model->search($this->_itemsPerPage);
         }
-//var_dump($dataProvider->getData()); die;
         $this->render('list', array(
             'sectionId' => $this->getId(),
             'modelClass' => $modelClass,

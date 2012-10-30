@@ -1,8 +1,8 @@
 <?php
 
 return array(
-    'basePath' => dirname(__FILE__) . DIRECTORY_SEPARATOR . '..',
-    'name' => 'My Web Application',
+    'basePath' => dirname(__FILE__) . '/..',
+    'name' => 'InCity.Sumy.Ua',
     'sourceLanguage' => 'en',
     'language' => 'uk',
     'theme' => 'classic',
@@ -17,7 +17,7 @@ return array(
     'modules' => array(
         'gii' => array(
             'class' => 'system.gii.GiiModule',
-            'password' => 'yii',
+            'password' => 'yiiadmin',
         ),
         'admin' => array(
         ),
@@ -71,12 +71,12 @@ return array(
                 '/<controller>/<action>' => '/<controller>/<action>',
             ),
         ),
-        'db' => require dirname(__FILE__) . DIRECTORY_SEPARATOR . 'db.php',
+        'db' => require dirname(__FILE__) . '/db.php',
         'errorHandler' => array(
             'errorAction' => 'site/error',
         ),
     ),
     // application-level parameters that can be accessed
     // using Yii::app()->params['paramName']
-    'params' => require dirname(__FILE__) . DIRECTORY_SEPARATOR . 'settings.php',
+    'params' => require dirname(__FILE__) . '/settings.php',
 );
