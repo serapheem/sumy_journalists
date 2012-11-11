@@ -1,6 +1,6 @@
-assets
-framework
-upload
+assets/
+framework/
+upload/
 protected/config/db.php
 .htaccess
 
