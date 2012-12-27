@@ -3,6 +3,3 @@ framework/
 upload/
 protected/config/db.php
 .htaccess
-
-.settings
-.project
