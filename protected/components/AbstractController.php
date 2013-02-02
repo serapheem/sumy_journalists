@@ -1,12 +1,12 @@
 <?php
 /**
- * Contains base controller
+ * Contains base controller of the site
  */
 
 /**
  * Controller Abstract Class
  */
-abstract class AbstractController extends CController
+abstract class AbstractController extends Controller
 {
     /**
      * Name of the model class
@@ -36,6 +36,32 @@ abstract class AbstractController extends CController
      * @var integer
      */
     protected $_itemsPerPage = 20;
+
+    /**
+     * {@inheritdoc}
+     */
+    public function filters()
+    {
+        return array(
+            'accessControl', // perform access control for CRUD operations
+        );
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function accessRules()
+    {
+        return array(
+            array('allow', // allow all users to perform 'index' and 'show' actions
+                'actions' => array('index', 'show'),
+                'users' => array('*'),
+            ),
+            array('deny', // deny all users
+                'users' => array('*'),
+            ),
+        );
+    }
     
     /**
      * Gets name of the model class
@@ -94,7 +120,7 @@ abstract class AbstractController extends CController
     }
 
     /**
-     * Displays list of all active items
+     * Displays all items
      */
     public function actionIndex()
     {
@@ -106,7 +132,7 @@ abstract class AbstractController extends CController
         }
         else
         {
-            $this->_model = $this->loadModel(true, 'index');
+            $this->_model = $this->loadModel(true, 'search');
             $this->_model->unsetAttributes(); // clear any default values
             if ($attributes = Yii::app()->request->getQuery($modelClass))
                 $this->_model->attributes = $attributes;
@@ -123,11 +149,11 @@ abstract class AbstractController extends CController
     }
 
     /**
-     * Updates the selected item
+     * Shows the selected item
      * 
      * @param string|null $returnUrl The URL address to redirect after successful item update
      */
-    public function actionShow()
+    public function actionShow($returnUrl = null)
     {
         $sectionId = $this->getId();
         $request = Yii::app()->request;

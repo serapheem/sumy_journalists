@@ -33,8 +33,9 @@ if ( ( stripos( $_SERVER['HTTP_USER_AGENT'], 'msie 6' ) !== false )
         <meta property="fb:app_id" content="116412811804627" />
 
         <link href="<?php echo Yii::app()->theme->baseUrl ?>/style.css" rel="stylesheet" type="text/css" />
-        
+        <!--
         <script src="<?php echo Yii::app()->theme->baseUrl ?>/js/jquery-1.7.min.js" type="text/javascript"></script>
+        -->
         <script src="<?php echo Yii::app()->theme->baseUrl ?>/js/core.js" type="text/javascript"></script>
         
         <script type="text/javascript" src="http://userapi.com/js/api/openapi.js?34"></script>
@@ -124,7 +125,7 @@ if ( ( stripos( $_SERVER['HTTP_USER_AGENT'], 'msie 6' ) !== false )
                     <?php if ( $this->show_poll ) : ?> 
                     	<div class="box" id="poll"><?php $this->widget( 'application.extensions.Poll.PollWidget' ); ?></div> 
                     <?php endif; ?>
-                    
+                    <!--
                     <div class="advertisement">
 	                    <script type="text/javascript"><!--
 						google_ad_client = "ca-pub-8966739192858537";
@@ -133,11 +134,11 @@ if ( ( stripos( $_SERVER['HTTP_USER_AGENT'], 'msie 6' ) !== false )
 						google_ad_width = 160;
 						google_ad_height = 600;
 						//-->
-						</script>
+					<!--	</script>
 						<script type="text/javascript"
 						src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
 						</script>
-                    </div>
+                    </div> -->
                 </div>
                 <div class="clear"></div>
             </div>

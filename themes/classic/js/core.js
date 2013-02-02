@@ -94,3 +94,7 @@ function addParticipantVote(id, model)
 			}
 		)
 }
+function blockContent(id)
+{
+    jQuery('#' + id).append(jQuery('<div>').addClass('overlay'));
+}

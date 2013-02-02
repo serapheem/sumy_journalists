@@ -55,8 +55,8 @@ return array(
 //                    'defaultParams' => array('catid' => 5)
 //                ),
                 
-                '/news.html' => '/site/news',
-                '/news/<slug:(\w|_|-|.|:)+>' => '/site/news',
+                '/news.html' => '/news/index',
+                '/news/<slug:(\w|_|-|.|:)+>' => '/news/show',
                 '/top10.html' => '/participants/top10',
                 '/top10/results.html' => '/participants/results',
                 '/participants.html' => '/participants',

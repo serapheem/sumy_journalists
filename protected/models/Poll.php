@@ -41,7 +41,7 @@ class Poll extends CActiveRecord
 	public function rules( ) 
 	{
 		return array(
-			array( 'title, publish', 'required' ),
+			array( 'title, state', 'required' ),
 		);
 	}
 	
@@ -56,7 +56,7 @@ class Poll extends CActiveRecord
 	{
 		return array(
 			'title' => Yii::t( 'main', 'TITLE' ),
-			'publish' => Yii::t( 'main', 'PUBLISH' ),
+			'state' => Yii::t( 'main', 'PUBLISH' ),
 		);
 	}
     
@@ -85,7 +85,7 @@ class Poll extends CActiveRecord
     {
         return array(
             'published' => array(
-                'condition' => 'publish=1',
+                'condition' => 'state=1',
                 'order' => 'RAND() ASC',
                 'limit' => 1,
             ),
