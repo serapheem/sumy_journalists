@@ -1,10 +1,14 @@
 <?php
 /**
- * CleanBehavior class file.
+ * Contains CleanBehavior class
+ *
+ * @author      Serhiy Hlushko <serhiy.hlushko@gmail.com>
+ * @copyright   Copyright 2013 Hlushko inc.
+ * @company     Hlushko inc.
  */
 
 /**
- * CleanBehavior will automatically clean selected atributes.
+ * CleanBehavior will automatically clean selected attributes
  */
 class CleanBehavior extends CActiveRecordBehavior
 {
@@ -22,8 +26,7 @@ class CleanBehavior extends CActiveRecordBehavior
     public function beforeValidate(CModelEvent $event)
     {
         $owner = $this->getOwner();
-        foreach ($this->attributes as $attr)
-        {
+        foreach ($this->attributes as $attr) {
             $owner->$attr = trim($owner->$attr);
         }
     }

@@ -1,6 +1,10 @@
 <?php
 /**
  * Contains base class of admin module
+ *
+ * @author      Serhiy Hlushko <serhiy.hlushko@gmail.com>
+ * @copyright   Copyright 2013 Hlushko inc.
+ * @company     Hlushko inc.
  */
 
 /**
@@ -24,27 +28,24 @@ class AdminModule extends CWebModule
 
     /**
      * Does some operation before any action
+     * @param CController $controller
+     * @param CAction     $action
      * 
-     * @param   string  $controller 
-     * @param   string  $action
-     * 
-     * @return  bool
+     * @return bool
      */
-    public function beforeControllerAction($controller, $action)
+    public function beforeControllerAction(CController $controller, CAction $action)
     {
-        if (parent::beforeControllerAction($controller, $action))
-        {
+        if (parent::beforeControllerAction($controller, $action)) {
             $controller->layout = 'admin.views.main';
 
-            if (!Yii::app()->user->isGuest || ($action->id === 'login'))
-            {
+            if ( ! Yii::app()->user->isGuest || ($action->id === 'login')) {
                 return true;
             }
 
             Yii::app()->getRequest()->redirect('/admin/default/login');
+
             return true;
-        }
-        else {
+        } else {
             return false;
         }
     }

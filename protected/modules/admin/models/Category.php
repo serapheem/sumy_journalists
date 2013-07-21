@@ -1,12 +1,16 @@
 <?php
 /**
- * File for categories model
+ * Contains Category model
+ *
+ * @author      Serhiy Hlushko <serhiy.hlushko@gmail.com>
+ * @copyright   Copyright 2013 Hlushko inc.
+ * @company     Hlushko inc.
  */
 
 /**
  * Categories Model class
  */
-class Categories extends AdminAbstractModel
+class Category extends AdminModel
 {
     /**
      * {@inheritdoc}
@@ -21,7 +25,7 @@ class Categories extends AdminAbstractModel
      */
     public function tableName()
     {
-        return '{{categories}}';
+        return '{{category}}';
     }
 
     /**

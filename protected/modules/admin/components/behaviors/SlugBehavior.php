@@ -1,10 +1,14 @@
 <?php
 /**
- * SlugBehavior class file.
+ * Contains SlugBehavior class
+ *
+ * @author      Serhiy Hlushko <serhiy.hlushko@gmail.com>
+ * @copyright   Copyright 2013 Hlushko inc.
+ * @company     Hlushko inc.
  */
 
 /**
- * SlugBehavior will automatically fill slug atribute based on title attribute.
+ * SlugBehavior will automatically fill slug attribute based on title attribute
  */
 class SlugBehavior extends CActiveRecordBehavior
 {
@@ -19,7 +23,7 @@ class SlugBehavior extends CActiveRecordBehavior
      * Defaults to 'title'
      */
     public $titleAttribute = 'title';
-    
+
     /**
      * @var int The max possible length of the slug attribute. 
      * Defaults to 255
@@ -34,24 +38,20 @@ class SlugBehavior extends CActiveRecordBehavior
      */
     public function beforeSave(CModelEvent $event)
     {
-        if ($this->getOwner()->{$this->slugAttribute})
-        {
-            $this->getOwner()->{$this->slugAttribute} = 
-                $this->translit($this->getOwner()->{$this->slugAttribute});
-        }
-        else {
-            $this->getOwner()->{$this->slugAttribute} = 
-                $this->translit($this->getOwner()->{$this->titleAttribute});
+        if ($this->getOwner()->{$this->slugAttribute}) {
+            $this->getOwner()->{$this->slugAttribute} = $this->translit($this->getOwner()->{$this->slugAttribute});
+        } else {
+            $this->getOwner()->{$this->slugAttribute} = $this->translit($this->getOwner()->{$this->titleAttribute});
         }
     }
 
     /**
      * Function convert cyrillic letters to latin
-     * 
-     * @param sting input data
+     * @param string $input data
+     *
      * @return string result of converting
      */
-    public function translit($string)
+    public function translit($input)
     {
         $table = array(
 //            'А' => 'A',
@@ -121,24 +121,19 @@ class SlugBehavior extends CActiveRecordBehavior
             'ю' => 'yu',
             'я' => 'ya'
         );
-        
-        $output = str_replace(array_keys($table), array_values($table), 
-            mb_strtolower($string, 'utf-8'));
+
+        $output = str_replace(array_keys($table), array_values($table), mb_strtolower($input, 'utf-8'));
 
         $output = preg_replace('/\s+/ms', '-', $output);
         $output = preg_replace('/[^a-z0-9\_\-.]+/mi', '', $output);
         $output = preg_replace('#[\-]+#i', '-', $output);
-        
-        if (strlen($output) > $this->maxLength)
-        {
+
+        if (strlen($output) > $this->maxLength) {
             $output = substr($output, 0, $this->maxLength);
-            if ($temp_max = strrpos($output, '-'))
-            {
-                $output = substr($output, 0, $temp_max);
+            if ($tempMax = strrpos($output, '-')) {
+                $output = substr($output, 0, $tempMax);
             }
-        }
-        elseif (strrpos($output, '-') == (strlen($output) - 1))
-        {
+        } elseif (strrpos($output, '-') == (strlen($output) - 1)) {
             $output = substr($output, 0, strlen($output) - 1);
         }
 

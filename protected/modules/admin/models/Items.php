@@ -1,12 +1,16 @@
 <?php
 /**
- * File for items model
+ * Contains Item model
+ *
+ * @author      Serhiy Hlushko <serhiy.hlushko@gmail.com>
+ * @copyright   Copyright 2013 Hlushko inc.
+ * @company     Hlushko inc.
  */
 
 /**
  * Items Model class
  */
-class Items extends AdminAbstractModel
+class Item extends AdminModel
 {
     //public $featured;
     

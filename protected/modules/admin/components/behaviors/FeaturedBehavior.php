@@ -1,6 +1,10 @@
 <?php
 /**
- * FeaturedBehavior class file.
+ * Contains FeaturedBehavior class
+ *
+ * @author      Serhiy Hlushko <serhiy.hlushko@gmail.com>
+ * @copyright   Copyright 2013 Hlushko inc.
+ * @company     Hlushko inc.
  */
 
 /**
@@ -13,28 +17,31 @@ class FeaturedBehavior extends CActiveRecordBehavior
      * Defaults to 'featured'
      */
     public $featuredAttribute = 'featured';
-    
+
     /**
      * @var bool The default value for featured status. Defaults to 'true'
      */
     public $defaultValue = 1;
-    
+
     /**
      * Responds to {@link CModel::onAfterConstruct} event.
      * Sets default attribute value to model instance
      * 
      * @param CEvent $event event parameter
+     *
+     * @throws BadMethodCallException If featured attribute name or value was not set
      */
     public function afterConstruct(CEvent $event)
     {
-        if (empty($this->featuredAttribute))
+        if (empty($this->featuredAttribute)) {
             throw new BadMethodCallException('Name of featured attribute was\'nt set!');
-        if (is_null($this->defaultValue))
-            throw new BadMethodCallException('Default value for "' . $this->featuredAttribute 
-                . '" attribute was\'nt set!');
-        
-        if ($this->getOwner()->getScenario() != 'search')
-        {
+        }
+        if (is_null($this->defaultValue)) {
+            throw new BadMethodCallException(
+                sprintf('Default value for "%s" attribute was\'nt set!', $this->featuredAttribute)
+            );
+        }
+        if ($this->getOwner()->getScenario() != 'search') {
             $this->getOwner()->{$this->featuredAttribute} = $this->defaultValue;
         }
     }
@@ -53,27 +60,26 @@ class FeaturedBehavior extends CActiveRecordBehavior
             'section' => $sectionId,
             'item_id' => $owner->primaryKey
         );
-        if ($owner->{$this->featuredAttribute})
-        {
+        if ($owner->{$this->featuredAttribute}) {
             $record = Frontpage::model()->findByAttributes($attrs);
-            if (!$record)
-            {
+            if ( ! $record) {
                 $m = Frontpage::model();
                 $m->isNewRecord = true;
                 $m->attributes = $attrs;
-                if (!$m->save())
-                {
-                    Yii::app()->user->setFlash('error', 
-                        Yii::t($sectionId, 'admin.list.message.error.featureItem'));
+                if ( ! $m->save()) {
+                    Yii::app()->getUser()->setFlash(
+                        'error',
+                        Yii::t($sectionId, 'admin.list.message.error.featureItem')
+                    );
                 }
             }
-        }
-        else {
+        } else {
             $record = Frontpage::model()->findByAttributes($attrs);
-            if ($record && !$record->delete())
-            {
-                Yii::app()->user->setFlash('error', 
-                    Yii::t($sectionId, 'admin.list.message.error.unfeatureItem'));
+            if ($record && !$record->delete()) {
+                Yii::app()->getUser()->setFlash(
+                    'error',
+                    Yii::t($sectionId, 'admin.list.message.error.unfeatureItem')
+                );
             }
         }
     }
@@ -92,10 +98,11 @@ class FeaturedBehavior extends CActiveRecordBehavior
             'section' => $sectionId,
             'item_id' => $owner->primaryKey
         ));
-        if ($record && !$record->delete())
-        {
-            Yii::app()->user->setFlash('error', 
-                Yii::t($sectionId, 'admin.list.message.error.unfeatureItem'));
+        if ($record && !$record->delete()) {
+            Yii::app()->getUser()->setFlash(
+                'error',
+                Yii::t($sectionId, 'admin.list.message.error.unfeatureItem')
+            );
         }
     }
 

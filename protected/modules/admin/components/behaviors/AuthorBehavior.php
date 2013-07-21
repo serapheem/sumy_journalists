@@ -1,6 +1,10 @@
 <?php
 /**
- * AuthorBehavior class file.
+ * Contains AuthorBehavior class
+ *
+ * @author      Serhiy Hlushko <serhiy.hlushko@gmail.com>
+ * @copyright   Copyright 2013 Hlushko inc.
+ * @company     Hlushko inc.
  */
 
 /**
@@ -34,13 +38,11 @@ class AuthorBehavior extends CActiveRecordBehavior
      */
     public function beforeSave(CModelEvent $event)
     {
-        if ($this->getOwner()->getIsNewRecord() && ($this->createAttribute !== null))
-        {
+        if ($this->getOwner()->getIsNewRecord() && ($this->createAttribute !== null)) {
             $this->getOwner()->{$this->createAttribute} = Yii::app()->user->id;
         }
-        if ((!$this->getOwner()->getIsNewRecord() || $this->setUpdateOnCreate)
-            && ($this->updateAttribute !== null))
-        {
+        if (( ! $this->getOwner()->getIsNewRecord() || $this->setUpdateOnCreate)
+            && ($this->updateAttribute !== null)) {
             $this->getOwner()->{$this->updateAttribute} = Yii::app()->user->id;
         }
     }

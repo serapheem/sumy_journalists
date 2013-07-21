@@ -42,7 +42,7 @@ return array(
 			'maxlength' => 64,
             'value' => ''
 		),
-		'password2' => array(
+		'repeatedPassword' => array(
 			'type' => 'password',
 			'maxlength' => 64,
             'value' => ''

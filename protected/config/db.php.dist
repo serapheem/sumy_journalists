@@ -1,8 +1,8 @@
 <?php return array(
-    'connectionString' => 'mysql:host=localhost;dbname=my_incity',
+    'connectionString' => 'mysql:host=localhost;dbname=***',
     'emulatePrepare' => true,
-    'username' => 'root',
-    'password' => '46820',
+    'username' => '***',
+    'password' => '***',
     'charset' => 'utf8',
-    'tablePrefix' => '',
+    'tablePrefix' => 'icsu_',
 );

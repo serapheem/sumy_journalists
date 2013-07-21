@@ -7,7 +7,7 @@ return array(
     'language' => 'uk',
     'theme' => 'classic',
     // preloading 'log' component
-    'preload' => array('log'),
+    'preload' => array('log', 'input'),
     // autoloading model and component classes
     'import' => array(
         'application.components.*',
@@ -74,6 +74,11 @@ return array(
         'db' => require dirname(__FILE__) . '/db.php',
         'errorHandler' => array(
             'errorAction' => 'site/error',
+        ),
+        'input' => array(
+            'class'     => 'CmsInput',
+            'cleanPost' => false,
+            'cleanGet'  => false,
         ),
     ),
     // application-level parameters that can be accessed
