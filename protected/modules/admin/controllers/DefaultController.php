@@ -6,7 +6,7 @@
 /**
  * Default Controller Class
  */
-class DefaultController extends AdminAbstractController
+class DefaultController extends AdminController
 {
     /**
      * {@inheritdoc}

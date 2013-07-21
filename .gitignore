@@ -1,6 +1,8 @@
 assets/
 framework/
-upload/
 protected/config/db.php
+protected/config/db_test.php
+upload/
+vendor/
 .idea
 .htaccess

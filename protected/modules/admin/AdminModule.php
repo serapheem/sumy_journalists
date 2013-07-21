@@ -30,10 +30,10 @@ class AdminModule extends CWebModule
      * Does some operation before any action
      * @param CController $controller
      * @param CAction     $action
-     * 
+     *
      * @return bool
      */
-    public function beforeControllerAction(CController $controller, CAction $action)
+    public function beforeControllerAction($controller, $action)
     {
         if (parent::beforeControllerAction($controller, $action)) {
             $controller->layout = 'admin.views.main';

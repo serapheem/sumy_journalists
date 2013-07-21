@@ -23,7 +23,7 @@ class CleanBehavior extends CActiveRecordBehavior
      *
      * @param CModelEvent $event event parameter
      */
-    public function beforeValidate(CModelEvent $event)
+    public function beforeValidate($event)
     {
         $owner = $this->getOwner();
         foreach ($this->attributes as $attr) {

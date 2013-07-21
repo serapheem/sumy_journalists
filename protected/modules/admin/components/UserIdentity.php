@@ -31,7 +31,7 @@ class UserIdentity extends CUserIdentity
      */
     public function authenticate()
     {
-        $record = Users::model()
+        $record = User::model()
             ->findByAttributes(array('email' => $this->username));
 
         if ($record === null)
@@ -43,7 +43,7 @@ class UserIdentity extends CUserIdentity
             $this->errorCode = self::ERROR_PASSWORD_INVALID;
         }
         else {
-            Users::model()->updateByPk($record->primaryKey, array(
+            User::model()->updateByPk($record->primaryKey, array(
                 'ip' => Yii::app()->request->getUserHostAddress(),
                 'lasttime' => date('Y-m-d H:i:s'),
             ));

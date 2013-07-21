@@ -10,7 +10,7 @@
 /**
  * Describes common functionality for controllers of Admin module
  */
-abstract class AdminAbstractController extends CController
+abstract class AdminController extends CController
 {
     /**
      * {@inheritdoc}
