@@ -1,18 +1,21 @@
 <?php
 /**
  * Contains class for user identification
+ *
+ * @author      Serhiy Hlushko <serhiy.hlushko@gmail.com>
+ * @copyright   Copyright 2013 Hlushko inc.
+ * @company     Hlushko inc.
  */
 
 /**
- * User Identity class
+ * Manages User Identification
  */
 class UserIdentity extends CUserIdentity
 {
     /**
-     * Identifier of user
-     * @var int
+     * @var int Identifier of user
      */
-    private $_id;
+    protected $_id;
 
     /**
      * Returns the user identifier
@@ -34,25 +37,25 @@ class UserIdentity extends CUserIdentity
         $record = User::model()
             ->findByAttributes(array('email' => $this->username));
 
-        if ($record === null)
-        {
+        if ($record === null) {
             $this->errorCode = self::ERROR_USERNAME_INVALID;
-        }
-        elseif ($record->password !== sha1($record->email . $this->password))
-        {
+        } elseif ($record->password !== sha1($this->username . $this->password)) {
             $this->errorCode = self::ERROR_PASSWORD_INVALID;
-        }
-        else {
-            User::model()->updateByPk($record->primaryKey, array(
-                'ip' => Yii::app()->request->getUserHostAddress(),
-                'lasttime' => date('Y-m-d H:i:s'),
-            ));
+        } else {
+            User::model()->updateByPk(
+                $record->primaryKey,
+                array(
+                    'ip' => Yii::app()->getRequest()->getUserHostAddress(),
+                    'lasttime' => date('Y-m-d H:i:s'),
+                )
+            );
 
             $this->_id = $record->primaryKey;
             $this->setState('email', $record->email);
             $this->errorCode = self::ERROR_NONE;
         }
-        return !$this->errorCode;
+
+        return $this->getIsAuthenticated();
     }
 
 }

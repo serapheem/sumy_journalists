@@ -1,10 +1,14 @@
 <?php
 /**
- * Contains login model
+ * Contains Login model class
+ *
+ * @author      Serhiy Hlushko <serhiy.hlushko@gmail.com>
+ * @copyright   Copyright 2013 Hlushko inc.
+ * @company     Hlushko inc.
  */
 
 /**
- * Login Model class
+ * Manages whole login and authentication process
  */
 class Login extends CFormModel
 {
@@ -25,11 +29,11 @@ class Login extends CFormModel
      * @var bool
      */
     public $rememberMe = false;
-    
+
     /**
      * @var UserIdentity 
      */
-    private $_identity;
+    protected $_identity;
 
     /**
      * {@inheritdoc}
@@ -61,13 +65,11 @@ class Login extends CFormModel
      */
     public function authenticate($attribute, $params)
     {
-        if (!$this->hasErrors())
-        {
+        if ( ! $this->hasErrors()) {
             $this->_identity = new UserIdentity($this->email, $this->password);
             $this->_identity->authenticate();
 
-            switch ($this->_identity->errorCode)
-            {
+            switch ($this->_identity->errorCode) {
                 case UserIdentity::ERROR_USERNAME_INVALID:
                     $this->addError('username', Yii::t('main', 'LOGIN_INCORRECT'));
                     break;
@@ -89,18 +91,17 @@ class Login extends CFormModel
      */
     public function login()
     {
-        if ($this->_identity === null)
-        {
+        if ($this->_identity === null) {
             $this->_identity = new UserIdentity($this->email, $this->password);
             $this->_identity->authenticate();
         }
 
         $success = false;
-        if ($this->_identity->errorCode === UserIdentity::ERROR_NONE)
-        {
+        if ($this->_identity->errorCode === UserIdentity::ERROR_NONE) {
             Yii::app()->user->login($this->_identity, 3600 * 24 * 30);
             $success = true;
         }
+
         return $success;
     }
 

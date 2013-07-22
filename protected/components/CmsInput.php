@@ -422,7 +422,7 @@ class CmsInput extends CApplicationComponent
     {
         if($this->CI_Security!==null)
             return $this->CI_Security;
-        Yii::import('application.vendors.Codeigniter.CI_Security');
+        Yii::import('application.vendor.Codeigniter.CI_Security');
         $this->CI_Security=new CI_Security;
         return $this->CI_Security;
     }

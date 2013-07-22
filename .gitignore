@@ -2,6 +2,8 @@ assets/
 framework/
 protected/config/db.php
 protected/config/db_test.php
+tests/_data
+tests/_log
 upload/
 vendor/
 .idea

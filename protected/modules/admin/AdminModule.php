@@ -36,9 +36,7 @@ class AdminModule extends CWebModule
     public function beforeControllerAction($controller, $action)
     {
         if (parent::beforeControllerAction($controller, $action)) {
-            $controller->layout = 'admin.views.main';
-
-            if ( ! Yii::app()->user->isGuest || ($action->id === 'login')) {
+            if ( ! Yii::app()->getUser()->getIsGuest() || ($action->getId() === 'login')) {
                 return true;
             }
 

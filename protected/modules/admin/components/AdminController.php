@@ -48,17 +48,6 @@ abstract class AdminController extends CController
     protected $_model = null;
 
     /**
-     * Updates the last visited date before initialize application
-     */
-    public function init()
-    {
-        User::model()
-            ->updateByPk(Yii::app()->user->getId(), array('lasttime' => date('Y-m-d H:i:s')));
-
-        parent::init();
-    }
-
-    /**
      * {@inheritdoc}
      */
     public function filters()
@@ -86,7 +75,7 @@ abstract class AdminController extends CController
 
     /**
      * Gets name of the model class
-     * 
+     *
      * @return string
      */
     protected function getModelClass()
@@ -101,9 +90,9 @@ abstract class AdminController extends CController
     /**
      * Returns the model object or null if there is no model with such identifier
      * @param bool 	 $create   Created new model object or return null
-     * @param string $scenario The new scenario for model
-     * 
-     * @return CActiveRecord|null
+     * @param string $scenario The scenario for new model
+     *
+     * @return CModel|null
      */
     protected function loadModel($create = true, $scenario = 'insert')
     {
@@ -113,17 +102,13 @@ abstract class AdminController extends CController
         }
 
         if ($this->_model === null) {
-            if ($id = (int) Yii::app()->getRequest()->getParam('id', 0)) {
+            if ($id = (int) Yii::app()->input->get('id', 0)) {
                 $this->_model = $modelClass::model()->findbyPk($id);
                 if ($this->_model) {
-                    $this->_model->setScenario('update');
+                    $this->_model->setScenario($scenario);
                 }
             } elseif ($create) {
                 $this->_model = new $modelClass($scenario);
-            }
-
-            if ($scenario && $this->_model) {
-                $this->_model->setScenario($scenario);
             }
 
             // TODO : Check for correct work with other controllers
